@@ -1,0 +1,11 @@
+{
+  "General": {
+    "WebAssemblyName": "SportBox7.Startup"
+  },
+  "ApplicationSettings": {
+    "Secret": "M5M3 M8G1G MA1C0PRS G3N3R4T18KL PE8E MMMMMM"
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "My Fake Connection String"
+  }
+}

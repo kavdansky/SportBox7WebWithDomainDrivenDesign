@@ -1,0 +1,13 @@
+﻿namespace SportBox7.Application.Contracts
+{
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Domain.Common;
+
+    public interface IRepository<in TEntity>
+        where TEntity : IAggregateRoot
+    {
+        Task Save(TEntity entity, CancellationToken cancellationToken = default);
+    }
+}

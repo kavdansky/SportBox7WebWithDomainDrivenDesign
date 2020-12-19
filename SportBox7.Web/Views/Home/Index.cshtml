@@ -1,0 +1,123 @@
+﻿@using SportBox7.Application.Features.Articles.Queries.HomePage;
+@model FrontPageOutputModel
+@{
+    ViewData["Title"] = "Home Page";
+    ViewData["Category"] = "Home";
+}
+
+
+<div class="hero-area">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12 col-lg-8">
+                <!-- Breaking News Widget -->
+                @if (Model != null)
+                {
+                <div class="breaking-news-area d-flex align-items-center">
+                    <div class="news-title">
+                        <p>Последни новини</p>
+                    </div>
+                    <div id="breakingNewsTicker" class="ticker">
+                        <ul>
+                            @{
+                                foreach (var article in Model.LatestNews)
+                                {
+                                    <li><a href="/Articles/@article.ArticleId">@article.Title</a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Hero Area End ##### -->
+<div class="featured-post-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-8">
+                <div class="row">
+                    @foreach (var article in Model.Topnews)
+                    {
+                        <!-- Single Featured Post -->
+                        <div class="col-12 col-lg-7">
+                            <div class="single-blog-post featured-post">
+                                <div class="post-data">
+                                    @if (article != null)
+                                    {
+                                        <a href="/Categories/Details/@article.CategoryEN" class="post-catagory">@article.CategoryName</a>
+                                        <a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl" class="post-title">
+                                            <h6>@article.Title</h6>
+                                        </a>
+                                        <div class="post-thumb single-video-post">
+                                            <a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl"><img src="@article.ImageUrl" alt=""></a>
+                                        </div>
+                                        <div class="post-meta">
+                                            <p class="post-excerp">@article.Body<a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl">...вижте повече</a></p>
+                                            <!-- Post Like & Post Comment -->
+                                            <div class="d-flex align-items-center">
+                                               
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                <div class="col-12 col-lg-5">
+                    @foreach (var article in Model.SideBar)
+                    {
+                        <!-- Single Featured Post -->
+                        <div class="single-blog-post featured-post-2">
+                            @if (Model != null)
+                            {
+                                <div class="post-thumb single-video-post">
+                                    <a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl"><img src="@article.ImageUrl" alt=""></a>
+                                </div>
+                                <div class="post-data">
+                                    <a href="/Categories/Details/@article.CategoryEN" class="post-catagory">@article.CategoryName</a>
+                                    <div class="post-meta">
+                                        <a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl" class="post-title">
+                                            <h6>@article.Title</h6>
+                                        </a>
+                                        <!-- Post Like & Post Comment -->
+                                        
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    }
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                @if (Model.SideBar != null)
+                {
+                      foreach (var article in Model.SideBar)
+                      {
+                          <div class="single-blog-post small-featured-post d-flex">                          
+                              <div class="post-thumb single-video-post">
+                                  <a href="#"><img src="@article.ImageUrl" alt=""></a>
+                              </div>
+                              <div class="post-data">
+                                  <a href="/Categories/Details/@article.CategoryEN" class="post-catagory">@article.CategoryName</a>
+                                  <div class="post-meta">
+                                      <a href="/news/all/@article.Id/@article.CategoryName/@article.Title" class="post-title">
+                                          <h6>@article.Title</h6>
+                                      </a>
+                                      <p class="post-date"><span></span></p>
+                                  </div>
+                              </div>                            
+                          </div>
+                      }                    
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Featured Post Area End ##### -->
