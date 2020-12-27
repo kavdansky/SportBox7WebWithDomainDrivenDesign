@@ -25,13 +25,6 @@ namespace SportBox7.Web.Controllers
         public async Task<ActionResult<ListArticlesByCategoryOutputModel>> Category([FromQuery] ListArticlesByCategoryQuery query)
         =>  View(await this.Mediator.Send(query));
         
-
-
-       // [HttpGet]
-       // public async Task<ActionResult<SearchArticleOutputModel>> Search(
-       //      [FromQuery] ListArticlesByCategoryQuery query)
-       //    => (SearchArticleOutputModel)await this.Mediator.Send(query);
-
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<CreateArticleOutputModel>> Create(

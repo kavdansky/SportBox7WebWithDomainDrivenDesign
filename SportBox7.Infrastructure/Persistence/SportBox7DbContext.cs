@@ -1,16 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using SportBox7.Data.Models;
-using SportBox7.Domain.Models.Articles;
-using SportBox7.Domain.Models.Editors;
-using SportBox7.Infrastructure.Identity;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-
-namespace SportBox7.Infrastructure.Persistence
+﻿namespace SportBox7.Infrastructure.Persistence
 {
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+    using SportBox7.Domain.Models.Articles;
+    using SportBox7.Domain.Models.Editors;
+    using SportBox7.Infrastructure.Identity;
+    using System.Reflection;
+
     internal class SportBox7DbContext: IdentityDbContext<User>
     {
         public SportBox7DbContext(DbContextOptions<SportBox7DbContext> options)

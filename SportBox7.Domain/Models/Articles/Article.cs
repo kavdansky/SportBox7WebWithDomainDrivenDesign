@@ -1,17 +1,14 @@
-﻿using SportBox7.Domain.Common;
-using System;
-using SportBox7.Domain.Exeptions;
-using System.Collections.Generic;
-using System.Text;
-using SportBox7.Domain.Models.Articles.Enums;
-using static SportBox7.Domain.Models.ModelConstants.Common;
-using static SportBox7.Domain.Models.ModelConstants.Article;
-using SportBox7.Data.Models;
-using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-using System.Linq;
-
-namespace SportBox7.Domain.Models.Articles
+﻿namespace SportBox7.Domain.Models.Articles
 {
+    using SportBox7.Domain.Common;
+    using System;
+    using SportBox7.Domain.Exeptions;
+    using System.Collections.Generic;
+    using SportBox7.Domain.Models.Articles.Enums;
+    using System.Linq;
+    using static SportBox7.Domain.Models.ModelConstants.Common;
+    using static SportBox7.Domain.Models.ModelConstants.Article;
+
     public class Article: EditableEntity<int>, IAggregateRoot
     {
         private readonly HashSet<SocialSignal> socialSignals;
@@ -50,13 +47,13 @@ namespace SportBox7.Domain.Models.Articles
             this.SeoUrl = seoUrl;
             this.MetaKeywords = metaKeywords;
             this.MetaDescription = metaDescription;
-            this.ArticleType = ArticleType;
-            this.socialSignals = new HashSet<SocialSignal>();
-
+            this.ArticleType = ArticleType;         
             this.ArticleState = default!;
             this.ArticleType = default!;
             this.TargetDate = default!;
             this.Category = default!;
+            this.socialSignals = new HashSet<SocialSignal>();
+
         }
 
         private void Validate(string title, string body, string h1Tag, string imageUrl, string metaKeywords, string metaDescription)

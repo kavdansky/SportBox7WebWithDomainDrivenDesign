@@ -21,11 +21,11 @@ namespace SportBox7.Domain.Models
         public class Article
         {
             public const int TitleMinLength = 5;
-            public const int TitleMaxLength = 60;
+            public const int TitleMaxLength = 120;
             public const int BodyMinLength = 5;
             public const int BodyMaxLength = 11000;
             public const int H1MinLength = 5;
-            public const int H1MaxLength = 60;
+            public const int H1MaxLength = 120;
         }
 
         public class Editor

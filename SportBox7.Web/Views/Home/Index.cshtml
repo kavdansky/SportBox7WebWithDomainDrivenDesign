@@ -39,10 +39,11 @@
         <div class="row">
             <div class="col-12 col-md-6 col-lg-8">
                 <div class="row">
-                    @foreach (var article in Model.Topnews)
-                    {
+                    
                         <!-- Single Featured Post -->
-                        <div class="col-12 col-lg-7">
+                    <div class="col-12 col-lg-7">
+                        @foreach (var article in Model.Topnews)
+                        {
                             <div class="single-blog-post featured-post">
                                 <div class="post-data">
                                     @if (article != null)
@@ -55,19 +56,18 @@
                                             <a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl"><img src="@article.ImageUrl" alt=""></a>
                                         </div>
                                         <div class="post-meta">
-                                            <p class="post-excerp">@article.Body<a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl">...вижте повече</a></p>
+                                            <p class="post-excerp">@article.Body.Substring(0, 250)<a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl">...вижте повече</a></p>
                                             <!-- Post Like & Post Comment -->
                                             <div class="d-flex align-items-center">
-                                               
                                             </div>
                                         </div>
                                     }
 
                                 </div>
                             </div>
-                        </div>
-                    }
-
+                        }
+                    </div>
+                    
                 <div class="col-12 col-lg-5">
                     @foreach (var article in Model.SideBar)
                     {

@@ -1,12 +1,12 @@
-﻿using SportBox7.Domain.Exeptions;
-using SportBox7.Domain.Models.Articles;
-using SportBox7.Domain.Models.Articles.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SportBox7.Domain.Factories.Articles
+﻿namespace SportBox7.Domain.Factories.Articles
 {
+    using SportBox7.Domain.Exeptions;
+    using SportBox7.Domain.Models.Articles;
+    using SportBox7.Domain.Models.Articles.Enums;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
     internal class ArticleFactory : IArticleFactory
     {
         private string title = default!;

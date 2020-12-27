@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using SportBox7.Data.Models;
 using SportBox7.Domain.Exeptions;
 using System;
 using System.Collections.Generic;

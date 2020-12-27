@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using SportBox7.Domain.Common;
-using System.Linq;
-using System.Threading.Tasks;
-using SportBox7.Domain.Exeptions;
-
-using static SportBox7.Domain.Models.ModelConstants.SocialSignal;
-
-namespace SportBox7.Data.Models
+﻿namespace SportBox7.Domain.Models.Articles
 {
+    using SportBox7.Domain.Common;
+    using SportBox7.Domain.Exeptions;
+    using static SportBox7.Domain.Models.ModelConstants.SocialSignal;
+
     public class SocialSignal: Entity<int>
     {
      

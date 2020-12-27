@@ -1,11 +1,8 @@
-﻿using SportBox7.Domain.Common;
-using SportBox7.Domain.Exeptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SportBox7.Domain.Models.Articles
+﻿namespace SportBox7.Domain.Models.Articles
 {
+    using SportBox7.Domain.Common;
+    using SportBox7.Domain.Exeptions;
+
     public class Category: Entity<int>
     {
         private const byte DescriptionStringMinLength = 3;
