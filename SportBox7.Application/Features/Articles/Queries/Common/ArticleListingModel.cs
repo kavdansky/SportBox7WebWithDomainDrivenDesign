@@ -1,9 +1,13 @@
-﻿namespace SportBox7.Application.Features.Articles.Queries.Category
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace SportBox7.Application.Features.Articles.Queries.Common
 {
-    public class ArticleListingModel
+    public abstract class ArticleListingModel
     {
         public ArticleListingModel(
-            int id, 
+            int id,
             string title,
             string body,
             string imageUrl,
@@ -29,7 +33,5 @@
         public string Category { get; }
 
         public string SeoUrl { get; set; }
-
-
     }
 }

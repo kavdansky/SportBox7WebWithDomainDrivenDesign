@@ -5,12 +5,12 @@
 
     public class ListArticlesByCategoryOutputModel
     {
-        internal ListArticlesByCategoryOutputModel(IEnumerable<ArticleListingModel> articles)
+        internal ListArticlesByCategoryOutputModel(IEnumerable<ArticleByCategoryListingModel> articles)
         {
             this.Articles = articles;          
         }
 
-        public IEnumerable<ArticleListingModel> Articles { get; }
+        public IEnumerable<ArticleByCategoryListingModel> Articles { get; }
 
         public int Total 
         {

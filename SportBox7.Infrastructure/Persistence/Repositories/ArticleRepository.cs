@@ -18,7 +18,7 @@
         {
         }
 
-        public async Task<IEnumerable<ArticleListingModel>> GetArticleListingsByCategory(
+        public async Task<IEnumerable<ArticleByCategoryListingModel>> GetArticleListingsByCategory(
             string? category = default,
             CancellationToken cancellationToken = default)
         {
@@ -34,7 +34,7 @@
             }
 
             return await query
-                .Select(art => new ArticleListingModel(
+                .Select(art => new ArticleByCategoryListingModel(
                     art.Id,
                     art.Title,
                     art.Body,

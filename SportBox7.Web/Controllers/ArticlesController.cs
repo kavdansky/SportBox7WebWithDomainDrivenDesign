@@ -9,22 +9,21 @@ using SportBox7.Application.Contracts;
 using SportBox7.Application.Features.Articles.Queries.Category;
 using SportBox7.Domain.Factories.Editors;
 using SportBox7.Domain.Models.Articles;
-using SportBox7.Domain.Models.Editors;
-using SportBox7.Web.Common;
-using SportBox7.Application.Features.Articles.Commands.Create;
-using Microsoft.AspNetCore.Authorization;
-using SportBox7.Web;
-
 namespace SportBox7.Web.Controllers
 {
-    
-   
+    using SportBox7.Application.Features.Articles.Commands.Create;
+    using Microsoft.AspNetCore.Authorization;
+
     public class ArticlesController: MainController
     {
         [HttpGet]
         public async Task<ActionResult<ListArticlesByCategoryOutputModel>> Category([FromQuery] ListArticlesByCategoryQuery query)
         =>  View(await this.Mediator.Send(query));
-        
+
+        [HttpGet]
+        public async Task<ActionResult<ListArticlesByCategoryOutputModel>> Id([FromQuery] ListArticlesByCategoryQuery query)
+        => View(await this.Mediator.Send(query));
+
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<CreateArticleOutputModel>> Create(

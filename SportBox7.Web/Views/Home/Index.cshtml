@@ -48,7 +48,7 @@
                                 <div class="post-data">
                                     @if (article != null)
                                     {
-                                        <a href="/Categories/Details/@article.CategoryEN" class="post-catagory">@article.CategoryName</a>
+                                        <a href="articles?category=@article.CategoryEN" class="post-catagory">@article.CategoryName</a>
                                         <a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl" class="post-title">
                                             <h6>@article.Title</h6>
                                         </a>
@@ -79,7 +79,7 @@
                                     <a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl"><img src="@article.ImageUrl" alt=""></a>
                                 </div>
                                 <div class="post-data">
-                                    <a href="/Categories/Details/@article.CategoryEN" class="post-catagory">@article.CategoryName</a>
+                                    <a href="articles?category=@article.CategoryEN" class="post-catagory">@article.CategoryName</a>
                                     <div class="post-meta">
                                         <a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl" class="post-title">
                                             <h6>@article.Title</h6>
@@ -105,7 +105,7 @@
                                   <a href="#"><img src="@article.ImageUrl" alt=""></a>
                               </div>
                               <div class="post-data">
-                                  <a href="/Categories/Details/@article.CategoryEN" class="post-catagory">@article.CategoryName</a>
+                                  <a href="articles?category=@article.CategoryEN" class="post-catagory">@article.CategoryName</a>
                                   <div class="post-meta">
                                       <a href="/news/all/@article.Id/@article.CategoryName/@article.Title" class="post-title">
                                           <h6>@article.Title</h6>

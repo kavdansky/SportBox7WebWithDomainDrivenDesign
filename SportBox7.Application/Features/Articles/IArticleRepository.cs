@@ -11,7 +11,7 @@
 
     public interface IArticleRepository : IRepository<Article>
     {
-        Task<IEnumerable<ArticleListingModel>> GetArticleListingsByCategory(
+        Task<IEnumerable<ArticleByCategoryListingModel>> GetArticleListingsByCategory(
             string? category = default,
             CancellationToken cancellationToken = default);
 

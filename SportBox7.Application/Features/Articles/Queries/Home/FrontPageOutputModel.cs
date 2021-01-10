@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SportBox7.Application.Features.Articles.Queries.HomePage
 {
-    public class FrontPageOutputModel
+    public class FrontPageOutputModel: PageLayoutOutpuModel
     {
         private IArticleRepository articleRepository = default!;
 
@@ -15,23 +15,13 @@ namespace SportBox7.Application.Features.Articles.Queries.HomePage
         {
            
         }
-        public IEnumerable<MenuCategoriesModel> MenuCategories { get; set; } = default!;
-
-        public IEnumerable<LatestNewsModel> LatestNews { get; set; } = default!;
-
-        public IEnumerable<SideBarModel> SideBar { get; set; } = default!;
-
         public IEnumerable<TopNewsModel> Topnews { get; set; } = default!;
 
         private async Task<FrontPageOutputModel> InitializeAsync(IArticleRepository articleRepository)
         {
-            
-            
             this.articleRepository = articleRepository;
-            this.MenuCategories = await articleRepository.GetMenuCategories();
-            this.LatestNews = await articleRepository.GetLatestNews();
+            await InitializeLayoutComponentsAsync(articleRepository);
             this.Topnews = await articleRepository.GetTopNews();
-            this.SideBar = articleRepository.GetsideBarNews();
             
             return this;
         }
