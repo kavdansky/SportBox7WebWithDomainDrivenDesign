@@ -11,8 +11,8 @@ namespace SportBox7.Domain.Models.Articles
         public IEnumerable<object> GetData()
         {
             Category footballBG = new Category("Футбол БГ", "FootballBG");
-            Category footballWorld = new Category("FootballWorld", "FootBall");
-            Category volleyball = new Category("Волейбол", "Vollaeyball");
+            Category footballWorld = new Category("Футбол свят", "FootBall");
+            Category volleyball = new Category("Волейбол", "Volleyball");
             Category basketball = new Category("Баскетбол", "Basketball");
             Category martial = new Category("Бойни", "Martial");
             Category others = new Category("Други", "Others");

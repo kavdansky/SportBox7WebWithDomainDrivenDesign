@@ -29,10 +29,8 @@
             if (!string.IsNullOrWhiteSpace(category))
             {
                 query = query
-                    .Where(article => EF
-                        .Functions
-                        .Like(article.Category.CategoryNameEN, $"%{category}%"))
-                    .OrderBy(cr=> cr.CreationDate);
+                    .Where(a => a.Category.CategoryNameEN == category)
+                    .OrderBy(a => a.CreationDate);
             }
 
             return await query
@@ -58,7 +56,7 @@
             List<SideBarModel> model = new List<SideBarModel>();
             foreach (Category category in this.db.Categories.ToList())
             {
-                model.Add(this.All().Include(c=> c.Category).Where(a => a.Category.CategoryNameEN == category.CategoryNameEN).OrderByDescending(a => a.CreationDate).Select(a => new SideBarModel(a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.SeoUrl, a.ImageUrl)).FirstOrDefault());
+                model.Add(this.All().Include(c=> c.Category).Where(a => a.Category.CategoryNameEN == category.CategoryNameEN).OrderByDescending(a => a.CreationDate).Select(a => new SideBarModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.SeoUrl, a.ImageUrl)).FirstOrDefault());
             }
             return model;
         }

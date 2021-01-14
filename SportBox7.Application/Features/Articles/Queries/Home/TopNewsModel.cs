@@ -9,7 +9,7 @@ namespace SportBox7.Application.Features.Articles.Queries.HomePage
     {
         
         public TopNewsModel(int id, string title, string categoryEN, string categoryName, string seoUrl, string imageUrl, string body)
-            :base(title, categoryEN, categoryName, seoUrl, imageUrl)
+            :base(id, title, categoryEN, categoryName, seoUrl, imageUrl)
         {
             this.Body = body;
         }

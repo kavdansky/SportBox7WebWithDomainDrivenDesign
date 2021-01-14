@@ -3,7 +3,6 @@
     using MyTested.AspNetCore.Mvc;
     using SportBox7.Application.Features.Articles.Queries.Category;
     using SportBox7.Domain.Models.Editors;
-    //using SportBox7.Web1.Controllers;
     using System.Linq;
     using FluentAssertions;
     using Xunit;

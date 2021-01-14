@@ -6,8 +6,9 @@ namespace SportBox7.Application.Features.Articles.Queries.Common
 {
     public abstract class BaseArticleModel
     {
-        public BaseArticleModel(string title, string categoryEN, string categoryName, string seoUrl, string imageUrl)
+        public BaseArticleModel(int id, string title, string categoryEN, string categoryName, string seoUrl, string imageUrl)
         {
+            this.Id = id;
             this.Title = title;
             this.CategoryEN = categoryEN;
             this.CategoryName = categoryName;

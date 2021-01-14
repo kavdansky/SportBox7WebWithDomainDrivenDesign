@@ -95,7 +95,7 @@
                                     @{
                                         foreach (var article in Model.LatestNews)
                                         {
-                                            <li><a href="/Articles/all?id=@article.ArticleId">@Html.Raw(article.Title)</a></li>
+                                            <li><a href="/articles/all?id=@article.ArticleId">@Html.Raw(article.Title)</a></li>
                                         }
                                     }
                                 </ul>
@@ -147,9 +147,9 @@
                                     <a href="#"><img src="@article.ImageUrl" alt=""></a>
                                 </div>
                                 <div class="post-data">
-                                    <a href="articles?category=@article.CategoryEN" class="post-catagory">@Html.Raw(article.CategoryName)</a>
+                                    <a href="/articles?category=@article.CategoryEN" class="post-catagory">@Html.Raw(article.CategoryName)</a>
                                     <div class="post-meta">
-                                        <a href="/news/all/@article.Id/@article.CategoryName/@article.Title" class="post-title">
+                                        <a href="/articles/all?id=@article.Id" class="post-title">
                                             <h6>@Html.Raw(article.Title)</h6>
                                         </a>
                                         <p class="post-date"><span></span></p>
