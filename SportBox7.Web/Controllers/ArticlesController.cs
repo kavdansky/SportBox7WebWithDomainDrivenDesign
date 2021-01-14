@@ -1,29 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using SportBox7.Application;
-using SportBox7.Application.Contracts;
-using SportBox7.Application.Features.Articles.Queries.Category;
-using SportBox7.Domain.Factories.Editors;
-using SportBox7.Domain.Models.Articles;
-namespace SportBox7.Web.Controllers
+﻿namespace SportBox7.Web.Controllers
 {
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using SportBox7.Application.Features.Articles.Queries.Category;
     using SportBox7.Application.Features.Articles.Commands.Create;
     using Microsoft.AspNetCore.Authorization;
+    using SportBox7.Application.Features.Articles.Queries.Id;
 
+    [Route("[controller]")]
     public class ArticlesController: MainController
     {
         [HttpGet]
+        [Route("/articles")]
         public async Task<ActionResult<ListArticlesByCategoryOutputModel>> Category([FromQuery] ListArticlesByCategoryQuery query)
-        =>  View(await this.Mediator.Send(query));
-
-        [HttpGet]
-        public async Task<ActionResult<ListArticlesByCategoryOutputModel>> Id([FromQuery] ListArticlesByCategoryQuery query)
         => View(await this.Mediator.Send(query));
 
+       
+        [Route("/articles/all")]
+        [HttpGet]
+        public async Task<ActionResult<ArticleByIdOutputModel>> Id([FromQuery] ArticleByIdQuery query)
+       => View(await this.Mediator.Send(query));
+
+
+        
+
+       
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<CreateArticleOutputModel>> Create(

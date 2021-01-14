@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SportBox7.Application.Features.Articles.Queries.HomePage
 {
-    public class TopNewsModel: BasicNewsModel
+    public class TopNewsModel: BaseArticleModel
     {
         
         public TopNewsModel(int id, string title, string categoryEN, string categoryName, string seoUrl, string imageUrl, string body)

@@ -1,6 +1,7 @@
 ﻿namespace SportBox7.Application.Features.Articles.Queries.HomePage
 {
     using MediatR;
+    using SportBox7.Application.Features.Articles.Contrcts;
     using System.Threading;
     using System.Threading.Tasks;
 

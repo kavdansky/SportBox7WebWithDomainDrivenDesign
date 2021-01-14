@@ -1,40 +1,39 @@
-﻿using SportBox7.Application.Features.Articles.Queries.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SportBox7.Application.Features.Articles.Queries.HomePage
+﻿namespace SportBox7.Application.Features.Articles.Queries.HomePage
 {
-    public class FrontPageOutputModel: PageLayoutOutpuModel
-    {
-        private IArticleRepository articleRepository = default!;
+    using SportBox7.Application.Features.Articles.Contracts;
+    using SportBox7.Application.Features.Articles.Contrcts;
+    using SportBox7.Application.Features.Articles.Queries.Common;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
+    public class FrontPageOutputModel: PageLayoutOutpuModel, IMetaTagable
+    {
         public FrontPageOutputModel()
         {
-           
+            this.MetaTitle = "Новини от спорта - sportbox7.com";
+            this.MetaDescription = "Последни новини и събития от спорта- информация, мнения и социални мрежи.";
+            this.MetaKeywords = "спорт, спортни новини, футбол, баскетбол, волейбол, бойни спортове";
         }
+
         public IEnumerable<TopNewsModel> Topnews { get; set; } = default!;
+
+        public string MetaDescription { get; set; } = default!;
+
+        public string MetaKeywords { get; set; } = default!;
+
+        public string MetaTitle { get; set; } = default!;
 
         private async Task<FrontPageOutputModel> InitializeAsync(IArticleRepository articleRepository)
         {
-            this.articleRepository = articleRepository;
             await InitializeLayoutComponentsAsync(articleRepository);
-            this.Topnews = await articleRepository.GetTopNews();
-            
+            this.Topnews = await articleRepository.GetTopNews();            
             return this;
         }
 
         public static Task<FrontPageOutputModel> CreateAsync(IArticleRepository articleRepository)
         {
-            
             var frpgouput = new FrontPageOutputModel();
             return frpgouput.InitializeAsync(articleRepository);
         }
-
-
-
-
     }
 }

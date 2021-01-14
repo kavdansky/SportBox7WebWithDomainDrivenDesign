@@ -1,16 +1,15 @@
 ﻿using MediatR;
 using SportBox7.Application.Contracts;
 using SportBox7.Application.Features.Articles.Commands.Common;
+using SportBox7.Application.Features.Articles.Contrcts;
 using SportBox7.Application.Features.Editors;
 using SportBox7.Domain.Factories.Articles;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace SportBox7.Application.Features.Articles.Commands.Create
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class CreateArticleCommand : ArticleCommand<CreateArticleCommand>, IRequest<CreateArticleOutputModel>
     {
         public class CreateCreateArticleCommandHandler : IRequestHandler<CreateArticleCommand, CreateArticleOutputModel>

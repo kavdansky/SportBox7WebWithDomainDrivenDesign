@@ -74,13 +74,24 @@ namespace SportBox7.Startup
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}");
+                endpoints.MapRazorPages();
+            });
 
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                   name: "articlesById",
+                   pattern: "{controller=Articles}/all/{action=Id}/{id?}");
+            });
+
+            app.UseEndpoints(endpoints =>
+            {
                 endpoints.MapControllerRoute(
                     name: "articlesByCategory",
                     pattern: "{controller=Articles}/{action=Category}/{category?}");
-
-                endpoints.MapRazorPages();
             });
+
+            
         }
     }
 }

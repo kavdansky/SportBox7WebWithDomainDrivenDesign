@@ -1,58 +1,200 @@
 ﻿@using SportBox7.Application.Features.Articles.Queries.Category;
 @model ListArticlesByCategoryOutputModel
-@{
-    ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    
-}
 
-<div class="hero-area">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-12 col-lg-8">
-                <!-- Breaking News Widget -->
-                <!--<partial name="_NewsWidgetPartial" model="@ViewBag.NewsWidget" />-->
-            </div>
-            </div>
-        </div>
-    </div>
-    <!-- ##### Hero Area End ##### -->
-                <div class="blog-area section-padding-0-80">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12 col-lg-8">
-                                <div class="blog-posts-area">
-                                    @foreach (ArticleByCategoryListingModel article in Model.Articles)
-                                    {
-                                        <!-- Single Featured Post -->
-                                        <div class="single-blog-post featured-post mb-30">
-                                            <div class="post-data">
-                                                <a href="#" class="post-catagory">@article.Category</a>
-                                                <a href="/news/all/@article.Id/@article.Category/@article.Title" class="post-title">
-                                                    <h6>@article.Title</h6>
-                                                </a>
-                                                <div class="post-thumb">
-                                                    <a href="/news/@article.Id/@article.Category/@article.Title"><img src="" height="200" alt=""></a>
-                                                </div>
-                                                <div class="post-meta">
-                                                    <p class="post-author">By <a href="#"></a></p>
-                                                    <p class="post-excerp">@article.Body <a href="/news/@article.Category/@article.Id/@article.SeoUrl">...вижте повече</a></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr />
-                                    }
-                                </div>        
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="@Html.Raw(Model.MetaTitle)">
+    <meta name="keywords" content="@Html.Raw(Model.MetaKeywords)">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <link rel="icon" href="">
+    <title>@Html.Raw(Model.MetaTitle)</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+    <header class="header-area">
+        <!-- Top Header Area -->
+        <div class="top-header-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="top-header-content d-flex align-items-center justify-content-between">
+                            <!-- Logo -->
+                            <div class="logo">
+                                <a href="/"><img src="~/img/core-img/logoSmall.jpg" alt="sportBox7-logo"></a>
                             </div>
-                            <div class="col-12 col-lg-4">
-                                <div class="blog-sidebar-area">
-
-                                    <!-- Latest Posts Widget -->
-                                  
-                                </div>
+                            <!-- Advertisement -->
+                            <div class="login-search-area d-flex align-items-center">
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- ##### Blog Area End ##### -->
+            </div>
+        </div>
+        <!-- Navbar Area -->
+        <div class="newspaper-main-menu" id="stickyMenu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="newspaperNav">
+
+                        <!-- Logo -->
+                        <div class="logo">
+                            <a href="index.html"><img src="~/img/core-img/logoSmall-black.jpg" alt="sportBox7 logo"></a>
+                        </div>
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- close btn -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                    @{
+                                        foreach (var item in Model.MenuCategories)
+                                        {
+                                            <li><a href="/articles?category=@item.NameEn" class="active">@Html.Raw(item.Name)</a></li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                            <!-- Nav End -->
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <partial name="_CookieConsentPartial" />
+    <div class="hero-area">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 col-lg-8">
+                    <!-- Breaking News Widget -->
+                    @if (Model != null && Model.LatestNews != null)
+                    {
+                        <div class="breaking-news-area d-flex align-items-center">
+                            <div class="news-title">
+                                <p>Последни новини</p>
+                            </div>
+                            <div id="breakingNewsTicker" class="ticker">
+                                <ul>
+                                    @{
+                                        foreach (var article in Model.LatestNews)
+                                        {
+                                            <li><a href="/Articles/all?id=@article.ArticleId">@Html.Raw(article.Title)</a></li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Hero Area End ##### -->
+    <!-- ##### Hero Area End ##### -->
+    <div class="blog-area section-padding-0-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <div class="blog-posts-area">
+                        @foreach (ArticleByCategoryListingModel article in Model.Articles)
+                        {
+                            <!-- Single Featured Post -->
+                            <div class="single-blog-post featured-post mb-30">
+                                <div class="post-data">
+                                    <a href="#" class="post-catagory">@article.Category</a>
+                                    <a href="/news/all/@article.Id/@article.Category/@article.Title" class="post-title">
+                                        <h6>@article.Title</h6>
+                                    </a>
+                                    <div class="post-thumb">
+                                        <a href="/news/@article.Id/@article.Category/@article.Title"><img src="" height="200" alt=""></a>
+                                    </div>
+                                    <div class="post-meta">
+                                        <p class="post-author">By <a href="#"></a></p>
+                                        <p class="post-excerp">@article.Body <a href="/news/@article.Category/@article.Id/@article.SeoUrl">...вижте повече</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                        }
+                    </div>
+                </div>
+                <!-- SideBar -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    @if (Model != null && Model.SideBar != null)
+                    {
+                        foreach (var article in Model.SideBar)
+                        {
+                            <div class="single-blog-post small-featured-post d-flex">
+                                <div class="post-thumb single-video-post">
+                                    <a href="#"><img src="@article.ImageUrl" alt=""></a>
+                                </div>
+                                <div class="post-data">
+                                    <a href="articles?category=@article.CategoryEN" class="post-catagory">@Html.Raw(article.CategoryName)</a>
+                                    <div class="post-meta">
+                                        <a href="/news/all/@article.Id/@article.CategoryName/@article.Title" class="post-title">
+                                            <h6>@Html.Raw(article.Title)</h6>
+                                        </a>
+                                        <p class="post-date"><span></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <!-- SideBar End -->
+            </div>
+        </div>
+    </div>
+    <!-- ##### Blog Area End ##### -->
+    <!-- ##### Featured Post Area End ##### -->
+    <footer>
+        <hr />
+        <div class="bottom-footer-area">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12">
+                        <!-- Copywrite -->
+                        <p>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ##### Footer Area Start ##### -->
+    <!-- ##### All Javascript Files ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="~/js/plugins.js"></script>
+    <!-- Active js -->
+    <script src="~/js/active.js"></script>
+</body>
+
+</html>
 

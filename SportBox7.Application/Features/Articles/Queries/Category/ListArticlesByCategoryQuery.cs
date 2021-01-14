@@ -1,13 +1,12 @@
 ﻿using MediatR;
+using SportBox7.Application.Features.Articles.Contrcts;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace SportBox7.Application.Features.Articles.Queries.Category
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class ListArticlesByCategoryQuery : IRequest<ListArticlesByCategoryOutputModel>
     {
         public string? Category { get; set; }
@@ -22,9 +21,10 @@ namespace SportBox7.Application.Features.Articles.Queries.Category
 
             public async Task<ListArticlesByCategoryOutputModel> Handle(ListArticlesByCategoryQuery request, CancellationToken cancellationToken)
             {
-                var articleList = await this.articleRepository.GetArticleListingsByCategory(request.Category);
+                var currentCat = string.Empty;
+                currentCat = request.Category;
                 
-                return new ListArticlesByCategoryOutputModel(articleList);
+                return await ListArticlesByCategoryOutputModel.CreateAsync(this.articleRepository, currentCat);
             }
         }
     }

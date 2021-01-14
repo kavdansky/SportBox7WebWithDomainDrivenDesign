@@ -1,17 +1,31 @@
 ﻿namespace SportBox7.Application.Features.Articles.Queries.Id
 {
+    using SportBox7.Application.Features.Articles.Contracts;
     using SportBox7.Application.Features.Articles.Queries.Common;
 
-    public class ArticleByIdListingModel: ArticleListingModel
+    public class ArticleByIdModel: ArticleListingModel, IMetaTagable
     {
-        public ArticleByIdListingModel(
+        public ArticleByIdModel(
             int id,
             string title,
             string body,
             string imageUrl,
             string category,
-            string seoUrl)
+            string seoUrl,
+            string metaDescription,
+            string metaKeywords,
+            string metaTitle)
             : base(id, title, body, imageUrl, category, seoUrl)
-        { }
+        {
+            this.MetaDescription = metaDescription;
+            this.MetaKeywords = metaKeywords;
+            this.MetaTitle = metaTitle;
+        }
+
+        public string MetaDescription { get; set; } = default!;
+
+        public string MetaKeywords { get; set; } = default!;
+
+        public string MetaTitle { get; set; } = default!;
     }
 }

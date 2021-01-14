@@ -1,19 +1,16 @@
-﻿@using SportBox7.Application.Features.Articles.Queries.HomePage;
-@model FrontPageOutputModel
-@{
-    ViewData["Title"] = "Home Page";
-    ViewData["Category"] = "Home";
-}
+﻿@using SportBox7.Application.Features.Articles.Queries.Id;
+@model ArticleByIdOutputModel
+
 <!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="utf-8" />
-    <meta name="description" content="@Html.Raw(Model.MetaDescription)">
-    <meta name="keywords" content="@Html.Raw(Model.MetaKeywords)">
+    <meta name="description" content="@Html.Raw(Model.Article.MetaTitle)">
+    <meta name="keywords" content="@Html.Raw(Model.Article.MetaKeywords)">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <link rel="icon" href="">
-    <title>@Html.Raw(Model.MetaTitle)</title>
+    <title>@Html.Raw(Model.Article.MetaTitle)</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
 </head>
@@ -87,7 +84,7 @@
             <div class="row align-items-center">
                 <div class="col-12 col-lg-8">
                     <!-- Breaking News Widget -->
-                    @if (Model != null && Model.LatestNews != null)
+                    @if (Model != null)
                     {
                         <div class="breaking-news-area d-flex align-items-center">
                             <div class="news-title">
@@ -110,74 +107,36 @@
         </div>
     </div>
     <!-- ##### Hero Area End ##### -->
-    <div class="featured-post-area">
+    <!-- ##### Blog Area Start ##### -->
+    <div class="blog-area section-padding-0-80">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-8">
-                    <div class="row">
-                        <!-- TopNews -->
-                        <div class="col-12 col-lg-7">
-                            @if (Model != null && Model.Topnews != null)
+                <div class="col-12 col-lg-8">
+                    <div class="blog-posts-area">
+                        <!-- Single Featured Post -->
+                        <div class="single-blog-post featured-post single-post">
+                            @if (Model != null)
                             {
-                                @foreach (var article in Model.Topnews)
-                                {
-                                    <div class="single-blog-post featured-post">
-                                        <div class="post-data">
-                                            @if (article != null)
-                                            {
-                                                <a href="articles?category=@article.CategoryEN" class="post-catagory">@Html.Raw(article.CategoryName)</a>
-                                                <a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl" class="post-title">
-                                                    <h6>@Html.Raw(article.Title)</h6>
-                                                </a>
-                                                <div class="post-thumb single-video-post">
-                                                    <a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl"><img src="@article.ImageUrl" alt=""></a>
-                                                </div>
-                                                <div class="post-meta">
-                                                    <p class="post-excerp">@Html.Raw(article.Body.Substring(0, 250))<a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl">...вижте повече</a></p>
-                                                    <!-- Post Like & Post Comment -->
-                                                    <div class="d-flex align-items-center">
-                                                    </div>
-                                                </div>
-                                            }
-
-                                        </div>
+                                <div class="post-data">
+                                    <a href="#" class="post-catagory">@Model.Article.Category</a>
+                                    <a href="#" class="post-title">
+                                        <h6>@Model.Article.Title</h6>
+                                    </a>
+                                    <div class="post-thumb">
+                                        <a href="#"><img src="@Model.Article.ImageUrl" alt=""></a>
                                     </div>
-                                }
+                                    <div class="post-meta">
+
+                                        <p class="post-author">By <a href="#"></a></p>
+                                        <p>@Model.Article.Body</p>
+                                        <!-- Post Like & Post Comment -->
+
+                                    </div>
+                                </div>
                             }
                         </div>
-                        <!-- TopNews End -->
-                        <!-- Other News -->
-                        <div class="col-12 col-lg-5">
-                            @if (Model != null && Model.SideBar != null)
-                            {
-                                @foreach (var article in Model.SideBar)
-                                {
-                                    <!-- Single Featured Post -->
-                                    <div class="single-blog-post featured-post-2">
-                                        @if (Model != null)
-                                        {
-                                            <div class="post-thumb single-video-post">
-                                                <a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl"><img src="@article.ImageUrl" alt=""></a>
-                                            </div>
-                                            <div class="post-data">
-                                                <a href="articles?category=@article.CategoryEN" class="post-catagory">@Html.Raw(article.CategoryName)</a>
-                                                <div class="post-meta">
-                                                    <a href="/news/all/@article.Id/@article.CategoryEN/@article.SeoUrl" class="post-title">
-                                                        <h6>@Html.Raw(article.Title)</h6>
-                                                    </a>
-                                                    <!-- Post Like & Post Comment -->
-
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
-                                }
-                            }
-                        </div>
-                        <!-- Other News end -->
                     </div>
                 </div>
-                <!-- SideBar -->
                 <div class="col-12 col-md-6 col-lg-4">
                     @if (Model != null && Model.SideBar != null)
                     {
@@ -200,10 +159,10 @@
                         }
                     }
                 </div>
-                <!-- SideBar End -->
             </div>
         </div>
     </div>
+    <!-- ##### Blog Area End ##### -->
     <!-- ##### Featured Post Area End ##### -->
     <footer>
         <hr />

@@ -6,6 +6,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Persistence;
     using SportBox7.Application.Features.Articles;
+    using SportBox7.Application.Features.Articles.Contrcts;
     using Xunit;
 
     public class InfrastructureConfigurationSpecs

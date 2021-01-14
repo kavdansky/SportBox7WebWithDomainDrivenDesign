@@ -8,8 +8,10 @@
     using Domain.Models.Articles;
     using Microsoft.EntityFrameworkCore;
     using SportBox7.Application.Features.Articles;
+    using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Common;
     using SportBox7.Application.Features.Articles.Queries.HomePage;
+    using SportBox7.Application.Features.Articles.Queries.Id;
 
     internal class ArticleRepository : DataRepository<Article>, IArticleRepository
     {
@@ -47,6 +49,9 @@
         public async Task<FrontPageOutputModel> GetArticlesForHomePage(CancellationToken cancellationToken = default)
             => await FrontPageOutputModel.CreateAsync(this);
 
+        public async Task<ArticleByIdOutputModel> GetArticlePage(CancellationToken cancellationToken = default, int id = default)
+            => await ArticleByIdOutputModel.CreateAsync(this, id);
+
         public List<SideBarModel> GetsideBarNews()
         {
 
@@ -56,6 +61,11 @@
                 model.Add(this.All().Include(c=> c.Category).Where(a => a.Category.CategoryNameEN == category.CategoryNameEN).OrderByDescending(a => a.CreationDate).Select(a => new SideBarModel(a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.SeoUrl, a.ImageUrl)).FirstOrDefault());
             }
             return model;
+        }
+
+        public async Task<ArticleByIdModel> GetArticleById(int id)
+        {
+            return await this.All().Where(a => a.Id == id).Select(a=> new ArticleByIdModel(a.Id, a.Title, a.Body, a.ImageUrl, a.Category.CategoryName, a.SeoUrl, a.MetaDescription, a.MetaKeywords, a.Title)).FirstOrDefaultAsync();
         }
 
         public async Task<List<LatestNewsModel>> GetLatestNews()

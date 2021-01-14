@@ -4,9 +4,9 @@ using System.Text;
 
 namespace SportBox7.Application.Features.Articles.Queries.Common
 {
-    public abstract class BasicNewsModel
+    public abstract class BaseArticleModel
     {
-        public BasicNewsModel(string title, string categoryEN, string categoryName, string seoUrl, string imageUrl)
+        public BaseArticleModel(string title, string categoryEN, string categoryName, string seoUrl, string imageUrl)
         {
             this.Title = title;
             this.CategoryEN = categoryEN;

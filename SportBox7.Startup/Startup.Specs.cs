@@ -8,6 +8,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using MyTested.AspNetCore.Mvc;
     using SportBox7.Application.Features.Articles;
+    using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Domain.Factories.Articles;
     using SportBox7.Infrastructure.Identity;
 

@@ -1,15 +1,11 @@
 ﻿namespace SportBox7.Application.Features.Articles.Commands.Common
 {
     using System;
-    using Domain.Common;
-    using Domain.Models.Articles;
     using FluentValidation;
-
     using static Domain.Models.ModelConstants.Common;
     using static Domain.Models.ModelConstants.Article;
     using SportBox7.Domain.Models.Articles.Enums;
-
-    //DateTime targetDate
+    using SportBox7.Application.Features.Articles.Contrcts;
 
     public class ArticleCommandValidator<TCommand> : AbstractValidator<ArticleCommand<TCommand>>
         where TCommand : EntityCommand<int>
