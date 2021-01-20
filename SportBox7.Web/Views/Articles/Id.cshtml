@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <link rel="icon" href="">
-    <title>@Html.Raw(Model.Article.MetaTitle)</title>
+    <title>@Html.Raw(Model.Article.MetaTitle) - Sportbox7 - @Html.Raw(Model.CurrentCategory.CategoryName)</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
 </head>
@@ -62,11 +62,26 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
+                                    @if (Model.CurrentCategory != null && !Model.MenuCategories.Any(c => c.NameEn == Model.CurrentCategory.CategoryNameEN))
+                                    {
+                                        <li><a href="/" style="font-weight:bold; color:#000000" class="active">Начало</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/" class="active">Начало</a></li>
+                                    }
                                     @{
+
                                         foreach (var item in Model.MenuCategories)
                                         {
-                                            <li><a href="/articles?category=@item.NameEn" class="active">@Html.Raw(item.Name)</a></li>
-
+                                            if (Model.CurrentCategory != null && item.NameEn == Model.CurrentCategory.CategoryNameEN)
+                                            {
+                                                <li><a href="/articles?category=@item.NameEn" style="font-weight:bold; color:#000000" class="active">@Html.Raw(item.Name)</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li><a href="/articles?category=@item.NameEn" class="active">@Html.Raw(item.Name)</a></li>
+                                            }
                                         }
                                     }
                                 </ul>
@@ -126,8 +141,10 @@
                                         <a href="#"><img src="@Model.Article.ImageUrl" alt=""></a>
                                     </div>
                                     <div class="post-meta">
-
-                                        <p class="post-author">By <a href="#"></a></p>
+                                        @if (Model.Author != null)
+                                        {
+                                            <p class="post-author">By @Model.Author.FirstName @Model.Author.LastName<a href="#"></a></p>
+                                        }
                                         <p>@Model.Article.Body</p>
                                         <!-- Post Like & Post Comment -->
 

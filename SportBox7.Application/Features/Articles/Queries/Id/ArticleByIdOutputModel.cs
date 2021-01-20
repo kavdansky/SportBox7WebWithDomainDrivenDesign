@@ -1,17 +1,29 @@
 ﻿namespace SportBox7.Application.Features.Articles.Queries.Id
 {
+    using SportBox7.Application.Features.Articles.Contracts;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Common;
+    using SportBox7.Domain.Models.Editors;
     using System.Threading.Tasks;
 
-    public class ArticleByIdOutputModel : PageLayoutOutpuModel
+    public class ArticleByIdOutputModel : PageLayoutOutpuModel, IMetaTagable
     {
         public ArticleByIdModel Article { get; set; } = default!;
+
+        public Editor Author { get; set; } = default!;
+
+        public string MetaDescription { get; set; } = default!;
+
+        public string MetaKeywords { get; set; } = default!;
+
+        public string MetaTitle { get; set; } = default!;
 
         private async Task<ArticleByIdOutputModel> InitializeAsync(IArticleRepository articleRepository, int id)
         {
             await InitializeLayoutComponentsAsync(articleRepository);
+            this.CurrentCategory = await articleRepository.GetCategory(id);
             this.Article = await articleRepository.GetArticleById(id);
+            this.Author = await articleRepository.GetArticleAuthor(id);
             return this;
         }
 

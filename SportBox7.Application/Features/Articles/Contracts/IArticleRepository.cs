@@ -9,6 +9,7 @@
     using SportBox7.Application.Features.Articles.Queries.Common;
     using SportBox7.Application.Features.Articles.Queries.HomePage;
     using SportBox7.Application.Features.Articles.Queries.Id;
+    using SportBox7.Domain.Models.Editors;
 
     public interface IArticleRepository : IRepository<Article>
     {
@@ -36,7 +37,9 @@
 
         Task<List<TopNewsModel>> GetTopNews();
 
+        Task<Editor> GetArticleAuthor(int id);
 
+        Task<Category> GetCategoryByName(string? name);
 
         Task<int> Total(CancellationToken cancellationToken = default);
     }

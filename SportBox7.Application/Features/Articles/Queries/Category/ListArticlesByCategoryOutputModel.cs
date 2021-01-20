@@ -23,7 +23,6 @@
                 return Articles.Count();
             }
         }
-        public string CurrentCategory { get; set; } = default!;
 
         public string MetaDescription { get; set; } = default!;
 
@@ -35,9 +34,20 @@
         {
             await InitializeLayoutComponentsAsync(articleRepository);
             this.Articles = await articleRepository.GetArticleListingsByCategory(category);
-            this.MetaDescription = $"Новини от {this.MetaDescription}";
-            this.MetaKeywords = $"новини {this.MetaKeywords}";
-            this.MetaTitle = $"Новини от {this.MetaTitle}";
+            this.CurrentCategory = await articleRepository.GetCategoryByName(category);
+            if (category == null)
+            {
+                this.MetaDescription = $"Последни новини от sportbox7.com";
+                this.MetaKeywords = $"Последни новини спорт";
+                this.MetaTitle = $"Последни новини от sportbox7.com";
+            }
+            else
+            {
+                this.MetaDescription = $"Новини от {this.CurrentCategory.CategoryName}";
+                this.MetaKeywords = $"новини от {this.CurrentCategory.CategoryName}";
+                this.MetaTitle = $"Новини от {this.CurrentCategory.CategoryName}";
+            }
+            
             return this;
         }
 

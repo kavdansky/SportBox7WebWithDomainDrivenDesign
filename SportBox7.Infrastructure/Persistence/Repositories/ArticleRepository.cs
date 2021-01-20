@@ -7,11 +7,11 @@
     using Application.Features.Articles.Queries.Category;
     using Domain.Models.Articles;
     using Microsoft.EntityFrameworkCore;
-    using SportBox7.Application.Features.Articles;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Common;
     using SportBox7.Application.Features.Articles.Queries.HomePage;
     using SportBox7.Application.Features.Articles.Queries.Id;
+    using SportBox7.Domain.Models.Editors;
 
     internal class ArticleRepository : DataRepository<Article>, IArticleRepository
     {
@@ -39,6 +39,7 @@
                     art.Title,
                     art.Body,
                     art.ImageUrl,
+                    art.Category.CategoryName,
                     art.Category.CategoryNameEN,
                     art.SeoUrl))
                 .ToListAsync(cancellationToken);
@@ -63,7 +64,7 @@
 
         public async Task<ArticleByIdModel> GetArticleById(int id)
         {
-            return await this.All().Where(a => a.Id == id).Select(a=> new ArticleByIdModel(a.Id, a.Title, a.Body, a.ImageUrl, a.Category.CategoryName, a.SeoUrl, a.MetaDescription, a.MetaKeywords, a.Title)).FirstOrDefaultAsync();
+            return await this.All().Where(a => a.Id == id).Select(a=> new ArticleByIdModel(a.Id, a.Title, a.Body, a.ImageUrl, a.Category.CategoryName, a.Category.CategoryNameEN, a.SeoUrl, a.MetaDescription, a.MetaKeywords, a.Title)).FirstOrDefaultAsync();
         }
 
         public async Task<List<LatestNewsModel>> GetLatestNews()
@@ -91,10 +92,17 @@
                 .Categories
                 .FirstOrDefaultAsync(c => c.Id == categoryId, cancellationToken);
 
+        public async Task<Category> GetCategoryByName(string? name)
+            => await this.db.Categories.Where(c => c.CategoryNameEN == name).FirstOrDefaultAsync();
+
         public async Task<int> Total(CancellationToken cancellationToken = default)
             => await this
                 .All()
                 .CountAsync(cancellationToken);
+
+        public async Task<Editor> GetArticleAuthor(int articleId)
+            => await this.db.Editors.Where(a => a.Articles.Where(x => x.Id == articleId).Any()).FirstOrDefaultAsync();
+        
 
     
     }

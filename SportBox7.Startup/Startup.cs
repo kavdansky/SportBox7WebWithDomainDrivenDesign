@@ -1,25 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Logging;
-using SportBox7.Application;
-using SportBox7.Domain;
-using SportBox7.Infrastructure;
-using SportBox7.Web;
-
 namespace SportBox7.Startup
 {
+    using System.IO;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.FileProviders;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.IdentityModel.Logging;
+    using SportBox7.Application;
+    using SportBox7.Domain;
+    using SportBox7.Infrastructure;
+    using SportBox7.Web;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -74,24 +67,15 @@ namespace SportBox7.Startup
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}");
-                endpoints.MapRazorPages();
-            });
 
-            app.UseEndpoints(endpoints =>
-            {
                 endpoints.MapControllerRoute(
-                   name: "articlesById",
+                   name: "articleById",
                    pattern: "{controller=Articles}/all/{action=Id}/{id?}");
-            });
 
-            app.UseEndpoints(endpoints =>
-            {
                 endpoints.MapControllerRoute(
                     name: "articlesByCategory",
                     pattern: "{controller=Articles}/{action=Category}/{category?}");
             });
-
-            
         }
     }
 }

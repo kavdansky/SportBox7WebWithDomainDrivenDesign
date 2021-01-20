@@ -65,11 +65,18 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
+                                    @if (Model.CurrentCategory == null)
+                                    {
+                                        <li><a href="/" style="font-weight:bold; color:#000000" class="active">Начало</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/" style="font-weight:bold; color:#000000" class="active">Начало</a></li>
+                                    }
                                     @{
                                         foreach (var item in Model.MenuCategories)
                                         {
                                             <li><a href="/articles?category=@item.NameEn" class="active">@Html.Raw(item.Name)</a></li>
-
                                         }
                                     }
                                 </ul>
@@ -133,7 +140,7 @@
                                                     <a href="/Articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
                                                 </div>
                                                 <div class="post-meta">
-                                                    <p class="post-excerp">@Html.Raw(article.Body.Substring(0, 250))<a href="/Articles/all?id=@article.Id">...вижте повече</a></p>
+                                                    <p class="post-excerp">@Html.Raw(article.Body.Substring(0, 180))<a href="/Articles/all?id=@article.Id">...вижте повече</a></p>
                                                     <!-- Post Like & Post Comment -->
                                                     <div class="d-flex align-items-center">
                                                     </div>

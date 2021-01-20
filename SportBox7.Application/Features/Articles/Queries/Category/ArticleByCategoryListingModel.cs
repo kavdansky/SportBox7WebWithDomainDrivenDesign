@@ -11,8 +11,9 @@ namespace SportBox7.Application.Features.Articles.Queries.Category
             string body,
             string imageUrl,
             string category,
+            string categoryEn,
             string seoUrl)
-            :base(id, title, body, imageUrl, category, seoUrl)
+            :base(id, title, body, imageUrl, category, categoryEn, seoUrl)
         {     }
     }
 }

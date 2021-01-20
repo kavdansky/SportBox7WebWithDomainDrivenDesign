@@ -7,7 +7,7 @@
     using Microsoft.AspNetCore.Authorization;
     using SportBox7.Application.Features.Articles.Queries.Id;
 
-    [Route("[controller]")]
+ 
     public class ArticlesController: MainController
     {
         [HttpGet]
