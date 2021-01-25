@@ -1,17 +1,11 @@
-﻿using MediatR;
-using SportBox7.Application.Common;
-using SportBox7.Application.Contracts;
-using SportBox7.Application.Features.Editors;
-using SportBox7.Application.Features.Identity.Commands.LoginUser;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace SportBox7.Application.Features.Identity.Commands.LoginUser
+﻿namespace SportBox7.Application.Features.Identity.Commands.LoginUser
 {
+    using MediatR;
+    using SportBox7.Application.Common;
+    using SportBox7.Application.Features.Editors;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel>>
     {
         public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, Result<LoginOutputModel>>

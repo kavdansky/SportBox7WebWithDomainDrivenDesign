@@ -1,33 +1,44 @@
 ﻿namespace SportBox7.Web.Controllers
 {
     using System.Threading.Tasks;
-    using Application.Contracts;
     using Application.Features.Identity;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using SportBox7.Application.Features.Identity.Commands;
     using SportBox7.Application.Features.Identity.Commands.CreateUser;
     using SportBox7.Application.Features.Identity.Commands.LoginUser;
-    using SportBox7.Web.Common;
+    using SportBox7.Application.Features.Identity.Queries.LoginUser;
 
-    [ApiController]
-    [Route("[controller]")]
     public class IdentityController : MainController
     {
         private readonly IIdentity identity;
 
-        public IdentityController(IIdentity identity) => this.identity = identity;
+        public IdentityController(IIdentity identity) 
+            => this.identity = identity;
 
         [HttpPost]
-        [Route(nameof(Register))]
+        [Route("identity/register")]
         public async Task<ActionResult> Register(
             CreateUserCommand command)
             => await this.Send(command);
 
         [HttpPost]
-        [Route(nameof(Login))]
+        [Route("identity/login")]
         public async Task<ActionResult<LoginOutputModel>> Login(LoginUserCommand command)
-            => await this.Send(command);
-       
+        {
+            var result = await this.Mediator.Send(command);
+            if (!result.Succeeded)
+            {
+                return RedirectToAction("Login", new { errorMessage = string.Join(", ", result.Errors) });
+                
+            }
+            return RedirectToAction("Index", "Editors");
+        }
+      
+
+        [HttpGet]
+        [Route("identity/login")]
+        public async Task<ActionResult<LoginUserInputModel>> Login(string? errorMessage)
+            => View(await LoginUserInputModel.CreateAsync(errorMessage));
+
     }
 }

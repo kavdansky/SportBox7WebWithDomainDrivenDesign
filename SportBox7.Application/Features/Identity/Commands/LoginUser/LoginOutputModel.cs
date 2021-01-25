@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SportBox7.Application.Features.Identity.Commands.LoginUser
+﻿namespace SportBox7.Application.Features.Identity.Commands.LoginUser
 {
     public class LoginOutputModel
     {

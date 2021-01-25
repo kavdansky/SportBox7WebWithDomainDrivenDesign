@@ -1,12 +1,12 @@
-﻿using MediatR;
-using SportBox7.Application.Contracts;
-using SportBox7.Application.Features.Articles.Commands.Common;
-using SportBox7.Application.Features.Articles.Contrcts;
-using SportBox7.Application.Features.Editors;
-using SportBox7.Domain.Factories.Articles;
-using System;
-namespace SportBox7.Application.Features.Articles.Commands.Create
+﻿namespace SportBox7.Application.Features.Articles.Commands.Create
 {
+    using MediatR;
+    using SportBox7.Application.Contracts;
+    using SportBox7.Application.Features.Articles.Commands.Common;
+    using SportBox7.Application.Features.Articles.Contrcts;
+    using SportBox7.Application.Features.Editors;
+    using SportBox7.Domain.Factories.Articles;
+    using System;
     using System.Threading;
     using System.Threading.Tasks;
 

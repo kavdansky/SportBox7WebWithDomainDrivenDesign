@@ -75,6 +75,10 @@ namespace SportBox7.Startup
                 endpoints.MapControllerRoute(
                     name: "articlesByCategory",
                     pattern: "{controller=Articles}/{action=Category}/{category?}");
+
+                endpoints.MapControllerRoute(
+                    name: "login",
+                    pattern: "{controller=Identity}/{action=Login}");
             });
         }
     }

@@ -98,7 +98,7 @@
                     {
                         <div class="breaking-news-area d-flex align-items-center">
                             <div class="news-title">
-                                <p>Последни новини</p>
+                                <p><a href="/articles" id="latestNews">Последни</a></p>
                             </div>
                             <div id="breakingNewsTicker" class="ticker">
                                 <ul>
@@ -192,7 +192,7 @@
                         {
                             <div class="single-blog-post small-featured-post d-flex">
                                 <div class="post-thumb single-video-post">
-                                    <a href="#"><img src="@article.ImageUrl" alt=""></a>
+                                    <a href="/Articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
                                 </div>
                                 <div class="post-data">
                                     <a href="articles?category=@article.CategoryEN" class="post-catagory">@Html.Raw(article.CategoryName)</a>
