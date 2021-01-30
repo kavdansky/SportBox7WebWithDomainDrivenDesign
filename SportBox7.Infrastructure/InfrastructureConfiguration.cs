@@ -1,6 +1,8 @@
 ﻿namespace SportBox7.Infrastructure
 {
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -12,6 +14,7 @@
     using SportBox7.Application.Features.Identity;
     using SportBox7.Infrastructure.Identity;
     using SportBox7.Infrastructure.Persistence.Repositories;
+    using System.Configuration;
     using System.Text;
 
     public static class InfrastructureConfiguration
@@ -22,7 +25,7 @@
             => services
                 .AddDatabase(configuration)
                 .AddRepositories()
-                .AddIdentity(configuration);
+                .AddIdentity();
 
 
         private static IServiceCollection AddDatabase(
@@ -47,9 +50,11 @@
                     .WithTransientLifetime());
 
         private static IServiceCollection AddIdentity(
-            this IServiceCollection services,
-            IConfiguration configuration)
+            this IServiceCollection services)
         {
+            
+            services.AddHttpContextAccessor();
+
             services
                 .AddIdentity<User, IdentityRole>(options =>
                 {
@@ -59,36 +64,16 @@
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                 })
-                .AddEntityFrameworkStores<SportBox7DbContext>();
+                .AddEntityFrameworkStores<SportBox7DbContext>()
+                .AddDefaultTokenProviders();
 
-            var secret = configuration
-                .GetSection(nameof(ApplicationSettings))
-                .GetValue<string>(nameof(ApplicationSettings.Secret));
-
-            var key = Encoding.ASCII.GetBytes(secret);
-
-            services
-                .AddAuthentication(authentication =>
-                {
-                    authentication.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    authentication.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(bearer =>
-                {
-                    bearer.RequireHttpsMetadata = false;
-                    bearer.SaveToken = true;
-                    bearer.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
-
+            services.AddControllersWithViews();
+            services.AddAuthentication();
+            services.AddAuthorization();
+            services.AddTransient<SignInManager<User>>();
+            services.AddTransient<UserManager<User>>();
             services.AddTransient<IIdentity, IdentityService>();
-            services.AddTransient<IJwtTokenGenerator, JwtTokenGeneratorService>();
-
+            
             return services;
         }
 

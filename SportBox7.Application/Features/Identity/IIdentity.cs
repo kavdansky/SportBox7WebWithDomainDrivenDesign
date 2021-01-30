@@ -14,5 +14,7 @@ namespace SportBox7.Application.Features.Identity
         Task<Result<IUser>> Register(UserInputModel userInput);
 
         Task<Result<LoginSuccessModel>> Login(UserInputModel userInput);
+
+        Task<Result> Logout();
     }
 }

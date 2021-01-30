@@ -1,8 +1,13 @@
 namespace SportBox7.Startup
 {
     using System.IO;
+    using System.Net;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http.Features;
+    using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.FileProviders;
@@ -29,12 +34,7 @@ namespace SportBox7.Startup
             services.AddApplication(this.Configuration);
             services.AddInfrastructure(this.Configuration);
             services.AddWebComponents();
-            services.AddRazorPages();
         }
-
-        
-
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -45,21 +45,34 @@ namespace SportBox7.Startup
                 IdentityModelEventSource.ShowPII = true;
             }
 
-            app
-                //.UseValidationExceptionHandler()
-                .UseHttpsRedirection()
-                .UseAuthentication()
-                .UseAuthorization()
-                .UseStaticFiles(new StaticFileOptions()
-                 {
-                     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory().Replace("Startup", "Web"), "wwwroot")),
-                 })
-                .UseRouting()
-                .UseCors(options => options
+            
+            app.UseHttpsRedirection();
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory().Replace("Startup", "Web"), "wwwroot")),
+            });
+
+            app.UseStatusCodePages(async context => {
+                var request = context.HttpContext.Request;
+                var response = context.HttpContext.Response;
+
+                if (response.StatusCode == (int)HttpStatusCode.NotFound)
+                {
+                    await Task.Run(() => 1);
+                    response.Redirect("/Home/NotFound");
+                }
+
+            });
+
+
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseCors(options => options
                     .AllowAnyOrigin()
                     .AllowAnyHeader()
                     .AllowAnyMethod())
-                
                 .Initialize();
 
             app.UseEndpoints(endpoints =>
@@ -75,10 +88,6 @@ namespace SportBox7.Startup
                 endpoints.MapControllerRoute(
                     name: "articlesByCategory",
                     pattern: "{controller=Articles}/{action=Category}/{category?}");
-
-                endpoints.MapControllerRoute(
-                    name: "login",
-                    pattern: "{controller=Identity}/{action=Login}");
             });
         }
     }

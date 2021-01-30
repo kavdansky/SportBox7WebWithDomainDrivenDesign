@@ -2,14 +2,16 @@
 {
     public class LoginOutputModel
     {
-        public LoginOutputModel(string token, int editorId)
+        public LoginOutputModel(string email, int editorId, string userId)
         {
-            this.Token = token;
+            this.Email = email;
             this.EditorId = editorId;
+            this.UserId = userId;
         }
+        public string UserId { get; set; }
 
         public int EditorId { get; }
 
-        public string Token { get; }
+        public string Email { get; }
     }
 }

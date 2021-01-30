@@ -20,12 +20,8 @@ namespace SportBox7.Application.Features.Articles.Queries.Category
            
 
             public async Task<ListArticlesByCategoryOutputModel> Handle(ListArticlesByCategoryQuery request, CancellationToken cancellationToken)
-            {
-                var currentCat = string.Empty;
-                currentCat = request.Category;
-                
-                return await ListArticlesByCategoryOutputModel.CreateAsync(this.articleRepository, currentCat);
-            }
+                => await ListArticlesByCategoryOutputModel.CreateAsync(this.articleRepository, request.Category);
+            
         }
     }
 }

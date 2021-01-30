@@ -117,74 +117,35 @@
         </div>
     </div>
     <!-- ##### Hero Area End ##### -->
-    <div class="featured-post-area">
+    <div class="blog-area section-padding-0-80">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-8">
-                    <div class="row">
-                        <!-- TopNews -->
-                        <div class="col-12 col-lg-7">
-                            @if (Model != null && Model.Topnews != null)
+                <div class="col-12 col-lg-8">
+                    <div class="blog-posts-area">
+                        <!-- Single Featured Post -->
+                        <div class="single-blog-post featured-post single-post">
+                            @if (Model != null)
                             {
-                                @foreach (var article in Model.Topnews)
-                                {
-                                    <div class="single-blog-post featured-post">
-                                        <div class="post-data">
-                                            @if (article != null)
-                                            {
-                                                <a href="articles?category=@article.CategoryEN" class="post-catagory">@Html.Raw(article.CategoryName)</a>
-                                                <a href="/Articles/all?id=@article.Id" class="post-title">
-                                                    <h6>@Html.Raw(article.Title)</h6>
-                                                </a>
-                                                <div class="post-thumb single-video-post">
-                                                    <a href="/Articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
-                                                </div>
-                                                <div class="post-meta">
-                                                    <p class="post-excerp">@Html.Raw(article.Body.Substring(0, 180))<a href="/Articles/all?id=@article.Id">...вижте повече</a></p>
-                                                    <!-- Post Like & Post Comment -->
-                                                    <div class="d-flex align-items-center">
-                                                    </div>
-                                                </div>
-                                            }
-
-                                        </div>
+                                <div class="post-data">
+                                    <a href="#" class="post-catagory"></a>
+                                    <a href="#" class="post-title">
+                                        <h4>Страницата, която търсите не е намерена!</h4>
+                                    </a>
+                                    <div class="post-thumb">
+                                        <a href="#"><img src="" alt=""></a>
                                     </div>
-                                }
+                                    <div class="post-meta">
+                                       
+                                        <p>Извиняваме се за причиненото неудобство. Може да продължите да разглеждате новините от sportbox7.com</p>
+                                        <!-- Post Like & Post Comment -->
+
+                                    </div>
+                                </div>
                             }
                         </div>
-                        <!-- TopNews End -->
-                        <!-- Other News -->
-                        <div class="col-12 col-lg-5">
-                            @if (Model != null && Model.SideBar != null)
-                            {
-                                @foreach (var article in Model.SideBar)
-                                {
-                                    <!-- Single Featured Post -->
-                                    <div class="single-blog-post featured-post-2">
-                                        @if (Model != null)
-                                        {
-                                            <div class="post-thumb single-video-post">
-                                                <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
-                                            </div>
-                                            <div class="post-data">
-                                                <a href="/articles?category=@article.CategoryEN" class="post-catagory">@Html.Raw(article.CategoryName)</a>
-                                                <div class="post-meta">
-                                                    <a href="/Articles/all?id=@article.Id" class="post-title">
-                                                        <h6>@Html.Raw(article.Title)</h6>
-                                                    </a>
-                                                    <!-- Post Like & Post Comment -->
-
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
-                                }
-                            }
-                        </div>
-                        <!-- Other News end -->
                     </div>
                 </div>
-                <!-- SideBar -->
+                <!--SideBar-->
                 <div class="col-12 col-md-6 col-lg-4">
                     @if (Model != null && Model.SideBar != null)
                     {
@@ -192,12 +153,12 @@
                         {
                             <div class="single-blog-post small-featured-post d-flex">
                                 <div class="post-thumb single-video-post">
-                                    <a href="/Articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
+                                    <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
                                 </div>
                                 <div class="post-data">
-                                    <a href="articles?category=@article.CategoryEN" class="post-catagory">@Html.Raw(article.CategoryName)</a>
+                                    <a href="/articles?category=@article.CategoryEN" class="post-catagory">@Html.Raw(article.CategoryName)</a>
                                     <div class="post-meta">
-                                        <a href="/Articles/all?id=@article.Id" class="post-title">
+                                        <a href="/articles/all?id=@article.Id" class="post-title">
                                             <h6>@Html.Raw(article.Title)</h6>
                                         </a>
                                         <p class="post-date"><span></span></p>
@@ -207,10 +168,11 @@
                         }
                     }
                 </div>
-                <!-- SideBar End -->
+                <!--SideBar End-->
             </div>
         </div>
     </div>
+    <!-- ##### Blog Area End ##### -->
     <!-- ##### Featured Post Area End ##### -->
     <footer>
         <hr />

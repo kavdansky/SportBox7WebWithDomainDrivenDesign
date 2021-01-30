@@ -20,6 +20,8 @@ namespace SportBox7.Web
                     .RegisterValidatorsFromAssemblyContaining<Result>())
                 .AddNewtonsoftJson();
 
+            services.AddRazorPages();
+
             return services;
         }
     }

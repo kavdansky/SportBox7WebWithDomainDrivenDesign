@@ -2,14 +2,14 @@
 {
     public class LoginSuccessModel
     {
-        public LoginSuccessModel(string userId, string token)
+        public LoginSuccessModel(string userId, string email)
         {
             this.UserId = userId;
-            this.Token = token;
+            this.Email = email;
         }
 
         public string UserId { get; }
 
-        public string Token { get; }
+        public string Email { get; set; }
     }
 }

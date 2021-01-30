@@ -36,7 +36,7 @@
 
                 var dealerId = await this.editorRepository.GetEditorId(user.UserId, cancellationToken);
 
-                return new LoginOutputModel(user.Token, dealerId);
+                return new LoginOutputModel(user.Email, dealerId, user.UserId);
             }
         }
     }

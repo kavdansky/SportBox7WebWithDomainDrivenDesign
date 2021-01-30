@@ -17,7 +17,7 @@ namespace SportBox7.Web
         protected IMediator Mediator =>
             this.mediator ??= this.HttpContext
             .RequestServices
-            .GetService<IMediator>();
+            .GetRequiredService<IMediator>();
 
         protected Task<ActionResult<TResult>> Send<TResult>(IRequest<TResult> request)
             => this.Mediator.Send(request).ToActionResult();

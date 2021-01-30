@@ -64,8 +64,9 @@
 
         private bool BeAValidDate(string value)
         {
-            DateTime date;
-            return DateTime.TryParse(value, out date);
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+            return DateTime.TryParse(value, out DateTime date);
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
         }
 
         private bool ContainArticleType(int value)
