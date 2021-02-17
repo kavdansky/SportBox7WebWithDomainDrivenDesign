@@ -1,16 +1,10 @@
-﻿using SportBox7.Domain.Common;
-using SportBox7.Domain.Exeptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-
-using static SportBox7.Domain.Models.ModelConstants.Common;
-using static SportBox7.Domain.Models.ModelConstants.Source;
-
-namespace SportBox7.Domain.Models.Articles
+﻿namespace SportBox7.Domain.Models.Sources
 {
-    public class Source: Entity<int>
+    using SportBox7.Domain.Common;
+    using SportBox7.Domain.Exeptions;
+    using static SportBox7.Domain.Models.ModelConstants.Source;
+
+    public class Source: Entity<int>, IAggregateRoot
     {
         internal Source(string sourceName, string sourceUrl, string sourceImageUrl)
         {

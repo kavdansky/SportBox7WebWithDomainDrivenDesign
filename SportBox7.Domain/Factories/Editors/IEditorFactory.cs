@@ -1,10 +1,7 @@
-﻿using SportBox7.Domain.Models.Editors;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SportBox7.Domain.Factories.Editors
+﻿namespace SportBox7.Domain.Factories.Editors
 {
+    using SportBox7.Domain.Models.Editors;
+
     public interface IEditorFactory: IFactory<Editor>
     {
         IEditorFactory WithFirstName(string firstName);

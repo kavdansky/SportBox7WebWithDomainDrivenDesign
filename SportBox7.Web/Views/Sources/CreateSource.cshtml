@@ -1,5 +1,7 @@
-﻿@using SportBox7.Application.Features.Identity.Queries.LoginUser
-@model LoginUserInputModel
+﻿@using SportBox7.Application.Features.Sources.Queries.Create
+@model CreateSourceInputModel
+
+
 <!DOCTYPE html>
 <html lang="bg">
 <head>
@@ -9,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <link rel="icon" href="">
-    <title>Editor Login - Sportbox7</title>
+    <title>Editor Dashboard - Sportbox7</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
 </head>
@@ -26,7 +28,12 @@
                                 <a href="/"><img src="~/img/core-img/logoSmall.jpg" alt="sportBox7-logo"></a>
                             </div>
                             <!-- Advertisement -->
+                            <!-- Login Search Area -->
                             <div class="login-search-area d-flex align-items-center">
+                                <!-- Login -->
+                                <div class="login d-flex">
+                                    <a href="/identity/logout">Logout</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -75,6 +82,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-12 col-lg-8">
+                   
                 </div>
             </div>
         </div>
@@ -90,33 +98,33 @@
                         <div class="single-blog-post featured-post single-post">
                             <div class="post-data">
                                 <a href="#" class="post-catagory"></a>
-                                <div class="post-meta">  
-                                    <form id="account" method="post">
-                                        <h4>Use a local account to log in.</h4>
-                                        <hr />
-                                        @if (Model.ErrorMessage != null)
-                                        {
-                                            @:<p>@Model.ErrorMessage</p>
-                                        }
-
+                                <div class="post-meta">
+                                    <h4>Create Source</h4>
+                                    <hr />
+                                    <form asp-action="CreateSource" enctype="multipart/form-data">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                         <div class="form-group">
-                                            <label asp-for="@Model.Email"></label>
-                                            <input asp-for="@Model.Email" class="form-control" />
-                                            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                                            <label asp-for="SourceName" class="control-label"></label>
+                                            <input asp-for="SourceName" class="form-control" />
                                         </div>
                                         <div class="form-group">
-                                            <label asp-for="@Model.Password"></label>
-                                            <input type="password" asp-for="@Model.Password" class="form-control" />
-                                            <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                                            <label asp-for="SourceUrl" class="control-label"></label>
+                                            <input asp-for="SourceUrl" class="form-control" />
+                                            <span asp-validation-for="SourceUrl" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary">Log in</button>
+                                            <label asp-for="SourceImageUrl" class="control-label"></label>
+                                            <input asp-for="SourceImageUrl" rows="10" cols="20" class="form-control" />
+                                            <span asp-validation-for="SourceImageUrl" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Create" class="btn btn-primary" />
                                         </div>
                                     </form>
                                     <!-- Post Like & Post Comment -->
                                 </div>
                             </div>
-                        
+
                         </div>
                     </div>
                 </div>

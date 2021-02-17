@@ -27,7 +27,7 @@
             ValidateServices(services);
 
             services.ReplaceTransient<UserManager<User>>(_ => IdentityFakes.FakeUserManager);
-            services.ReplaceTransient<IJwtTokenGenerator>(_ => JwtTokenGeneratorFakes.FakeJwtTokenGenerator);
+            //services.ReplaceTransient<IJwtTokenGenerator>(_ => JwtTokenGeneratorFakes.FakeJwtTokenGenerator);
         }
 
         private static void ValidateServices(IServiceCollection services)

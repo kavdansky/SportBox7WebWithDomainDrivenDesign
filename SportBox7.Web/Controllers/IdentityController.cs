@@ -13,9 +13,9 @@
     using SportBox7.Domain.Models.Editors;
     using SportBox7.Infrastructure.Identity;
 
+    
     public class IdentityController : MainController
-    {
-       
+    {  
         [HttpPost]
         [Route("identity/register")]
         public async Task<ActionResult> Register(

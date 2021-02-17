@@ -4,6 +4,7 @@
     using Microsoft.EntityFrameworkCore;
     using SportBox7.Domain.Models.Articles;
     using SportBox7.Domain.Models.Editors;
+    using SportBox7.Domain.Models.Sources;
     using SportBox7.Infrastructure.Identity;
     using System.Reflection;
 

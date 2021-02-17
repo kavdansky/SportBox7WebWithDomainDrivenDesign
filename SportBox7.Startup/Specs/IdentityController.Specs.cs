@@ -2,9 +2,6 @@
 {
     using Application.Features.Identity.Commands.CreateUser;
     using Application.Features.Identity.Commands.LoginUser;
-    using CarRentalSystem.Infrastructure.Identity;
-    using FluentAssertions;
-    using Infrastructure.Identity;
     using MyTested.AspNetCore.Mvc;
     using Web.Controllers;
     using Xunit;
@@ -20,7 +17,7 @@
                 .ShouldHave()
                 .ActionAttributes(attr => attr
                     .RestrictingForHttpMethod(HttpMethod.Post)
-                    .SpecifyingRoute(nameof(IdentityController.Register)));
+                    .SpecifyingRoute("identity/register"));
 
         [Fact]
         public void LoginShouldHaveCorrectAttributes()
@@ -31,7 +28,7 @@
                 .ShouldHave()
                 .ActionAttributes(attr => attr
                     .RestrictingForHttpMethod(HttpMethod.Post)
-                    .SpecifyingRoute(nameof(IdentityController.Login)));
+                    .SpecifyingRoute("identity/login"));
 
     }
 }

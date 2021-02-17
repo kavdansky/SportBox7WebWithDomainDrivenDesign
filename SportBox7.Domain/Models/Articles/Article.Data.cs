@@ -1,5 +1,6 @@
 ﻿using SportBox7.Domain.Common;
 using SportBox7.Domain.Models.Articles.Enums;
+using SportBox7.Domain.Models.Sources;
 using System;
 using System.Collections.Generic;
 namespace SportBox7.Domain.Models.Articles
@@ -15,11 +16,12 @@ namespace SportBox7.Domain.Models.Articles
             Category volleyball = new Category("Волейбол", "Volleyball");
             Category basketball = new Category("Баскетбол", "Basketball");
             Category martial = new Category("Бойни", "Martial");
+
             Category others = new Category("Други", "Others");
 
+            Source source = new Source("sportbox7.com", "https://sportbox7.com", "https://sportbox7.com/img/core-img/logoSmall.jpg");
 
-
-            return new List<Article>()
+            List<Article> articles = new List<Article>()
             {
                 new Article("Честит юбилей на Георги Денев", "Днес 70-и юбилей празнува знаменитият български футболист Георги Денев. Бившият национал е роден на 18 април 1950 г. в Ловеч, а кариерата му стартира в местния Кърпачев. През сезон 1968/69 играе за Спартак (Плевен), а след това преминава в ЦСКА. За \"армейците\" играе цяло десетилетие, като записва 237 мача и 78 гола за първенство, пет пъти печели шампионската титла и още три пъти Купата на България. В края на кариерата си излиза в чужбина и последователно облича екипите на Етникос (42 мача, 18 гола) и Арис (Лимасол, 47 мача, 16 гола).За националния отбор Денев дебютира през 1970 г.и изиграва 49 мача, в които се разписва десет пъти.Участник на световното първенство във ФРГ през 1974 - а.Българският футболен съюз честити празника на Георги Денев и му желае здраве, късмет и дълголетие!", "Честит юбилей на Георги Денев","https://bfunion.bg/uploads/2020-04-18/size1/GDenev.png", "https://bfunion.bg/archive/2020/4/46795/0", "test Meta Description", "test meta keywords", footballBG , ArticleType.NewsArticle, new DateTime(2020, 5, 11)),
 
@@ -34,6 +36,16 @@ namespace SportBox7.Domain.Models.Articles
 
                 new Article("Любо Ганев свиква конферентен УС", "Любо Ганев свиква следващата седмица първо заседание на управителния съвет на волейболната федерация след проведеното на 13 март общо събрание. Новоизбраните членове на ръководството трябва да решат как ще завършат националните първенства.", "Любо Ганев свиква конферентен УС","https://www.volleyball.bg/media/k2/items/cache/ad599b9fcc57857fe9e8210e5336a36d_XL.jpg", "https://www.volleyball.bg/news/item/6196", "test Meta Description", "test meta keywords", others, ArticleType.NewsArticle, new DateTime(2021, 1, 18))
             };
+
+            articles[0].UpdateSource(source);
+            articles[1].UpdateSource(source);
+            articles[2].UpdateSource(source);
+            articles[3].UpdateSource(source);
+            articles[4].UpdateSource(source);
+            articles[5].UpdateSource(source);
+
+
+            return articles;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace SportBox7.Domain.Models.Articles
 {
     using SportBox7.Domain.Common;
+    using SportBox7.Domain.Models.Sources;
     using System;
     using SportBox7.Domain.Exeptions;
     using System.Collections.Generic;
@@ -8,6 +9,7 @@
     using System.Linq;
     using static SportBox7.Domain.Models.ModelConstants.Common;
     using static SportBox7.Domain.Models.ModelConstants.Article;
+    using static SportBox7.Domain.Models.ModelConstants;
 
     public class Article: EditableEntity<int>, IAggregateRoot
     {
@@ -34,7 +36,9 @@
             this.socialSignals = new HashSet<SocialSignal>();
         }
 
+#pragma warning disable IDE0051 // Remove unused private members
         private Article(string title, string body, string h1Tag, string imageUrl, string seoUrl, string metaDescription, string metaKeywords)
+#pragma warning restore IDE0051 // Remove unused private members
         {
             this.Validate(title, body, h1Tag, imageUrl, metaKeywords, metaDescription);
 
@@ -80,7 +84,7 @@
 
         public string SeoUrl { get; private set; } = default!;
 
-        public Source? Source { get; private set; }
+        public Models.Sources.Source? Source { get; private set; }
 
         public Category Category { get; private set; }
        
@@ -154,7 +158,7 @@
             return this;
         }
 
-        public Article UpdateSource(Source source)
+        public Article UpdateSource(Models.Sources.Source source)
         {
             this.Source = source;
             this.LastModDate = DateTime.Now;
@@ -166,14 +170,6 @@
         {
             this.ValidateSeoUrl(seoUrl);
             this.SeoUrl = seoUrl;
-            this.LastModDate = DateTime.Now;
-
-            return this;
-        }
-
-        public Article UpdateSource(string sourceName, string sourceUrl, string sourceImageUrl)
-        {
-            this.Source = new Source(sourceName, sourceUrl, sourceImageUrl);
             this.LastModDate = DateTime.Now;
 
             return this;

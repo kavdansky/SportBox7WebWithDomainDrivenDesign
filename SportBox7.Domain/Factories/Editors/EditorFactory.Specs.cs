@@ -1,12 +1,10 @@
-﻿using FluentAssertions;
-using SportBox7.Domain.Exeptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-
-namespace SportBox7.Domain.Factories.Editors
+﻿namespace SportBox7.Domain.Factories.Editors
 {
+    using FluentAssertions;
+    using SportBox7.Domain.Exeptions;
+    using System;
+    using Xunit;
+
     public class EditorFactorySpecs
     {
         [Fact]

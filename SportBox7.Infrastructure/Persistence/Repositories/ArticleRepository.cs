@@ -102,8 +102,6 @@
 
         public async Task<Editor> GetArticleAuthor(int articleId)
             => await this.db.Editors.Where(a => a.Articles.Where(x => x.Id == articleId).Any()).FirstOrDefaultAsync();
-        
-
-    
+       
     }
 }

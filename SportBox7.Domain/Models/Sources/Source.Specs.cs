@@ -1,13 +1,10 @@
-﻿using FakeItEasy;
-using FluentAssertions;
-using SportBox7.Domain.Exeptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-
-namespace SportBox7.Domain.Models.Articles
+﻿namespace SportBox7.Domain.Models.Sources
 {
+    using FluentAssertions;
+    using SportBox7.Domain.Exeptions;
+    using System;
+    using Xunit;
+
     public class SourceSpecs
     {
        

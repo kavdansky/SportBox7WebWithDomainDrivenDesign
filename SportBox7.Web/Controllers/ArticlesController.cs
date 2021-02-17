@@ -6,8 +6,8 @@
     using SportBox7.Application.Features.Articles.Commands.Create;
     using Microsoft.AspNetCore.Authorization;
     using SportBox7.Application.Features.Articles.Queries.Id;
+    using SportBox7.Application.Features.Articles.Queries.Create;
 
- 
     public class ArticlesController: MainController
     {
         [HttpGet]
@@ -22,13 +22,15 @@
        => View(await this.Mediator.Send(query));
 
 
-        
-
-       
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<CreateArticleOutputModel>> Create(
             CreateArticleCommand command)
             => await this.Send(command);
+
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<CreateDraftArticleOutputModel>> Create()
+            => View();
     }
 }
