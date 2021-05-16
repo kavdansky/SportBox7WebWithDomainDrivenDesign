@@ -51,7 +51,11 @@ namespace SportBox7.Web.Controllers
         [Route("/sources/edit")]
         [HttpPost]
         public async Task<ActionResult<EditedSourceOutputModel>> Edit(EditSourceCommand command)
-            => View(await this.Mediator.Send(command));
+        {
+            await this.Mediator.Send(command);
+            return RedirectToAction("Index");
+        }
+            
 
     }
 }
