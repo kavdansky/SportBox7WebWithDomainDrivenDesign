@@ -3,6 +3,7 @@ using SportBox7.Domain.Models.Sources;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SportBox7.Domain.Factories.Sources
 {
@@ -43,6 +44,15 @@ namespace SportBox7.Domain.Factories.Sources
                 throw new InvalidSourceException("SourceImageUrl, SourceName and SourceUrl must have value");
             }
             return new Source(sourceName, sourceUrl, sourceImageUrl);
+        }
+
+        public Task<Source> BuildAsync()
+        {
+            if (this.isSourceImageUrlSet == false || this.isSourceNameSet == false || isSourceUrlSet == false)
+            {
+                throw new InvalidSourceException("SourceImageUrl, SourceName and SourceUrl must have value");
+            }
+            return Task.Run(()=> new Source(sourceName, sourceUrl, sourceImageUrl));
         }
     }
 }

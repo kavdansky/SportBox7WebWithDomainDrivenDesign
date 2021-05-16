@@ -15,8 +15,8 @@ namespace SportBox7.Application.Features.Articles.Queries.Category
         {
             private readonly IArticleRepository articleRepository;
 
-            public ListArticleByCategotyHandler(IArticleRepository repository) =>
-                this.articleRepository = repository;
+            public ListArticleByCategotyHandler(IArticleRepository repository) 
+                => this.articleRepository = repository;
            
 
             public async Task<ListArticlesByCategoryOutputModel> Handle(ListArticlesByCategoryQuery request, CancellationToken cancellationToken)

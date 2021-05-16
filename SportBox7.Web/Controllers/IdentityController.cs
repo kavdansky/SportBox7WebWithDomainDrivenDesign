@@ -40,6 +40,7 @@
         public async Task<ActionResult<LoginUserInputModel>> Login(string? errorMessage)
             => View(await LoginUserInputModel.CreateAsync(errorMessage));
 
+        [Authorize]
         [HttpGet]
         [Route("identity/logout")]
         public async Task<ActionResult> Logout(LogoutUserCommand command)

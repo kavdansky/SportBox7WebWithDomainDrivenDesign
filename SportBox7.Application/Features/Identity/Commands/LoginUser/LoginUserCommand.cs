@@ -33,7 +33,6 @@
                 }
 
                 var user = result.Data;
-
                 var dealerId = await this.editorRepository.GetEditorId(user.UserId, cancellationToken);
 
                 return new LoginOutputModel(user.Email, dealerId, user.UserId);

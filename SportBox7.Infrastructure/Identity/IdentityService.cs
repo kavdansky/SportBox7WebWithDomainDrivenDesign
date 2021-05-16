@@ -28,7 +28,12 @@
 
         public async Task<Result<LoginSuccessModel>> Login(UserInputModel userInput)
         {
+            if (userInput.Email == null)
+            {
+                return InvalidLoginErrorMessage;
+            }
             var user = await this.userManager.FindByEmailAsync(userInput.Email);
+
             if (user == null)
             {
                 return InvalidLoginErrorMessage;
@@ -51,7 +56,6 @@
             return Result.Success;
         }
         
-
         public async Task<Result<IUser>> Register(UserInputModel userInput)
         {
             var user = new User(userInput.Email);

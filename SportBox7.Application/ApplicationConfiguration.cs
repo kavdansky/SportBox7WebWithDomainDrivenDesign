@@ -5,6 +5,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using AutoMapper;
     using System.Reflection;
+    using SportBox7.Application.Behaviours;
 
     public static class ApplicationConfiguration
     {
@@ -15,5 +16,7 @@
                 options => options.BindNonPublicProperties = true)
             .AddAutoMapper(Assembly.GetExecutingAssembly())
             .AddMediatR(Assembly.GetExecutingAssembly());
+            //.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBeahaviour<,>));
+        
     }
 }

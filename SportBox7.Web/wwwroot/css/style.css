@@ -393,10 +393,10 @@ textarea:focus {
         .header-area .top-header-area .login-search-area .search-form form .form-control:-ms-input-placeholder {
           color: #fff;
           opacity: 1; }
-        .header-area .top-header-area .login-search-area .search-form form .form-control::-ms-input-placeholder {
+        .header-area .top-header-area .login-search-area .search-form form {
           color: #fff;
           opacity: 1; }
-        .header-area .top-header-area .login-search-area .search-form form .form-control::placeholder {
+        .header-area .top-header-area .login-search-area .search-form form {
           color: #fff;
           opacity: 1; }
   .header-area .newspaper-main-menu {
@@ -575,9 +575,6 @@ textarea:focus {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
-      -webkit-box-align: flex-end;
-      -ms-flex-align: flex-end;
-      -ms-grid-row-align: flex-end;
       align-items: flex-end; }
       .single-blog-post .post-data .post-meta .post-like span {
         line-height: 1;
@@ -589,9 +586,6 @@ textarea:focus {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
-      -webkit-box-align: flex-end;
-      -ms-flex-align: flex-end;
-      -ms-grid-row-align: flex-end;
       align-items: flex-end; }
       .single-blog-post .post-data .post-meta .post-comment span {
         line-height: 1;

@@ -1,11 +1,8 @@
-﻿using SportBox7.Application.Features.Sources.Queries.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SportBox7.Application.Features.Sources.Queries.Create
+﻿namespace SportBox7.Application.Features.Sources.Queries.Create
 {
+    using SportBox7.Application.Features.Sources.Queries.Common;
+    using System.Threading.Tasks;
+
     public class CreateSourceInputModel: SourceModel
     {
         public string ErrorMessage { get; set; } = default!;

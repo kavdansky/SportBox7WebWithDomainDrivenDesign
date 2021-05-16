@@ -7,10 +7,10 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class CreateSourceCommand: CreateSourceInputModel, IRequest<CreateSourceOutputModel>
+    public class CreateSourceCommand: CreateSourceInputModel, IRequest<Result<CreateSourceOutputModel>>
     {
         
-        public class CreateSourceCommandHandler : IRequestHandler<CreateSourceCommand, CreateSourceOutputModel>
+        public class CreateSourceCommandHandler : IRequestHandler<CreateSourceCommand, Result<CreateSourceOutputModel>>
         {
             private readonly ISourceFactory sourceFactory;
             private readonly ISourceRepository sourceRepository;
@@ -21,7 +21,7 @@
                 this.sourceRepository = sourceRepository;
             }
 
-            public async Task<CreateSourceOutputModel> Handle(CreateSourceCommand request, CancellationToken cancellationToken)
+            public async Task<Result<CreateSourceOutputModel>> Handle(CreateSourceCommand request, CancellationToken cancellationToken)
             {
                 var source = this.sourceFactory
                     .WithSourceName(request.SourceName)
@@ -31,7 +31,7 @@
 
                 await this.sourceRepository.Save(source, cancellationToken);
 
-                return new CreateSourceOutputModel(source.Id, source.SourceName);
+                return await Task.Run(() => new CreateSourceOutputModel(source.Id, source.SourceName)); 
             }
         }
 

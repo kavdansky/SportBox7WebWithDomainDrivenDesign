@@ -1,8 +1,8 @@
-﻿namespace SportBox7.Application.Features.Sources.Commands.Create
+﻿namespace SportBox7.Application.Features.Sources.Commands.Edit
 {
-    public class CreateSourceOutputModel
+    public class EditedSourceOutputModel
     {
-        public CreateSourceOutputModel(int sourceId, string sourceName)
+        public EditedSourceOutputModel(int sourceId, string sourceName)
         {
             this.SourceId = sourceId;
             this.SourceName = sourceName;

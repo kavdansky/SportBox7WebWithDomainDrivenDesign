@@ -3,13 +3,18 @@ using SportBox7.Domain.Models.Sources;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SportBox7.Domain.Factories.Sources
 {
     public interface ISourceFactory: IFactory<Source>
     {
         ISourceFactory WithSourceName(string sourceName);
+
         ISourceFactory WithSourceImageUrl(string sourceImageUrl);
+
         ISourceFactory WithSourceUrl(string sourceUrl);
+
+        Task<Source> BuildAsync();
     }
 }

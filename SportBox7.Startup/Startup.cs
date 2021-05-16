@@ -59,8 +59,7 @@ namespace SportBox7.Startup
 
                 if (response.StatusCode == (int)HttpStatusCode.NotFound)
                 {
-                    await Task.Run(() => 1);
-                    response.Redirect("/Home/NotFound");
+                    await Task.Run(() => response.Redirect("/Home/NotFound"));
                 }
 
             });

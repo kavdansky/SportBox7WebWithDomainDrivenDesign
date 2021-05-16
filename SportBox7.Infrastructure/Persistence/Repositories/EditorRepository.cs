@@ -62,19 +62,19 @@ namespace SportBox7.Infrastructure.Persistence.Repositories
             Expression<Func<User, T>> selector,
             CancellationToken cancellationToken = default)
         {
-            var dealerData = await this
+            var authorData = await this
                 .db
                 .Users
                 .Where(u => u.Id == userId)
                 .Select(selector)
                 .FirstOrDefaultAsync(cancellationToken);
 
-            if (dealerData == null)
+            if (authorData == null)
             {
-                throw new InvalidEditorException("This user is not a dealer.");
+                throw new InvalidEditorException("This user is not an author.");
             }
 
-            return dealerData;
+            return authorData;
         }
 
         

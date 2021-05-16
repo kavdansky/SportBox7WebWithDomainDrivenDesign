@@ -1,15 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SportBox7.Application.Features.Sources.Queries.Common
+﻿namespace SportBox7.Application.Features.Sources.Queries.Common
 {
-    public class SourceModel
+    using AutoMapper;
+    using SportBox7.Application.Mapping;
+    using SportBox7.Domain.Models.Sources;
+
+    public class SourceModel: IMapFrom<Source>
     {
+        public SourceModel()
+        { }
+
+        public SourceModel(string sourceName, string sourceUrl, string sourceImageUrl)
+        {
+            this.SourceName = sourceName;
+            this.SourceUrl = sourceUrl;
+            this.SourceImageUrl = sourceImageUrl;
+        }
+
+        public virtual void Mapping(Profile mapper)
+            => mapper
+                .CreateMap<Source, SourceModel>();
+          
         public string SourceUrl { get; set; } = default!;
 
         public string SourceName { get; set; } = default!;
 
         public string SourceImageUrl { get; set; } = default!;
+        
     }
 }

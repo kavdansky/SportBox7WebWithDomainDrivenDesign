@@ -13,13 +13,13 @@
         [HttpGet]
         [Route("/articles")]
         public async Task<ActionResult<ListArticlesByCategoryOutputModel>> Category([FromQuery] ListArticlesByCategoryQuery query)
-        => View(await this.Mediator.Send(query));
+            => View(await this.Mediator.Send(query));
 
        
         [Route("/articles/all")]
         [HttpGet]
         public async Task<ActionResult<ArticleByIdOutputModel>> Id([FromQuery] ArticleByIdQuery query)
-       => View(await this.Mediator.Send(query));
+            => View(await this.Mediator.Send(query));
 
 
         [HttpPost]
@@ -31,6 +31,6 @@
         [HttpGet]
         [Authorize]
         public async Task<ActionResult<CreateDraftArticleOutputModel>> Create()
-            => View();
+            => await Task.Run(() => View()); 
     }
 }

@@ -1,15 +1,16 @@
-﻿@using SportBox7.Application.Features.Identity.Commands.LoginUser
-@model LoginOutputModel
+﻿@using SportBox7.Application.Features.Sources.Queries.Edit
+@model EditSourceOutputModel
+
 <!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="utf-8" />
-    <meta name="description" content="Editor Login">
-    <meta name="keywords" content="Editor Login)">
+    <meta name="description" content="@Html.Raw(Model.MetaDescription)">
+    <meta name="keywords" content="@Html.Raw(Model.MetaKeywords)">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <link rel="icon" href="">
-    <title>Editor Dashboard - Sportbox7</title>
+    <title>@Html.Raw(Model.MetaTitle)</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
 </head>
@@ -30,7 +31,6 @@
                             <div class="login-search-area d-flex align-items-center">
                                 <!-- Login -->
                                 <div class="login d-flex">
-                                    <a href="#">Hello @Model.Email</a>
                                     <a href="/identity/logout">Logout</a>
                                 </div>
                             </div>
@@ -67,9 +67,6 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li><a href="/" class="active">Articles</a></li>
-                                    <li><a href="/sources" class="active">Sources</a></li>
-
                                 </ul>
                             </div>
                             <!-- Nav End -->
@@ -84,6 +81,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-12 col-lg-8">
+
                 </div>
             </div>
         </div>
@@ -100,9 +98,29 @@
                             <div class="post-data">
                                 <a href="#" class="post-catagory"></a>
                                 <div class="post-meta">
-                                    <h4>Dashboard</h4>
+                                    <h4>Edit Source</h4>
                                     <hr />
-                               
+                                    <form asp-action="Edit" enctype="multipart/form-data">
+                                        <input asp-for="Id" type="hidden" />
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <div class="form-group">
+                                            <label asp-for="SourceName" class="control-label"></label>
+                                            <input asp-for="SourceName" value="@Model.SourceName" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="SourceUrl" class="control-label"></label>
+                                            <input asp-for="SourceUrl" value="@Model.SourceUrl" class="form-control" />
+                                            <span asp-validation-for="SourceUrl" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="SourceImageUrl" class="control-label"></label>
+                                            <input asp-for="SourceImageUrl" value="@Model.SourceImageUrl" rows="10" cols="20" class="form-control" />
+                                            <span asp-validation-for="SourceImageUrl" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Edit" class="btn btn-primary" />
+                                        </div>
+                                    </form>
                                     <!-- Post Like & Post Comment -->
                                 </div>
                             </div>
