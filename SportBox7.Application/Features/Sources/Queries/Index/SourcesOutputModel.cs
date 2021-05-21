@@ -11,6 +11,8 @@
 
         public IEnumerable<IndexSourceModel> Sources { get; set; } = default!;
 
+        public string ErrorMessage { get; set; } = default!;
+
         public string MetaDescription { get; set; } = default!;
 
         public string MetaKeywords { get; set; } = default!;

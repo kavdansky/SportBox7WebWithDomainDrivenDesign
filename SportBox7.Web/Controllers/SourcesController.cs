@@ -13,6 +13,7 @@ namespace SportBox7.Web.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SportBox7.Domain.Exeptions;
 
     [Authorize]
     public class SourcesController: MainController
@@ -51,11 +52,20 @@ namespace SportBox7.Web.Controllers
         [Route("/sources/edit")]
         [HttpPost]
         public async Task<ActionResult<EditedSourceOutputModel>> Edit(EditSourceCommand command)
-        {
-            await this.Mediator.Send(command);
-            return RedirectToAction("Index");
+        {           
+            try
+            {
+                var model = await this.Mediator.Send(command);
+                if (model.Errors.Count != 0)
+                {
+                    return RedirectToAction("Edit", new EditSourceQuery() { Id = command.Id, ErrorMessage = string.Join(" ,", model.Errors) });
+                }
+                return RedirectToAction("Details", new { id = model.Data.SourceId });
+            }
+            catch (InvalidSourceException ex)
+            {
+                return RedirectToAction("Edit", new EditSourceQuery()  {Id = command.Id, ErrorMessage = ex.Error } );
+            }
         }
-            
-
     }
 }

@@ -7,6 +7,7 @@
             this.SourceId = sourceId;
             this.SourceName = sourceName;
         }
+        public string ErrorMessage { get; set; } = default!;
 
         public int SourceId { get; set; }
 

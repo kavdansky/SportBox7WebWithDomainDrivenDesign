@@ -94,10 +94,9 @@
                                     <form id="account" method="post">
                                         <h4>Use a local account to log in.</h4>
                                         <hr />
-                                        @if (Model.ErrorMessage != null)
-                                        {
-                                            @:<p class="text-danger">@Model.ErrorMessage</p>
-                                        }
+                                        
+                                            <p class="text-danger">@Model.ErrorMessage</p>
+                                        
 
                                         <div class="form-group">
                                             <label asp-for="@Model.Email"></label>

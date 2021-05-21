@@ -100,6 +100,10 @@
                                 <div class="post-meta">
                                     <h4>Edit Source</h4>
                                     <hr />
+                                    @if (Model.ErrorMessage != null)
+                                    {
+                                        @:<p class="text-danger">@Model.ErrorMessage</p>
+                                    }
                                     <form asp-action="Edit" enctype="multipart/form-data">
                                         <input asp-for="Id" type="hidden" />
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>

@@ -55,20 +55,20 @@
 
         private void ValidateSourceImageUrl(string sourceImageUrl)
         {
-            Validator.CheckForEmptyString<InvalidSourceException>(sourceImageUrl, "sourceName");
+            Validator.CheckForEmptyString<InvalidSourceException>(sourceImageUrl, "Source Image Url");
             Validator.CheckValidUrl<InvalidSourceException>(sourceImageUrl);
         }
 
         private void ValidateSourceUrl(string sourceUrl)
         {
-            Validator.CheckForEmptyString<InvalidSourceException>(sourceUrl, "sourceName");
+            Validator.CheckForEmptyString<InvalidSourceException>(sourceUrl, "Source Url");
             Validator.CheckValidUrl<InvalidSourceException>(sourceUrl);
         }
 
         private void ValidateSourceName(string sourceName)
         {
-            Validator.CheckForEmptyString<InvalidSourceException>(sourceName, "sourceName");
-            Validator.CheckStringLength<InvalidSourceException>(sourceName, SourceNameMinLength, SourceNameMaxLength, "sourceName");
+            Validator.CheckForEmptyString<InvalidSourceException>(sourceName, "Source Name");
+            Validator.CheckStringLength<InvalidSourceException>(sourceName, SourceNameMinLength, SourceNameMaxLength, "Source Name");
         }
 
         public string SourceUrl { get; private set; } = default!;

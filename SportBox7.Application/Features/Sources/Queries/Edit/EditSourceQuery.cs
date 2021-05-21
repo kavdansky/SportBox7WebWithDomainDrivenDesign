@@ -9,6 +9,8 @@
     {
         public int Id { get; set; }
 
+        public string ErrorMessage { get; set; } = default!;
+
         public class EditSourceQueryHandler : IRequestHandler<EditSourceQuery, EditSourceOutputModel>
         {
             private readonly ISourceRepository sourceRepository;
@@ -18,9 +20,11 @@
                 this.sourceRepository = sourceRepository;
             }
 
-            public Task<EditSourceOutputModel> Handle(EditSourceQuery request, CancellationToken cancellationToken)
+            public async Task<EditSourceOutputModel> Handle(EditSourceQuery request, CancellationToken cancellationToken)
             {
-                return this.sourceRepository.GetSourceToEditById(request.Id);
+                var model = await this.sourceRepository.GetSourceToEditById(request.Id);
+                model.ErrorMessage = request.ErrorMessage;
+                return model;
             }
         }
     }
