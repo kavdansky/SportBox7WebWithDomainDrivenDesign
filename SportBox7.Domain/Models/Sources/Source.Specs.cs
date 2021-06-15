@@ -7,7 +7,23 @@
 
     public class SourceSpecs
     {
-       
+
+        //[Fact]
+        //public void DeleteSetsIsDeletedToTrue()
+        //{
+        //    //Arrange
+        //    Source source = new Source(
+        //            "Gong.bg",
+        //            "http://gong.bg",
+        //            "http://gong.bg/images"
+        //            );
+        //
+        //    //Act
+        //    source.Delete();
+        //
+        //    //Assert
+        //    source.IsDeleted.Should().Equals(true);
+        //}
 
         [Fact]
         public void UpdateSourceNameWithInvalidStringShouldThrowException()

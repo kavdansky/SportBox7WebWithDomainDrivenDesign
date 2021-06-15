@@ -5,8 +5,6 @@
 
     public class CreateSourceInputModel: SourceModel
     {
-        public string ErrorMessage { get; set; } = default!;
-
         private async Task<CreateSourceInputModel> InitializeAsync(string? errorMessage)
         {
             if (errorMessage != null)

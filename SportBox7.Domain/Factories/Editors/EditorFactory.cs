@@ -30,7 +30,7 @@
 
         public Editor Build()
         {
-            if (isFirstNameSet == false || !isLastNameSet == false)
+            if (isFirstNameSet == false || isLastNameSet == false)
             {
                 throw new InvalidEditorException("Editor must have first and last name");
             }

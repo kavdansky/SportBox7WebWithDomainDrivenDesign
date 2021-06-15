@@ -1,5 +1,6 @@
 ﻿namespace SportBox7.Infrastructure.Identity
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Application;
@@ -16,14 +17,16 @@
 
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public IdentityService(
             UserManager<User> userManager,
-
+            RoleManager<IdentityRole> roleManager,
             SignInManager<User> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.roleManager = roleManager;
         }
 
         public async Task<Result<LoginSuccessModel>> Login(UserInputModel userInput)
@@ -55,7 +58,7 @@
             await this.signInManager.SignOutAsync();
             return Result.Success;
         }
-        
+
         public async Task<Result<IUser>> Register(UserInputModel userInput)
         {
             var user = new User(userInput.Email);

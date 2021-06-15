@@ -10,7 +10,6 @@
     {
         public class EditSourceCommandHandler : IRequestHandler<EditSourceCommand, Result<EditedSourceOutputModel>>
         {
-
             private readonly ISourceRepository sourceRepository;
 
             public EditSourceCommandHandler(ISourceRepository sourceRepository)

@@ -12,6 +12,7 @@
     using SportBox7.Application.Features.Sources.Queries.Index;
     using System;
     using SportBox7.Application.Features.Sources.Queries.Details;
+    using SportBox7.Application.Features.Sources.Queries.Delete;
 
     internal class SourceRepository : DataRepository<Source>, ISourceRepository
     {
@@ -36,14 +37,17 @@
         public async Task<IEnumerable<IndexSourceModel>> GetAllSources()
             => await Task.Run(()=> this.All().Select(x => new IndexSourceModel(x.Id, x.SourceName, x.SourceUrl, x.SourceImageUrl)).ToList());
 
-        public async Task<EditSourceOutputModel> GetSourceToEditById(int id)
-            => await this.mapper.ProjectTo<EditSourceOutputModel>(getSourceById(id)).FirstOrDefaultAsync();
+        public Task<EditSourceOutputModel> GetSourceToEditById(int id)
+            => this.mapper.ProjectTo<EditSourceOutputModel>(getSourceById(id)).FirstOrDefaultAsync();
 
-        public async Task<SourceByIdOutputModel> GetSourceById(int id)
-        => await this.mapper.ProjectTo<SourceByIdOutputModel>(getSourceById(id)).FirstOrDefaultAsync();
+        public Task<SourceByIdOutputModel> GetSourceById(int id)
+        => this.mapper.ProjectTo<SourceByIdOutputModel>(getSourceById(id)).FirstOrDefaultAsync();
 
-        private IQueryable<Source> GetSource(int id)
+        public IQueryable<Source> GetSource(int id)
             => this.All().Where(s => s.Id == id);
+
+        public Task<DeleteSourceOutputModel> GetSourceToDeleteById(int id)
+            => this.mapper.ProjectTo<DeleteSourceOutputModel>(getSourceById(id)).FirstOrDefaultAsync();
 
         Func<int, IQueryable<Source>> getSourceById => GetSource;
         

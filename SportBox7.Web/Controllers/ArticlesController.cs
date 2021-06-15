@@ -13,13 +13,28 @@
         [HttpGet]
         [Route("/articles")]
         public async Task<ActionResult<ListArticlesByCategoryOutputModel>> Category([FromQuery] ListArticlesByCategoryQuery query)
-            => View(await this.Mediator.Send(query));
+        {
+            var model = await this.Mediator.Send(query);
+            if (model.CurrentCategory != null)
+            {
+                return View(model);
+            }
+            return Redirect("/Home/NotFound");
+        }
 
-       
+
+
         [Route("/articles/all")]
         [HttpGet]
         public async Task<ActionResult<ArticleByIdOutputModel>> Id([FromQuery] ArticleByIdQuery query)
-            => View(await this.Mediator.Send(query));
+        {
+            var model = await this.Mediator.Send(query);
+            if (model.Article != null)
+            {
+                return View(model);
+            }
+            return Redirect("/Home/NotFound"); 
+        } 
 
 
         [HttpPost]
@@ -30,7 +45,7 @@
 
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<CreateDraftArticleOutputModel>> Create()
-            => await Task.Run(() => View()); 
+        public ActionResult<CreateDraftArticleOutputModel> Create()
+             => View(); 
     }
 }

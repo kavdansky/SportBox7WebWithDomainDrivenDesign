@@ -6,6 +6,8 @@
 
     public class SourceModel: IMapFrom<Source>
     {
+        public string ErrorMessage { get; set; } = default!;
+
         public SourceModel()
         { }
 

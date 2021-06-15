@@ -12,6 +12,7 @@
     using SportBox7.Application;
     using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Identity;
+    using SportBox7.Domain.Common;
     using SportBox7.Infrastructure.Identity;
     using SportBox7.Infrastructure.Persistence.Repositories;
     using System.Configuration;
@@ -39,6 +40,7 @@
                             .MigrationsAssembly(typeof(SportBox7DbContext)
                                 .Assembly.FullName)))
             .AddTransient<IInitializer, SportBox7DbInitializer>();
+            
 
         internal static IServiceCollection AddRepositories(this IServiceCollection services)
             => services
@@ -64,6 +66,7 @@
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<SportBox7DbContext>()
                 .AddDefaultTokenProviders();
 
@@ -72,8 +75,10 @@
             services.AddAuthorization();
             services.AddTransient<SignInManager<User>>();
             services.AddTransient<UserManager<User>>();
+            services.AddTransient<RoleManager<IdentityRole>>();
             services.AddTransient<IIdentity, IdentityService>();
-            
+            services.AddTransient<IInitialData, UserData>(x=> new UserData(services.BuildServiceProvider().GetService<IdentityService>()));
+
             return services;
         }
 

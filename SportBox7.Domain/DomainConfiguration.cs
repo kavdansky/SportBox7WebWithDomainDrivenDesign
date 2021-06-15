@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.DependencyInjection;
-using SportBox7.Domain.Common;
-using SportBox7.Domain.Factories;
-using SportBox7.Domain.Models.Articles;
-
-namespace SportBox7.Domain
+﻿namespace SportBox7.Domain
 {
+    using Microsoft.Extensions.DependencyInjection;
+    using SportBox7.Domain.Common;
+    using SportBox7.Domain.Factories;
+    using SportBox7.Domain.Models.Articles;
+
     public static class DomainConfiguration
     {
         public static IServiceCollection AddDomain(this IServiceCollection services)
@@ -19,5 +16,6 @@ namespace SportBox7.Domain
                     .AsMatchingInterface()
                     .WithTransientLifetime())
             .AddTransient<IInitialData, ArticleData>();
+            
     }
 }

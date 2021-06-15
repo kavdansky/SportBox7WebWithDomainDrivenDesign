@@ -14,6 +14,7 @@ namespace SportBox7.Web.Controllers
     using System.Linq;
     using System.Threading.Tasks;
     using SportBox7.Domain.Exeptions;
+    using SportBox7.Application.Features.Sources.Queries.Delete;
 
     [Authorize]
     public class SourcesController: MainController
@@ -41,6 +42,17 @@ namespace SportBox7.Web.Controllers
         public async Task<ActionResult<SourceByIdOutputModel>> Details(SourceByIdQuery query)
             => View(await this.Mediator.Send(query));
 
+        [Route("/sources/delete")]
+        public async Task<ActionResult<DeleteSourceOutputModel>> Delete(DeleteSourceQuery query)
+            => View(await this.Mediator.Send(query));
+
+        //[Route("/sources/delete")]
+        //[HttpPost]
+        //public async Task<ActionResult<DeleteSourceOutputModel>> Delete(DeleteSourceQuery query)
+        //{
+        //
+        //}
+
         [Route("/sources")]
         public async Task<ActionResult<SourcesOutputModel>> Index(ListSourcesQuery query)
             => View(await this.Mediator.Send(query));
@@ -58,7 +70,7 @@ namespace SportBox7.Web.Controllers
                 var model = await this.Mediator.Send(command);
                 if (model.Errors.Count != 0)
                 {
-                    return RedirectToAction("Edit", new EditSourceQuery() { Id = command.Id, ErrorMessage = string.Join(" ,", model.Errors) });
+                    return RedirectToAction("Edit", new EditSourceQuery() { Id = command.Id, ErrorMessage = string.Join(", ", model.Errors) });
                 }
                 return RedirectToAction("Details", new { id = model.Data.SourceId });
             }

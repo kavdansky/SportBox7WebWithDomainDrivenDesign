@@ -76,5 +76,6 @@
         public string SourceName { get; private set; } = default!;
 
         public string SourceImageUrl { get; private set; } = default!;
+
     }
 }

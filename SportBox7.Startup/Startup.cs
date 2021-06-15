@@ -3,11 +3,8 @@ namespace SportBox7.Startup
     using System.IO;
     using System.Net;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http.Features;
-    using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.FileProviders;

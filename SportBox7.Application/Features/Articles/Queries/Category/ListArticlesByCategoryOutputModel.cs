@@ -35,7 +35,7 @@
             await InitializeLayoutComponentsAsync(articleRepository);
             this.Articles = await articleRepository.GetArticleListingsByCategory(category);
             this.CurrentCategory = await articleRepository.GetCategoryByName(category);
-            if (category == null)
+            if (this.CurrentCategory == null)
             {
                 this.MetaDescription = $"Последни новини от sportbox7.com";
                 this.MetaKeywords = $"Последни новини спорт";

@@ -10,17 +10,30 @@
     using SportBox7.Application.Features.Identity.Commands.LoginUser;
     using SportBox7.Application.Features.Identity.Commands.LogoutUser;
     using SportBox7.Application.Features.Identity.Queries.LoginUser;
+    using SportBox7.Application.Features.Identity.Queries.RegisterUser;
     using SportBox7.Domain.Models.Editors;
     using SportBox7.Infrastructure.Identity;
 
-    
+    [ApiController]
     public class IdentityController : MainController
-    {  
+    {
+
+        [Route("identity/register")]
+        public async Task<ActionResult<RegisterUserInputModel>> Register(string? errorMessage)
+            => View(await RegisterUserInputModel.CreateAsync(errorMessage));
+
         [HttpPost]
         [Route("identity/register")]
         public async Task<ActionResult> Register(
             CreateUserCommand command)
-            => await this.Send(command);
+        { 
+            var result = await this.Send(command);
+            //if (!result.Succeeded)
+            //{
+            //    return RedirectToAction("Register", new { errorMessage = string.Join(", ", result.Errors) });
+            //}
+            return View();
+        } 
 
         [HttpPost]
         [Route("identity/login")]
