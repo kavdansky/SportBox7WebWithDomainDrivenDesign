@@ -9,11 +9,11 @@
     {
         public int Id { get; set; }
 
-        public class DealerDetailsQueryHandler : IRequestHandler<EditorDetailsQuery, EditorDetailsOutputModel>
+        public class EditorDetailsQueryHandler : IRequestHandler<EditorDetailsQuery, EditorDetailsOutputModel>
         {
             private readonly IEditorRepository editorRepository;
 
-            public DealerDetailsQueryHandler(IEditorRepository editorRepository) 
+            public EditorDetailsQueryHandler(IEditorRepository editorRepository) 
                 => this.editorRepository = editorRepository;
 
             public async Task<EditorDetailsOutputModel> Handle(

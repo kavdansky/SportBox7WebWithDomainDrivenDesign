@@ -18,9 +18,11 @@ namespace SportBox7.Infrastructure.Persistence
         {
             if (userManager.FindByEmailAsync("johndoe@localhost").Result == null)
             {
-                User user = new User("johndoe@localhost");
-                user.UserName = "johndoe";
-               
+                User user = new User("johndoe@localhost")
+                {
+                    UserName = "johndoe"
+                };
+
 
                 IdentityResult result = userManager.CreateAsync(user, "P@ssw0rd1!").Result;
 
@@ -33,11 +35,13 @@ namespace SportBox7.Infrastructure.Persistence
 
             if (userManager.FindByEmailAsync("kavdansky@mail.bg").Result == null)
             {
-                User user = new User("kavdansky@mail.bg");
-                user.UserName = "kavdansky";
-       
-                
-                IdentityResult result = userManager.CreateAsync(user, "000001").Result;
+                User user = new User("kavdansky@mail.bg")
+                {
+                    UserName = "kavdansky"
+                };
+
+
+                IdentityResult result = userManager.CreateAsync(user, "Kavdansky21").Result;
 
                 if (result.Succeeded)
                 {
@@ -50,19 +54,20 @@ namespace SportBox7.Infrastructure.Persistence
         {
             if (!roleManager.RoleExistsAsync("Editor").Result)
             {
-                IdentityRole role = new IdentityRole();
-                role.Name = "Editor";
-                IdentityResult roleResult = roleManager.
-                CreateAsync(role).Result;
+                IdentityRole role = new IdentityRole
+                {
+                    Name = "Editor"
+                };
+                _ = roleManager.CreateAsync(role).Result;
             }
-
 
             if (!roleManager.RoleExistsAsync("Admin").Result)
             {
-                IdentityRole role = new IdentityRole();
-                role.Name = "Admin";
-                IdentityResult roleResult = roleManager.
-                CreateAsync(role).Result;
+                IdentityRole role = new IdentityRole
+                {
+                    Name = "Admin"
+                };
+                _ = roleManager.CreateAsync(role).Result;
             }
         }
     }

@@ -9,21 +9,27 @@
     using SportBox7.Application.Features.Identity.Commands.CreateUser;
     using SportBox7.Application.Features.Identity.Commands.LoginUser;
     using SportBox7.Application.Features.Identity.Commands.LogoutUser;
+    using SportBox7.Application.Features.Identity.Queries.AllUsers;
     using SportBox7.Application.Features.Identity.Queries.LoginUser;
     using SportBox7.Application.Features.Identity.Queries.RegisterUser;
     using SportBox7.Domain.Models.Editors;
     using SportBox7.Infrastructure.Identity;
 
-    [ApiController]
     public class IdentityController : MainController
     {
-
         [Route("identity/register")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<RegisterUserInputModel>> Register(string? errorMessage)
             => View(await RegisterUserInputModel.CreateAsync(errorMessage));
 
+        [Route("identity")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<ListUsersOutputModel>> Index([FromQuery] ListUsersQuery query)
+            => View(await this.Mediator.Send(query));
+
         [HttpPost]
         [Route("identity/register")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Register(
             CreateUserCommand command)
         { 
@@ -61,7 +67,5 @@
             await this.Mediator.Send(command);
             return RedirectToAction("Login");
         }
-            
-
     }
 }

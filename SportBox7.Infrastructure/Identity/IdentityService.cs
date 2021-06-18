@@ -1,15 +1,17 @@
 ﻿namespace SportBox7.Infrastructure.Identity
 {
-    using System;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Application;
     using Application.Features.Identity;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.Extensions.Options;
     using SportBox7.Application.Common;
+    using SportBox7.Application.Features.Editors;
     using SportBox7.Application.Features.Identity.Commands;
     using SportBox7.Application.Features.Identity.Commands.LoginUser;
+    using SportBox7.Application.Features.Identity.Queries.AllUsers;
+    using SportBox7.Domain.Factories.Editors;
 
     public class IdentityService : IIdentity
     {
@@ -17,16 +19,30 @@
 
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IEditorFactory editorFactory;
+        private readonly IEditorRepository editorRepository;
+
 
         public IdentityService(
             UserManager<User> userManager,
-            RoleManager<IdentityRole> roleManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager,
+            IEditorFactory editorFactory,
+            IEditorRepository editorRepository)
         {
+            this.editorFactory = editorFactory;
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.roleManager = roleManager;
+            this.editorRepository = editorRepository;
+        }
+
+        public Task<List<SimpleUserListingModel>>GetAllSimpleUsers()
+        {
+            var editors = userManager.Users.Where(x => x.Editor  != null).Select(u=> u.Editor).ToList();
+            var editorsOutput = new List<SimpleUserListingModel>();
+            
+            editors.ForEach(e => editorsOutput.Add(new SimpleUserListingModel() { FirstName = e!.FirstName, LastName = e.LastName }));
+
+            return Task.Run(() => editorsOutput);
         }
 
         public async Task<Result<LoginSuccessModel>> Login(UserInputModel userInput)
@@ -46,6 +62,19 @@
             if (!passwordValid)
             {
                 return InvalidLoginErrorMessage;
+            }
+
+            if (await userManager.IsInRoleAsync(user, "Admin"))
+            {
+                if (user.Editor == null)
+                {
+                    var editor = editorFactory.WithFirstName("Lyubomir")
+                        .WithLastName("Kavdansky")
+                        .Build();
+
+                    user.BecomeEditor(editor);
+                    await editorRepository.Save(editor);
+                }
             }
 
             await this.signInManager.SignInAsync(user, false);
@@ -70,6 +99,6 @@
             return identityResult.Succeeded
                 ? Result<IUser>.SuccessWith(user)
                 : Result<IUser>.Failure(errors);
-        }    
+        }  
     }
 }

@@ -77,8 +77,7 @@
             services.AddTransient<UserManager<User>>();
             services.AddTransient<RoleManager<IdentityRole>>();
             services.AddTransient<IIdentity, IdentityService>();
-            services.AddTransient<IInitialData, UserData>(x=> new UserData(services.BuildServiceProvider().GetService<IdentityService>()));
-
+           
             return services;
         }
 

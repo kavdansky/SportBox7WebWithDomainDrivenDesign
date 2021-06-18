@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace SportBox7.Application.Features.Identity.Queries.RegisterUser
+﻿namespace SportBox7.Application.Features.Identity.Queries.RegisterUser
 {
+    using System.Threading.Tasks;
+
     public class RegisterUserInputModel
     {
         private RegisterUserInputModel()

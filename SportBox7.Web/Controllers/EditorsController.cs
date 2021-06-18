@@ -5,7 +5,6 @@
     using SportBox7.Application.Features.Identity.Commands.LoginUser;
     using System.Threading.Tasks;
 
-    
     public class EditorsController: MainController
     {
         [Authorize]
