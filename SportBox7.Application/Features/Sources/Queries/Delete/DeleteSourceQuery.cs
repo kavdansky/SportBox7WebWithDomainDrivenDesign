@@ -15,7 +15,7 @@
         {
             private readonly ISourceRepository sourceRepository;
          
-            public EditSourceQueryHandler(ISourceRepository sourceRepository, IMapper mapper)
+            public EditSourceQueryHandler(ISourceRepository sourceRepository)
             {
                 this.sourceRepository = sourceRepository;
             }

@@ -4,7 +4,7 @@
     using SportBox7.Application.Features.Identity.Commands;
     using SportBox7.Application.Features.Identity.Commands.LoginUser;
     using SportBox7.Application.Features.Identity.Queries.AllUsers;
-    using System.Collections;
+    using SportBox7.Application.Features.Identity.Queries.UserDetails;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -18,6 +18,6 @@
 
         Task<Result> Logout();
 
-        
+        Task<UserDetailsOutputModel> GetUserDetailsByEditorId(int id);
     }
 }
