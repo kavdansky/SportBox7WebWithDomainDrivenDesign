@@ -1,22 +1,13 @@
 ﻿namespace SportBox7.Infrastructure
 {
-    using Microsoft.AspNetCore.Authentication.Cookies;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.IdentityModel.Tokens;
     using Persistence;
-    using SportBox7.Application;
     using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Identity;
-    using SportBox7.Domain.Common;
     using SportBox7.Infrastructure.Identity;
-    using SportBox7.Infrastructure.Persistence.Repositories;
-    using System.Configuration;
-    using System.Text;
 
     public static class InfrastructureConfiguration
     {

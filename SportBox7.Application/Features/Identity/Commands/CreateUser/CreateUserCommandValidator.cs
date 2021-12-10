@@ -16,7 +16,9 @@
 
             this.RuleFor(u => u.Password)
                 .MaximumLength(MaxNameLength)
-                .NotEmpty();
+                .MinimumLength(MinNameLength)
+                .NotEmpty()
+                .WithMessage($"Паролата трябва да е между{MinNameLength} и {MaxNameLength}");
 
             this.RuleFor(u => u.FirstName)
                 .MinimumLength(MinNameLength)

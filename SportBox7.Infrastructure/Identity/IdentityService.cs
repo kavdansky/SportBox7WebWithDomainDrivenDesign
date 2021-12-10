@@ -8,9 +8,11 @@
     using Microsoft.AspNetCore.Identity;
     using SportBox7.Application.Common;
     using SportBox7.Application.Features.Editors;
-    using SportBox7.Application.Features.Identity.Commands;
+    using SportBox7.Application.Features.Identity.Commands.CreateUser;
+    using SportBox7.Application.Features.Identity.Commands.EditUser;
     using SportBox7.Application.Features.Identity.Commands.LoginUser;
     using SportBox7.Application.Features.Identity.Queries.AllUsers;
+    using SportBox7.Application.Features.Identity.Queries.EditUser;
     using SportBox7.Application.Features.Identity.Queries.UserDetails;
     using SportBox7.Domain.Factories.Editors;
 
@@ -39,8 +41,24 @@
             this.mapper = mapper;
         }
 
-        public async Task<List<SimpleUserListingModel>>GetAllSimpleUsers()
-            => await Task.Run(() => this.mapper.ProjectTo<SimpleUserListingModel>(userManager.Users.Where(x => x.Editor != null).Select(u => u.Editor)).ToList());
+        public async Task<EditUserOutputModel> EditUser(EditUserCommand userData)
+        {
+            var passwordHasher = new PasswordHasher<User>();
+            var userToEdit = this.userManager.Users.Where(i => i.Editor!.Id == userData.Id).FirstOrDefault();
+            userToEdit.Email = userData.Email;
+            userToEdit.PasswordHash = passwordHasher.HashPassword(userToEdit, userData.Password);
+            var identityResult = await userManager.UpdateAsync(userToEdit);
+            var editorToEdit = await editorRepository.GetEditorById(userData.Id);
+            editorToEdit.UpdateFirstName(userData.FirstName);
+            editorToEdit.UpdateLastName(userData.LastName);
+            var editorResult = await editorRepository.UpdateEditor(editorToEdit);
+            return await Task.Run(() => new EditUserOutputModel(userData.Email));
+        }
+
+        public async Task<List<SimpleUserListingModel>> GetAllSimpleUsers()
+        {
+            return await Task.Run(() => this.mapper.ProjectTo<SimpleUserListingModel>(userManager.Users.Where(x => x.Editor != null).Select(u => u.Editor)).ToList());  
+        } 
 
         public async Task<UserDetailsOutputModel> GetUserDetailsByEditorId(int id)
         {
@@ -57,7 +75,16 @@
             return new UserDetailsOutputModel();
         }
 
-        public async Task<Result<LoginSuccessModel>> Login(UserInputModel userInput)
+        public Task<EditUserInputModel> GetUserToEdit(int id)
+        {
+            var editor = editorRepository.GetEditorById(id).GetAwaiter().GetResult();
+            var user = userManager.Users.Where(x=> x.Editor != null).Where(u=> u.Editor!.Id == editor.Id).FirstOrDefault();
+            var resultUser = mapper.Map<EditUserInputModel>(editor);
+            resultUser.Email = user.Email;
+            return Task.Run(()=> resultUser);
+        }
+
+        public async Task<Result<LoginSuccessModel>> Login(LoginUserCommand userInput)
         {
             if (userInput.Email == null)
             {
@@ -100,7 +127,7 @@
             return Result.Success;
         }
 
-        public async Task<Result<IUser>> Register(UserInputModel userInput)
+        public async Task<Result<IUser>> Register(CreateUserCommand userInput)
         {
             var user = new User(userInput.Email);
             var identityResult = await this.userManager.CreateAsync(user, userInput.Password);

@@ -94,8 +94,12 @@
                                     <form asp-action="Register" enctype="multipart/form-data">
                                         <h4>Register New Editor</h4>
                                         <hr />
-                                        <p class="text-danger">@Model.ErrorMessage</p>
-
+                                        <p class="text-danger">
+                                            @foreach (var error in @Model.ErrorMessage)
+                                            {
+                                                @error<br />
+                                            }
+                                        </p>
 
                                         <div class="form-group">
                                             <label asp-for="@Model.Email"></label>

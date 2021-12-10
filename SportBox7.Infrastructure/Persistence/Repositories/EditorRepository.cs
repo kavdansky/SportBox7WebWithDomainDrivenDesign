@@ -1,21 +1,20 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using SportBox7.Application.Features.Dealers.Queries.Common;
-using SportBox7.Application.Features.Dealers.Queries.Details;
-using SportBox7.Application.Features.Editors;
-using SportBox7.Domain.Exeptions;
-using SportBox7.Domain.Models.Editors;
-using SportBox7.Infrastructure.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace SportBox7.Infrastructure.Persistence.Repositories
+﻿namespace SportBox7.Infrastructure.Persistence.Repositories
 {
+    using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
+    using SportBox7.Application.Common;
+    using SportBox7.Application.Features.Dealers.Queries.Common;
+    using SportBox7.Application.Features.Dealers.Queries.Details;
+    using SportBox7.Application.Features.Editors;
+    using SportBox7.Domain.Exeptions;
+    using SportBox7.Domain.Models.Editors;
+    using SportBox7.Infrastructure.Identity;
+    using System;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     internal class EditorRepository: DataRepository<Editor>, IEditorRepository
     {
         private readonly IMapper mapper;
@@ -77,6 +76,17 @@ namespace SportBox7.Infrastructure.Persistence.Repositories
             return authorData;
         }
 
-        
+        public Task<Editor> GetEditorById(int editorId, CancellationToken cancellationToken = default)
+            => Task.Run(()=> this.All().Where(e => e.Id == editorId).FirstOrDefault());
+
+        public async Task<bool> UpdateEditor(Editor editor)
+        {
+            var editorToEdit = this.db.Editors.Find(editor.Id);
+            editorToEdit.UpdateFirstName(editor.FirstName);
+            editorToEdit.UpdateLastName(editor.LastName);
+            await this.Save(editorToEdit);
+
+            return await Task.Run(() => true);
+        }
     }
 }

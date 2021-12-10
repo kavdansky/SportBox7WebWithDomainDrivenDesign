@@ -28,6 +28,20 @@
 
         public void AddArticle(Article article) => this.articles.Add(article);
 
+        public Editor UpdateFirstName(string firstName)
+        {
+            this.ValidateFirstName(firstName);
+            this.FirstName = firstName;
+            return this;
+        }
+
+        public Editor UpdateLastName(string lastName)
+        {
+            this.ValidateLastName(lastName);
+            this.LastName = lastName;
+            return this;
+        }
+
         private void Validate(string firstName, string lastName)
         {
             ValidateFirstName(firstName);

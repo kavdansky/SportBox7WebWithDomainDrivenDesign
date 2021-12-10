@@ -9,23 +9,19 @@
     {
         public ModelValidationException()
             : base("One or more validation errors have occurred.")
-            => this.Errors = new Dictionary<string, string[]>();
+            => this.Errors = new List<string>();
 
         public ModelValidationException(IEnumerable<ValidationFailure> errors)
             : this()
         {
-            var failureGroups = errors
-                .GroupBy(e => e.PropertyName, e => e.ErrorMessage);
+            
 
-            foreach (var failureGroup in failureGroups)
+            foreach (var error in errors)
             {
-                var propertyName = failureGroup.Key;
-                var propertyFailures = failureGroup.ToArray();
-
-                this.Errors.Add(propertyName, propertyFailures);
+                this.Errors.Add(error.ErrorMessage);
             }
         }
 
-        public IDictionary<string, string[]> Errors { get; }
+        public List<string> Errors { get; }
     }
 }

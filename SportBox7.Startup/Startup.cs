@@ -11,6 +11,7 @@ namespace SportBox7.Startup
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Logging;
     using SportBox7.Application;
+    using SportBox7.Application.Exceptions;
     using SportBox7.Domain;
     using SportBox7.Infrastructure;
     using SportBox7.Web;

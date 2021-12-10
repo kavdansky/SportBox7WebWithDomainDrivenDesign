@@ -2,18 +2,22 @@
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Common;
     using MediatR;
+    using SportBox7.Application.Common;
     using SportBox7.Application.Features.Editors;
     using SportBox7.Domain.Factories.Editors;
 
-    public class CreateUserCommand : UserInputModel, IRequest<Result>
+    public class CreateUserCommand: IRequest<Result<CreateUserOutputModel>>
     {
+        public string Email { get; set; } = default!;
+
+        public string Password { get; set; } = default!;
+
         public string FirstName { get; set; } = default!;
 
         public string LastName { get; set; } = default!;
 
-        public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result>
+        public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result<CreateUserOutputModel>>
         {
             private readonly IIdentity identity;
             private readonly IEditorFactory editorFactory;
@@ -29,7 +33,7 @@
                 this.editorRepository = editorRepository;
             }
 
-            public async Task<Result> Handle(
+            public async Task<Result<CreateUserOutputModel>> Handle(
                 CreateUserCommand request,
                 CancellationToken cancellationToken)
             {
@@ -37,7 +41,7 @@
 
                 if (!result.Succeeded)
                 {
-                    return result;
+                    return result.Errors;
                 }
 
                 var user = result.Data;
@@ -51,7 +55,7 @@
 
                 await this.editorRepository.Save(editor, cancellationToken);
 
-                return result;
+                return await Task.Run(()=> new CreateUserOutputModel(request.Email));
             }
         }
     }

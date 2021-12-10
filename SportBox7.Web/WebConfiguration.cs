@@ -5,10 +5,10 @@ using FluentValidation.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SportBox7.Application.Common;
-
-namespace SportBox7.Web
+using SportBox7.Application.Common;namespace SportBox7.Web
 {
+    using SportBox7.Application.Exceptions;
+
     public static class WebConfiguration
     {
         public static IServiceCollection AddWebComponents(this IServiceCollection services)

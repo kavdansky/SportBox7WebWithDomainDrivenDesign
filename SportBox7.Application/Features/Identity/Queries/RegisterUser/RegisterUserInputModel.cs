@@ -1,24 +1,16 @@
 ﻿namespace SportBox7.Application.Features.Identity.Queries.RegisterUser
 {
+    using SportBox7.Application.Features.Identity.Common;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public class RegisterUserInputModel
+    public class RegisterUserInputModel: UserInputModel
     {
-        private RegisterUserInputModel()
+        public RegisterUserInputModel()
         { }
-        public int Id { get; set; }
+        public new List<string> ErrorMessage { get; set; } = default!;
 
-        public string ErrorMessage { get; set; } = default!;
-
-        public string FirstName { get; set; } = default!;
-
-        public string LastName { get; set; } = default!;
-
-        public string Email { get; set; } = default!;
-
-        public string Password { get; set; } = default!;
-
-        private async Task<RegisterUserInputModel> InitializeAsync(string? errorMessage)
+        private async Task<RegisterUserInputModel> InitializeAsync(List<string> errorMessage)
         {
             if (errorMessage != null)
             {
@@ -32,7 +24,7 @@
             return this;
         }
 
-        public static async Task<RegisterUserInputModel> CreateAsync(string? errorMessage)
+        public static async Task<RegisterUserInputModel> CreateAsync(List<string> errorMessage)
         {
             RegisterUserInputModel model = new RegisterUserInputModel();
 

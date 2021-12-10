@@ -6,14 +6,15 @@
 
     public class SimpleUserListingModel: IMapFrom<Editor>
     {
-        public int Id { get; set; }
+        public int EditorId { get; set; }
+
+        public string UserId { get; set; } = default!;
 
         public string FirstName { get; set; } = default!;
 
         public string LastName { get; set; } = default!;
 
         public void Mapping(Profile mapper)
-            => mapper
-                .CreateMap<Editor, SimpleUserListingModel>();
+            => mapper.CreateMap<Editor, SimpleUserListingModel>();
     }
 }

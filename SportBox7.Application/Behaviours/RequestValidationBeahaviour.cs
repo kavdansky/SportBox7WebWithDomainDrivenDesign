@@ -18,7 +18,7 @@
             => this.validators = validators;
         
 
-        public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             var context = new ValidationContext<TRequest>(request);
 
@@ -34,7 +34,7 @@
                 throw new ModelValidationException(errors);
             }
 
-            return next();
+            return await next();
         }
     }
 }

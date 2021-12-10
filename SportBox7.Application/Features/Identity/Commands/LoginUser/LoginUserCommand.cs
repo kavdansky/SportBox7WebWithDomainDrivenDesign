@@ -6,8 +6,11 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel>>
+    public class LoginUserCommand: IRequest<Result<LoginOutputModel>>
     {
+        public string Email { get; set; } = default!;
+        public string Password { get; set; } = default!;
+
         public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, Result<LoginOutputModel>>
         {
             private readonly IIdentity identity;
