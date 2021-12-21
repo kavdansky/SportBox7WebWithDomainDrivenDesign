@@ -1,5 +1,5 @@
 ﻿@using SportBox7.Application.Features.Identity.Queries.AllUsers
-@model ListUsersOutputModel;
+@model ListUsersOutputModel
 <!DOCTYPE html>
 <html lang="bg">
 <head>
@@ -102,14 +102,15 @@
                                             <th>Name</th>
                                             <th>Actions</th>
                                         </tr>
-                                        <tr>
-                                            @foreach (var user in Model.Users)
-                                            {
-                                                <td>@user.FirstName @user.LastName</td>
-                                                <td  class=".text-dark"><a href="/identity/details?id=@user.EditorId">Details</a></td>
-                                            }
+
+                                        @foreach (var user in Model.Users)
+                                        {
+                                         <tr>
+                                            <td>@user.FirstName @user.LastName</td>
+                                            <td><a class=".text-dark" href="/identity/details?id=@user.Id">Details</a> | <a class=".text-dark" href="/identity/edit?id=@user.Id">Edit</a></td>
                                         </tr>
-                                    </table>
+                                         }    
+                                        </table>
                                 </div>
                             </div>
                         </div>

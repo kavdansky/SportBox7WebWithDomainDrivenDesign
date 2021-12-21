@@ -1158,9 +1158,13 @@ textarea:focus {
     display: inline-block;
     color: #d00614; }
 
-  #latestNews, a{
+  #latestNews, a {
       color: #fff;
   }
+
+#adminLink, a {
+    color: #000;
+}
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .contact-form-area {

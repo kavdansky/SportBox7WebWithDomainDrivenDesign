@@ -6,9 +6,7 @@
 
     public class SimpleUserListingModel: IMapFrom<Editor>
     {
-        public int EditorId { get; set; }
-
-        public string UserId { get; set; } = default!;
+        public int Id { get; set; }
 
         public string FirstName { get; set; } = default!;
 

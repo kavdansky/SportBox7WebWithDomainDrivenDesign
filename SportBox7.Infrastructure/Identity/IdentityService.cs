@@ -56,9 +56,9 @@
         }
 
         public async Task<List<SimpleUserListingModel>> GetAllSimpleUsers()
-        {
-            return await Task.Run(() => this.mapper.ProjectTo<SimpleUserListingModel>(userManager.Users.Where(x => x.Editor != null).Select(u => u.Editor)).ToList());  
-        } 
+            => await Task.Run(() => this.mapper.ProjectTo<SimpleUserListingModel>(userManager.Users
+                .Where(x => x.Editor != null)
+                .Select(u => u.Editor)).ToList());
 
         public async Task<UserDetailsOutputModel> GetUserDetailsByEditorId(int id)
         {

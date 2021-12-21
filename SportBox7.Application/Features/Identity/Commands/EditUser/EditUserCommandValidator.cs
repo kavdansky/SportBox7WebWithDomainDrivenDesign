@@ -1,10 +1,10 @@
-﻿namespace SportBox7.Application.Features.Identity.Commands.CreateUser
+﻿namespace SportBox7.Application.Features.Identity.Commands.EditUser
 {
     using FluentValidation;
 
     using static SportBox7.Domain.Models.ModelConstants.Common; 
 
-    public class EditUserCommandValidator : AbstractValidator<CreateUserCommand>
+    public class EditUserCommandValidator : AbstractValidator<EditUserCommand>
     {
         public EditUserCommandValidator()
         {

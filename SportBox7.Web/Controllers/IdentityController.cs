@@ -1,5 +1,6 @@
 ﻿namespace SportBox7.Web.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Application.Features.Identity;
@@ -62,13 +63,34 @@
         [Route("identity/edit")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<EditUserInputModel>> Edit(EditUserQuery query)
-          => View(await this.Mediator.Send(query));
-        
+        {
+            try
+            {
+                var result = await this.Mediator.Send(query);
+                return View(result);
+            }
+            catch (Exception)
+            {
+                return Redirect("/Home/NotFound");
+            }
+        }
+          
         [HttpPost]
         [Route("identity/edit")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<EditUserOutputModel>> Edit(EditUserCommand command)
-          => View(await this.Mediator.Send(command));
+        {
+            try
+            {
+                var result = await this.Mediator.Send(command);
+                return RedirectToAction("Index");
+            }
+            catch (ModelValidationException ex)
+            {
+                return RedirectToAction("Edit", new EditUserQuery {Errors = ex.Errors, Id = command.Id });
+            }
+            
+        }
 
         [Route("identity/register")]
         [Authorize(Roles = "Admin")]
@@ -88,7 +110,7 @@
                 {
                     return RedirectToAction("Register", await RegisterUserInputModel.CreateAsync(result.Errors));
                 }
-                return RedirectToAction("RegisterUserSuccess", result);
+                return Redirect("identity/editors");
             }
             catch (ModelValidationException ex )
             {
@@ -96,10 +118,5 @@
             }
             
         }
-
-        [Route("identity/registerSucsess")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<User>> RegisterUserSuccess(CreateUserOutputModel model)
-          => await Task.Run(()=> View(model)) ;
     }
 }
