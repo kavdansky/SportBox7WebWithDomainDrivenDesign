@@ -19,6 +19,7 @@
         Task<SourceByIdOutputModel> GetSourceById(int id);
         Task<DeleteSourceOutputModel> GetSourceToDeleteById(int id);
         IQueryable<Source> GetSource(int id);
-
+        Task<IEnumerable<Source>> GetSources();
+        Task<Source> GetSourceByName(string name);
     }
 }

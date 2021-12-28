@@ -8,7 +8,7 @@
 
         public string Body { get; set; } = default!;
 
-        public int Category { get; set; }
+        public string Category { get; set; } = default!;
 
         public string ImageUrl { get; set; } = default!;
 
@@ -23,5 +23,7 @@
         public int ArticleType { get; set; }
 
         public string TargetDate { get; set; } = default!;
+
+        public string Source { get; set; } = default!;
     }
 }

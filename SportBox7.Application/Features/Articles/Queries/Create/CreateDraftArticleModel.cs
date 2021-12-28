@@ -2,9 +2,9 @@
 {
     using SportBox7.Application.Features.Articles.Queries.Common;
     using SportBox7.Domain.Models.Articles.Enums;
+    using SportBox7.Domain.Models.Sources;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class CreateDraftArticleModel
     {
@@ -22,9 +22,13 @@
 
         public string SeoUrl { get; private set; } = default!;
 
-        public IEnumerable<string> Source { get; set; } = default!;
+        public string Source { get; set; } = default!;
 
         public IEnumerable<MenuCategoriesModel> Categories { get; set; } = default!;
+
+        public IEnumerable<Source> Sources { get; set; } = default!;
+
+        public string Category { get; set; } = default!;
 
         public DateTime? TargetDate { get; private set; }
 

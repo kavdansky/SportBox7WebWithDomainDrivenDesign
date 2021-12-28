@@ -9,13 +9,33 @@
     using System.Linq;
     using static SportBox7.Domain.Models.ModelConstants.Common;
     using static SportBox7.Domain.Models.ModelConstants.Article;
-    using static SportBox7.Domain.Models.ModelConstants;
 
     public class Article: EditableEntity<int>, IAggregateRoot
     {
         private readonly HashSet<SocialSignal> socialSignals;
 
         internal Article(string title, string body, string h1Tag, string imageUrl, string seoUrl, string metaDescription, string metaKeywords, Category category, ArticleType articleType, DateTime targetDate)
+        {
+            this.Validate(title, body, h1Tag, imageUrl, metaKeywords, metaDescription);
+
+            this.TargetDate = targetDate;
+            this.ArticleType = articleType;
+            this.CreationDate = DateTime.Now;
+            this.LastModDate = this.CreationDate;
+            this.Title = title;
+            this.Body = body;
+            this.H1Tag = h1Tag;
+            this.ImageUrl = imageUrl;
+            this.SeoUrl = seoUrl;
+            this.MetaKeywords = metaKeywords;
+            this.MetaDescription = metaDescription;
+            this.Category = category;
+            this.ArticleState = ArticleState.Draft;
+            this.ArticleType = ArticleType;
+            this.socialSignals = new HashSet<SocialSignal>();
+        }
+
+        internal Article(string title, string body, string h1Tag, string imageUrl, string seoUrl, string metaDescription, string metaKeywords, Category category, ArticleType articleType, DateTime targetDate, Models.Sources.Source source)
         {
             this.Validate(title, body, h1Tag, imageUrl, metaKeywords, metaDescription);
            
@@ -34,6 +54,7 @@
             this.ArticleState = ArticleState.Draft;
             this.ArticleType = ArticleType;
             this.socialSignals = new HashSet<SocialSignal>();
+            this.Source = source;
         }
 
 #pragma warning disable IDE0051 // Remove unused private members
@@ -68,6 +89,7 @@
             this.ValidateImageUrl(imageUrl);
             this.ValidateMetaKeywords(metaKeywords);
             this.ValidateMetaDescription(metaDescription);
+            
         }
 
         public string Title { get; private set; } = default!;

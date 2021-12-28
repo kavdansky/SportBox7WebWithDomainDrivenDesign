@@ -2,12 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Security.Claims;
     using System.Threading.Tasks;
     using Application.Features.Identity;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.DependencyInjection;
     using SportBox7.Application.Common;
     using SportBox7.Application.Exceptions;
     using SportBox7.Application.Features.Identity.Commands.CreateUser;
@@ -24,6 +26,13 @@
 
     public class IdentityController : MainController
     {
+        private readonly IIdentity identityService;
+
+        public IdentityController(IIdentity identityService)
+        {
+            this.identityService = identityService;
+        }
+
         [Route("identity/details")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UserDetailsOutputModel>> Details([FromQuery] UserDetailsQuery query)
@@ -61,13 +70,18 @@
         }
 
         [Route("identity/edit")]
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<EditUserInputModel>> Edit(EditUserQuery query)
         {
             try
             {
-                var result = await this.Mediator.Send(query);
-                return View(result);
+                var loggedUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                if (User.IsInRole("Admin") || identityService.CheckPermitForEdit(loggedUserId, query.Id))
+                {
+                    var result = await this.Mediator.Send(query);
+                    return View(result);
+                }
+                return Redirect("/Home/NotFound");
             }
             catch (Exception)
             {
@@ -77,13 +91,18 @@
           
         [HttpPost]
         [Route("identity/edit")]
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<EditUserOutputModel>> Edit(EditUserCommand command)
         {
             try
             {
-                var result = await this.Mediator.Send(command);
-                return RedirectToAction("Index");
+                var loggedUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                if (User.IsInRole("Admin") || identityService.CheckPermitForEdit(loggedUserId, command.Id))
+                {
+                    var result = await this.Mediator.Send(command);
+                    return RedirectToAction("Index");
+                }
+                return RedirectToAction("Edit", new EditUserQuery { Id = command.Id });
             }
             catch (ModelValidationException ex)
             {
@@ -112,7 +131,7 @@
                 }
                 return Redirect("identity/editors");
             }
-            catch (ModelValidationException ex )
+            catch (ModelValidationException ex)
             {
                 return RedirectToAction("Register", await RegisterUserInputModel.CreateAsync(ex.Errors));
             }

@@ -24,7 +24,7 @@
 
             this.RuleFor(c => c.Category)
                 .MustAsync(async (category, token) => await articleRepository
-                    .GetCategory(category, token) != null)
+                    .GetCategoryByName(category) != null)
                 .WithMessage("'{PropertyName}' does not exist.");
 
             this.RuleFor(c => c.ImageUrl)

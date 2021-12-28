@@ -14,11 +14,6 @@
                 .EmailAddress()
                 .NotEmpty();
 
-            this.RuleFor(u => u.Password)
-                .MaximumLength(MaxNameLength)
-                .MinimumLength(MinNameLength)
-                .NotEmpty();
-
             this.RuleFor(u => u.FirstName)
                 .MinimumLength(MinNameLength)
                 .MaximumLength(MaxNameLength)

@@ -3,6 +3,7 @@
     using SportBox7.Domain.Exeptions;
     using SportBox7.Domain.Models.Articles;
     using SportBox7.Domain.Models.Articles.Enums;
+    using SportBox7.Domain.Models.Sources;
     using System;
 
     internal class ArticleFactory : IArticleFactory
@@ -17,6 +18,7 @@
         private Category category = default!;
         private ArticleType articleType = default!;
         private DateTime targetDate = default!;
+        private Source source = default!;
 
         private bool isTitleSet;
         private bool isBodyset;
@@ -28,6 +30,7 @@
         private bool isCategorySet;
         private bool isArticleTypeSet;
         private bool isTargetDateSet;
+        private bool isSourceSet;
 
 
 
@@ -45,9 +48,9 @@
             return this;
         }
 
-        public IArticleFactory WithCategory(string name, string nameEn)
+        public IArticleFactory WithCategory(Category category)
         {
-            this.category =  new Category(name, nameEn);
+            this.category = category;
             this.isCategorySet = true;
             return this;
         }
@@ -87,6 +90,13 @@
             return this;
         }
 
+        public IArticleFactory WithSource(Source source)
+        {
+            this.source = source;
+            this.isSourceSet = true;
+            return this;
+        }
+
         public IArticleFactory WithTargetDate(DateTime targetDate)
         {
             this.isTargetDateSet = true;
@@ -103,17 +113,17 @@
 
         public Article Build()
         {
-            if (isArticleTypeSet && articleType == ArticleType.PeriodicArticle && isTargetDateSet!)
+            if (isArticleTypeSet && articleType == ArticleType.PeriodicArticle && !isTargetDateSet)
             {
                 throw new InvalidArticleException("Periodic Articles must have Target Date ");
             }
-            if (isTitleSet== false || isBodyset == false || isH1TagSet == false || isImageUrlSet == false || isSeoUrlSet == false || isMetaDescriptionSet== false || isMetaKeywordsSet == false || isCategorySet == false || isArticleTypeSet == false)
+            if (isTitleSet== false || isBodyset == false || isH1TagSet == false || isImageUrlSet == false || isSeoUrlSet == false || isMetaDescriptionSet== false || isMetaKeywordsSet == false || isCategorySet == false || isArticleTypeSet == false || isSourceSet == false)
             {
                 
                 throw new InvalidArticleException("Title, Body, H1Tag, ImageUrl, SeoUrl, MetaDescription, MetaKeywords, Category and Article must have value!");
             }
 
-            return new Article(this.title, this.body, this.h1Tag, this.imageUrl, this.seoUrl, this.metaDescription, this.metaKeywords, this.category, this.articleType, this.targetDate);
+            return new Article(this.title, this.body, this.h1Tag, this.imageUrl, this.seoUrl, this.metaDescription, this.metaKeywords, this.category, this.articleType, this.targetDate, this.source);
         }
     }
 }

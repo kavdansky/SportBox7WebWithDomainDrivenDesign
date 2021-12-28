@@ -49,6 +49,14 @@
         public Task<DeleteSourceOutputModel> GetSourceToDeleteById(int id)
             => this.mapper.ProjectTo<DeleteSourceOutputModel>(getSourceById(id)).FirstOrDefaultAsync();
 
+        public async Task<IEnumerable<Source>> GetSources()
+            => await base.All().ToListAsync();
+
+        public async Task<Source> GetSourceByName(string name)
+        {
+            return await this.All().Where(s => s.SourceName == name).FirstOrDefaultAsync();
+        }
+
         Func<int, IQueryable<Source>> getSourceById => GetSource;
         
     }

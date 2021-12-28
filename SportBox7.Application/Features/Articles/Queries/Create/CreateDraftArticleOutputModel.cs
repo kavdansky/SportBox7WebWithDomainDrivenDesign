@@ -1,31 +1,27 @@
-﻿using SportBox7.Application.Features.Articles.Contrcts;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SportBox7.Application.Features.Articles.Queries.Create
+﻿namespace SportBox7.Application.Features.Articles.Queries.Create
 {
-    public class CreateDraftArticleOutputModel
+    using SportBox7.Application.Features.Articles.Contrcts;
+    using SportBox7.Application.Features.Sources;
+    using System.Threading.Tasks;
+
+    public class CreateDraftArticleOutputModel: CreateDraftArticleModel
     {
+       
         public CreateDraftArticleOutputModel()
         {
-            this.Article = new CreateDraftArticleModel();
         }
 
-        public CreateDraftArticleModel Article { get; set; }
-
-        private async Task<CreateDraftArticleOutputModel> InitializeAsync(IArticleRepository articleRepository)
+        private async Task<CreateDraftArticleOutputModel> InitializeAsync(IArticleRepository articleRepository, ISourceRepository sourceRepository)
         {
-            this.Article.Categories = await articleRepository.GetMenuCategories();
+            this.Categories = await articleRepository.GetMenuCategories();
+            this.Sources = await sourceRepository.GetSources();
             return this;
         }
 
-        public static Task<CreateDraftArticleOutputModel> CreateAsync(IArticleRepository articleRepository)
+        public static Task<CreateDraftArticleOutputModel> CreateAsync(IArticleRepository articleRepository, ISourceRepository sourceRepository)
         {
             var outputModel = new CreateDraftArticleOutputModel();
-            return outputModel.InitializeAsync(articleRepository);
+            return outputModel.InitializeAsync(articleRepository, sourceRepository);
         }
 
     }

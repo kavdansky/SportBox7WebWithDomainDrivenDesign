@@ -2,7 +2,9 @@
 {
     using FluentAssertions;
     using SportBox7.Domain.Exeptions;
+    using SportBox7.Domain.Models.Articles;
     using SportBox7.Domain.Models.Articles.Enums;
+    using SportBox7.Domain.Models.Sources;
     using System;
     using Xunit;
 
@@ -18,13 +20,14 @@
             Action act = () => articleFactory
                 .WithArticleType(ArticleType.NewsArticle)
                 .WithBody("Test Body body")
-                .WithCategory("Футбол", "Football")
+                .WithCategory(new Category("Футбол", "Football"))
                 .WithH1Tag("Test H1 tag")
                 .WithImageUrl("https://imgurl")
                 .WithMetaDescription("test meta descr")
                 .WithMetaKeywords("Meta keywords test")
                 .WithTargetDate(new DateTime(2020, 11, 8))
                 .WithSeoUrl("https://seourl")
+                .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
 
             // Assert
@@ -40,7 +43,7 @@
             // Act
             Action act = () => articleFactory
                 .WithArticleType(ArticleType.NewsArticle)
-                .WithCategory("Футбол", "Football")
+                .WithCategory(new Category("Футбол", "Football"))
                 .WithH1Tag("Test H1 tag")
                 .WithImageUrl("https://imgurl")
                 .WithMetaDescription("test meta descr")
@@ -48,6 +51,7 @@
                 .WithTargetDate(new DateTime(2020, 11, 8))
                 .WithSeoUrl("https://seourl")
                 .WithTitle("Test title")
+                .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
 
             // Assert
@@ -71,6 +75,7 @@
                 .WithTargetDate(new DateTime(2020, 11, 8))
                 .WithSeoUrl("https://seourl")
                 .WithTitle("Test title")
+                .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
 
             // Assert
@@ -87,13 +92,14 @@
             Action act = () => articleFactory
                 .WithArticleType(ArticleType.NewsArticle)
                 .WithBody("Test Body body")
-                .WithCategory("Футбол", "Football")
+                .WithCategory(new Category("Футбол", "Football"))
                 .WithImageUrl("https://imgurl")
                 .WithMetaDescription("test meta descr")
                 .WithMetaKeywords("Meta keywords test")
                 .WithTargetDate(new DateTime(2020, 11, 8))
                 .WithSeoUrl("https://seourl")
                 .WithTitle("Test title")
+                .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
 
             // Assert
@@ -110,13 +116,14 @@
             Action act = () => articleFactory
                 .WithArticleType(ArticleType.NewsArticle)
                 .WithBody("Test Body body")
-                .WithCategory("Футбол", "Football")
+                .WithCategory(new Category("Футбол", "Football"))
                 .WithH1Tag("Test H1 tag")
                 .WithMetaDescription("test meta descr")
                 .WithMetaKeywords("Meta keywords test")
                 .WithTargetDate(new DateTime(2020, 11, 8))
                 .WithSeoUrl("https://seourl")
                 .WithTitle("Test title")
+                .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
 
             // Assert
@@ -133,13 +140,14 @@
             Action act = () => articleFactory
                 .WithArticleType(ArticleType.NewsArticle)
                 .WithBody("Test Body body")
-                .WithCategory("Футбол", "Football")
+                .WithCategory(new Category("Футбол", "Football"))
                 .WithH1Tag("Test H1 tag")
                 .WithImageUrl("https://imgurl")
                 .WithMetaKeywords("Meta keywords test")
                 .WithTargetDate(new DateTime(2020, 11, 8))
                 .WithSeoUrl("https://seourl")
                 .WithTitle("Test title")
+                .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
 
             // Assert
@@ -156,13 +164,14 @@
             Action act = () => articleFactory
                 .WithArticleType(ArticleType.NewsArticle)
                 .WithBody("Test Body body")
-                .WithCategory("Футбол", "Football")
+                .WithCategory(new Category("Футбол", "Football"))
                 .WithH1Tag("Test H1 tag")
                 .WithImageUrl("https://imgurl")
                 .WithMetaDescription("test meta descr")
                 .WithTargetDate(new DateTime(2020, 11, 8))
                 .WithSeoUrl("https://seourl")
                 .WithTitle("Test title")
+                .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
 
             // Assert
@@ -179,17 +188,69 @@
             Action act = () => articleFactory
                 .WithArticleType(ArticleType.NewsArticle)
                 .WithBody("Test Body body")
-                .WithCategory("Футбол", "Football")
+                .WithCategory(new Category("Футбол", "Football"))
                 .WithH1Tag("Test H1 tag")
                 .WithImageUrl("https://imgurl")
                 .WithMetaDescription("test meta descr")
                 .WithMetaKeywords("Meta keywords test")
                 .WithTargetDate(new DateTime(2020, 11, 8))
                 .WithTitle("Test title")
+                .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
 
             // Assert
             act.Should().Throw<InvalidArticleException>();
         }
+
+        [Fact]
+        public void BuildShouldThrowExceptionIfSourceIsNotSet()
+        {
+            // Assert
+            var articleFactory = new ArticleFactory();
+
+            // Act
+            Action act = () => articleFactory
+                .WithArticleType(ArticleType.NewsArticle)
+                .WithBody("Test Body body")
+                .WithCategory(new Category("Футбол", "Football"))
+                .WithH1Tag("Test H1 tag")
+                .WithImageUrl("https://imgurl")
+                .WithMetaDescription("test meta descr")
+                .WithMetaKeywords("Meta keywords test")
+                .WithTargetDate(new DateTime(2020, 11, 8))
+                .WithTitle("Test title")
+                .WithSeoUrl("https://seourl")
+                .Build();
+
+            // Assert
+            act.Should().Throw<InvalidArticleException>();
+        }
+
+        [Fact]
+        public void BuildShouldNotThrowExceptionIfEverithingIsFine()
+        {
+            // Assert
+            var articleFactory = new ArticleFactory();
+
+            // Act
+            Action act = () => articleFactory
+                .WithArticleType(ArticleType.NewsArticle)
+                .WithBody("Test Body body")
+                .WithCategory(new Category("Футбол", "Football"))
+                .WithH1Tag("Test H1 tag")
+                .WithImageUrl("https://imgurl")
+                .WithMetaDescription("test meta descr")
+                .WithMetaKeywords("Meta keywords test")
+                .WithTargetDate(new DateTime(2020, 11, 8))
+                .WithTitle("Test title")
+                .WithSeoUrl("https://seourl")
+                .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
+                .Build();
+
+            // Assert
+            act.Should().NotThrow<InvalidArticleException>();
+        }
+
+
     }
 }

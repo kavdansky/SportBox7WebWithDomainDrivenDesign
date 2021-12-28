@@ -1,5 +1,5 @@
-﻿@using SportBox7.Application.Features.Identity.Queries.AllUsers
-@model ListUsersOutputModel
+﻿@model SportBox7.Application.Features.Articles.Queries.Create.CreateDraftArticleOutputModel
+@using SportBox7.Domain.Models.Articles.Enums
 <!DOCTYPE html>
 <html lang="bg">
 <head>
@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <link rel="icon" href="">
-    <title>Editor Login - Sportbox7</title>
+    <title>Register new user - Sportbox7</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
 </head>
@@ -91,26 +91,68 @@
                             <div class="post-data">
                                 <a href="#" class="post-catagory"></a>
                                 <div class="post-meta">
-                                    <h4>Users</h4>
-                                    <hr />
-                                    <a href="/identity/register" class="btn btn-primary btn-group-sm">Add new editor</a>
-                                    <br />
-                                    <br />
-                                    <!-- Post Like & Post Comment -->
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Actions</th>
-                                        </tr>
+                                    <form asp-action="Create" enctype="multipart/form-data">
+                                        <h4>Create new draft article</h4>
+                                        <hr />
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Title"></label>
+                                            <input asp-for="@Model.Title" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="@Model.MetaDescription"></label>
+                                            <input asp-for="@Model.MetaDescription" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="@Model.MetaKeywords"></label>
+                                            <input asp-for="@Model.MetaKeywords" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="@Model.H1Tag"></label>
+                                            <input asp-for="@Model.H1Tag" class="form-control" />
+                                        </div>
 
-                                        @foreach (var user in Model.Users)
-                                        {
-                                         <tr>
-                                            <td>@user.FirstName @user.LastName</td>
-                                            <td><a id="adminLink" href="/identity/details?id=@user.Id">Details</a> | <a id="adminLink" href="/identity/edit?id=@user.Id">Edit</a></td>
-                                        </tr>
-                                         }    
-                                        </table>
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Body"></label>
+                                            <input asp-for="@Model.Body" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="@Model.TargetDate"></label>
+                                            <input asp-for="@Model.TargetDate" asp-format="{0:dd/MM/yyyy}" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="@Model.SeoUrl"></label>
+                                            <input asp-for="@Model.SeoUrl" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="@Model.ImageUrl"></label>
+                                            <input asp-for="@Model.ImageUrl" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Category"></label>
+                                            <select asp-for="@Model.Category"
+                                                    asp-items="@(new SelectList(Model.Categories.Select(x=> x.NameEn).ToList()))"
+                                                    class="form-control">
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="@Model.ArticleType"></label>
+                                            <select asp-for="@Model.ArticleType" asp-items="Html.GetEnumSelectList<ArticleType>()"
+                                                    class="form-control">
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="@Model.Source"></label>
+                                            <select asp-for="@Model.Source"
+                                                    asp-items="@(new SelectList(Model.Sources.Select(x=> x.SourceName).ToList()))"
+                                                    class="form-control">
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">Save draft</button>
+                                        </div>
+                                    </form>
+                                    <!-- Post Like & Post Comment -->
                                 </div>
                             </div>
                         </div>

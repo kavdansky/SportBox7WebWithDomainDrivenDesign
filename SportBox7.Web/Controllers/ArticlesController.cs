@@ -7,9 +7,19 @@
     using Microsoft.AspNetCore.Authorization;
     using SportBox7.Application.Features.Articles.Queries.Id;
     using SportBox7.Application.Features.Articles.Queries.Create;
+    using SportBox7.Application.Features.Articles.Contrcts;
+    using SportBox7.Application.Features.Sources;
 
     public class ArticlesController: MainController
     {
+        private readonly IArticleRepository articleRepository;
+        private readonly ISourceRepository sourceRepository;
+
+        public ArticlesController(IArticleRepository articleRepository, ISourceRepository sourceRepository)
+        {
+            this.articleRepository = articleRepository;
+            this.sourceRepository = sourceRepository;
+        }
         [HttpGet]
         [Route("/articles")]
         public async Task<ActionResult<ListArticlesByCategoryOutputModel>> Category([FromQuery] ListArticlesByCategoryQuery query)
@@ -22,8 +32,6 @@
             return Redirect("/Home/NotFound");
         }
 
-
-
         [Route("/articles/all")]
         [HttpGet]
         public async Task<ActionResult<ArticleByIdOutputModel>> Id([FromQuery] ArticleByIdQuery query)
@@ -34,18 +42,22 @@
                 return View(model);
             }
             return Redirect("/Home/NotFound"); 
-        } 
+        }
 
+        [Route("/articles/create")]
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<CreateDraftArticleOutputModel>> Create()
+            => View(await CreateDraftArticleOutputModel.CreateAsync(articleRepository, sourceRepository));
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<CreateArticleOutputModel>> Create(
-            CreateArticleCommand command)
-            => await this.Send(command);
+        public async Task<ActionResult<CreateArticleOutputModel>> Create(CreateArticleCommand command)
+        {
+            var result = await this.Send(command);
+            return result;
+        } 
 
-        [HttpGet]
-        [Authorize]
-        public ActionResult<CreateDraftArticleOutputModel> Create()
-             => View(); 
+         
     }
 }

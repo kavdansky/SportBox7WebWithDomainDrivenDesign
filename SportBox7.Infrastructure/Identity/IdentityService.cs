@@ -1,5 +1,6 @@
 ﻿namespace SportBox7.Infrastructure.Identity
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -41,12 +42,26 @@
             this.mapper = mapper;
         }
 
+        public bool CheckPermitForEdit(string userId, int editorId)
+        {
+
+            string userToEditId = userManager.Users.Where(u => u.Editor!.Id == editorId).FirstOrDefault().Id;
+            if (userId == userToEditId)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public async Task<EditUserOutputModel> EditUser(EditUserCommand userData)
         {
             var passwordHasher = new PasswordHasher<User>();
             var userToEdit = this.userManager.Users.Where(i => i.Editor!.Id == userData.Id).FirstOrDefault();
             userToEdit.Email = userData.Email;
-            userToEdit.PasswordHash = passwordHasher.HashPassword(userToEdit, userData.Password);
+            if (!String.IsNullOrEmpty(userData.Password))
+            {
+                userToEdit.PasswordHash = passwordHasher.HashPassword(userToEdit, userData.Password);
+            }
             var identityResult = await userManager.UpdateAsync(userToEdit);
             var editorToEdit = await editorRepository.GetEditorById(userData.Id);
             editorToEdit.UpdateFirstName(userData.FirstName);

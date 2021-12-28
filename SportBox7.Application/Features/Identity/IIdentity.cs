@@ -26,5 +26,7 @@
         Task<EditUserInputModel> GetUserToEdit(int id);
 
         Task<EditUserOutputModel> EditUser(EditUserCommand userData);
+
+        bool CheckPermitForEdit(string userId, int editorId);
     }
 }

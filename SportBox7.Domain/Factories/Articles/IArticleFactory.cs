@@ -1,11 +1,10 @@
-﻿using SportBox7.Domain.Models.Articles;
-using SportBox7.Domain.Models.Articles.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SportBox7.Domain.Factories.Articles
+﻿namespace SportBox7.Domain.Factories.Articles
 {
+    using SportBox7.Domain.Models.Articles;
+    using SportBox7.Domain.Models.Articles.Enums;
+    using SportBox7.Domain.Models.Sources;
+    using System;
+
     public interface IArticleFactory: IFactory<Article>
     {
         IArticleFactory WithTitle(string title);
@@ -22,11 +21,13 @@ namespace SportBox7.Domain.Factories.Articles
 
         IArticleFactory WithMetaKeywords(string metaKeywords);
 
-        IArticleFactory WithCategory(string name, string nameEn);
+        IArticleFactory WithCategory(Category category);
 
         IArticleFactory WithArticleType(ArticleType articleType);
 
         IArticleFactory WithTargetDate(DateTime targetDate);
+
+        IArticleFactory WithSource(Source source);
 
     }
 }
