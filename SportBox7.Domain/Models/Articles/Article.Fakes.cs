@@ -1,14 +1,14 @@
-﻿using Bogus;
-using FakeItEasy;
-using SportBox7.Domain.Common;
-using SportBox7.Domain.Models.Articles.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SportBox7.Domain.Models.Articles
+﻿namespace SportBox7.Domain.Models.Articles
 {
+    using Bogus;
+    using FakeItEasy;
+    using SportBox7.Domain.Common;
+    using SportBox7.Domain.Models.Articles.Enums;
+    using SportBox7.Domain.Models.Sources;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class ArticleFakes
     {
         public class ArticleDummyFactory : IDummyFactory
@@ -43,10 +43,10 @@ namespace SportBox7.Domain.Models.Articles
                             f.Lorem.Letter(20),
                             new Category("Футбол", "Football"),
                             ArticleType.NewsArticle,
-                            f.Date.Between(new DateTime(2018,11,11), new DateTime(2020,10,10))))
+                            f.Date.Between(new DateTime(2018,11,11), new DateTime(2020,10,10)),
+                                new Source(f.Lorem.Letter(10), f.Internet.Url(), f.Internet.Url())))
                         .Generate()
                         .SetId(id);
             }
-
     }
 }

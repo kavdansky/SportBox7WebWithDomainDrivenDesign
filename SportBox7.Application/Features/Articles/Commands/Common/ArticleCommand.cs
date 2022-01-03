@@ -1,8 +1,10 @@
 ﻿namespace SportBox7.Application.Features.Articles.Commands.Common
 {
-    public abstract class ArticleCommand<TCommand> : EntityCommand<int>
-        where TCommand : EntityCommand<int>
+    using System.Collections.Generic;
+
+    public abstract class ArticleCommand : EntityCommand<int>
     {
+        public List<string> Errors { get; set; } = new List<string>();
 
         public string Title { get; set; } = default!;
 

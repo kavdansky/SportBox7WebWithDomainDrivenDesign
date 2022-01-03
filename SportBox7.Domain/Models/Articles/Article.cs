@@ -14,27 +14,6 @@
     {
         private readonly HashSet<SocialSignal> socialSignals;
 
-        internal Article(string title, string body, string h1Tag, string imageUrl, string seoUrl, string metaDescription, string metaKeywords, Category category, ArticleType articleType, DateTime targetDate)
-        {
-            this.Validate(title, body, h1Tag, imageUrl, metaKeywords, metaDescription);
-
-            this.TargetDate = targetDate;
-            this.ArticleType = articleType;
-            this.CreationDate = DateTime.Now;
-            this.LastModDate = this.CreationDate;
-            this.Title = title;
-            this.Body = body;
-            this.H1Tag = h1Tag;
-            this.ImageUrl = imageUrl;
-            this.SeoUrl = seoUrl;
-            this.MetaKeywords = metaKeywords;
-            this.MetaDescription = metaDescription;
-            this.Category = category;
-            this.ArticleState = ArticleState.Draft;
-            this.ArticleType = ArticleType;
-            this.socialSignals = new HashSet<SocialSignal>();
-        }
-
         internal Article(string title, string body, string h1Tag, string imageUrl, string seoUrl, string metaDescription, string metaKeywords, Category category, ArticleType articleType, DateTime targetDate, Models.Sources.Source source)
         {
             this.Validate(title, body, h1Tag, imageUrl, metaKeywords, metaDescription);
@@ -78,6 +57,7 @@
             this.TargetDate = default!;
             this.Category = default!;
             this.socialSignals = new HashSet<SocialSignal>();
+            this.Source = default!;
 
         }
 
@@ -106,7 +86,7 @@
 
         public string SeoUrl { get; private set; } = default!;
 
-        public Models.Sources.Source? Source { get; private set; }
+        public Models.Sources.Source Source { get; private set; }
 
         public Category Category { get; private set; }
        

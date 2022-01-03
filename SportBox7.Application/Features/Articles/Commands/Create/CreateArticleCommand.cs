@@ -11,7 +11,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class CreateArticleCommand : ArticleCommand<CreateArticleCommand>, IRequest<CreateArticleOutputModel>
+    public class CreateArticleCommand : ArticleCommand, IRequest<CreateArticleOutputModel>
     {
         public class CreateCreateArticleCommandHandler : IRequestHandler<CreateArticleCommand, CreateArticleOutputModel>
         {

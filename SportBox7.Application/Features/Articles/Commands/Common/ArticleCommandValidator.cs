@@ -6,9 +6,10 @@
     using static Domain.Models.ModelConstants.Article;
     using SportBox7.Domain.Models.Articles.Enums;
     using SportBox7.Application.Features.Articles.Contrcts;
+    using SportBox7.Application.Features.Articles.Queries.Common;
+    using SportBox7.Application.Features.Articles.Commands.Create;
 
-    public class ArticleCommandValidator<TCommand> : AbstractValidator<ArticleCommand<TCommand>>
-        where TCommand : EntityCommand<int>
+    public class ArticleCommandValidator : AbstractValidator<CreateArticleCommand>
     {
         public ArticleCommandValidator(IArticleRepository articleRepository)
         {
@@ -51,11 +52,6 @@
                .MinimumLength(MetatagsMinLength)
                .MaximumLength(MetatagsMaxLength)
                .NotEmpty();
-
-
-            this.RuleFor(c => c.ArticleType)
-                .Must(ContainArticleType)
-                .WithMessage("'Transmission Type' is not valid.");
 
             this.RuleFor(s => s.TargetDate)
             .Must(BeAValidDate)

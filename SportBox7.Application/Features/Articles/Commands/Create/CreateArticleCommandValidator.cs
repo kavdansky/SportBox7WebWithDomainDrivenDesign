@@ -7,6 +7,6 @@
     public class CreateArticleCommandValidator : AbstractValidator<CreateArticleCommand>
     {
         public CreateArticleCommandValidator(IArticleRepository articleRepository) 
-            => this.Include(new ArticleCommandValidator<CreateArticleCommand>(articleRepository));
+            => this.Include(new ArticleCommandValidator(articleRepository));
     }
 }
