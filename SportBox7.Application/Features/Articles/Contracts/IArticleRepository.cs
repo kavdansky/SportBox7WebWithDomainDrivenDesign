@@ -25,7 +25,7 @@
 
         Task<ArticleByIdModel> GetArticleById(int id);
 
-        Task<Category> GetCategory(
+        Task<Category> GetCurrentCategory(
             int categoryId,
             CancellationToken cancellationToken = default);
 
@@ -42,5 +42,7 @@
         Task<Category> GetCategoryByName(string? name);
 
         Task<int> Total(CancellationToken cancellationToken = default);
+
+        Task<Article> GetArticleObjectById(int id);
     }
 }

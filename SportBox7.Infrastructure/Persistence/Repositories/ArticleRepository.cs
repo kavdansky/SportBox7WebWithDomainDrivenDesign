@@ -85,12 +85,13 @@
         public async Task<List<MenuCategoriesModel>> GetMenuCategories()
             => await this.db.Categories.Select(x => new MenuCategoriesModel(x.CategoryName, x.CategoryNameEN)).ToListAsync();
        
-        public async Task<Category> GetCategory(
-            int categoryId,
+        public async Task<Category> GetCurrentCategory(
+            int articleId,
             CancellationToken cancellationToken = default)
             =>  await this.db
                 .Categories
-                .FirstOrDefaultAsync(c => c.Id == categoryId, cancellationToken);
+                .Where(c=> c.CategoryNameEN == this.GetArticleById(articleId).GetAwaiter().GetResult().CategoryEn)
+                .FirstOrDefaultAsync();
 
         public async Task<Category> GetCategoryByName(string? name)
             => await this.db.Categories.Where(c => c.CategoryNameEN == name).FirstOrDefaultAsync();
@@ -102,6 +103,8 @@
 
         public async Task<Editor> GetArticleAuthor(int articleId)
             => await this.db.Editors.Where(a => a.Articles.Where(x => x.Id == articleId).Any()).FirstOrDefaultAsync();
-       
+
+        public Task<Article> GetArticleObjectById(int id)
+            => this.All().Include(x=> x.Source).Include(x=> x.Category).Where(a => a.Id == id).FirstOrDefaultAsync();
     }
 }

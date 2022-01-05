@@ -7,7 +7,7 @@
     using SportBox7.Application.Features.Sources;
     using System.Threading.Tasks;
 
-    public class CreateDraftArticleOutputModel: CreateDraftArticleModel
+    public class CreateDraftArticleOutputModel: CreateArticleModel
     {
        
         public CreateDraftArticleOutputModel()
@@ -30,7 +30,7 @@
         public override void Mapping(Profile mapper)
             => mapper
                 .CreateMap<CreateArticleCommand, CreateDraftArticleOutputModel>()
-                .IncludeBase<CreateArticleCommand, CreateDraftArticleModel>();
+                .IncludeBase<CreateArticleCommand, CreateArticleModel>();
 
     }
 }

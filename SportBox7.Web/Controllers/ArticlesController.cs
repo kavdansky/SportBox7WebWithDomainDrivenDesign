@@ -11,6 +11,7 @@
     using SportBox7.Application.Features.Sources;
     using SportBox7.Application.Exceptions;
     using AutoMapper;
+    using SportBox7.Application.Features.Articles.Queries.Edit;
 
     public class ArticlesController: MainController
     {
@@ -34,6 +35,17 @@
                 return View(model);
             }
             return Redirect("/Home/NotFound");
+        }
+
+        [Route("/articles/edit")]
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<EditArticleOutputModel>> Edit([FromQuery]EditArticleOutputModelQuery query)
+        {
+            var model = await this.Mediator.Send(query);
+            model.Categories = await articleRepository.GetMenuCategories();
+            model.Sources = await sourceRepository.GetSources();
+            return View(model);
         }
 
         [Route("/articles/all")]
@@ -61,8 +73,7 @@
             model.Sources = await sourceRepository.GetSources();
             return View(model);
         }
-        
-
+       
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<CreateArticleOutputModel>> Create(CreateArticleCommand command)

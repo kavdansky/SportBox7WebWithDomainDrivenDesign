@@ -13,7 +13,7 @@
 
     public class CreateArticleCommand : ArticleCommand, IRequest<CreateArticleOutputModel>
     {
-        public class CreateCreateArticleCommandHandler : IRequestHandler<CreateArticleCommand, CreateArticleOutputModel>
+        public class CreateArticleCommandHandler : IRequestHandler<CreateArticleCommand, CreateArticleOutputModel>
         {
             private readonly ICurrentUser currentUser;
             private readonly IEditorRepository editorRepository;
@@ -21,7 +21,7 @@
             private readonly IArticleFactory articleFactory;
             private readonly ISourceRepository sourceRepository;
 
-            public CreateCreateArticleCommandHandler(
+            public CreateArticleCommandHandler(
                 ICurrentUser currentUser,
                 IEditorRepository editorRepository,
                 IArticleRepository articleRepository,

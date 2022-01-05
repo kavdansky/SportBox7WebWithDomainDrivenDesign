@@ -7,7 +7,7 @@
     using System;
     using System.Collections.Generic;
 
-    public class CreateDraftArticleModel
+    public class CreateArticleModel
     {
         public List<string> Errors { get; set; } = new List<string>();
 
@@ -40,7 +40,8 @@
         public ArticleType ArticleType { get; private set; }
 
         public virtual void Mapping(Profile mapper)
-            => mapper
-                .CreateMap<ArticleCommand, CreateDraftArticleModel>();
+        {
+            mapper.CreateMap<ArticleCommand, CreateArticleModel>();
+        } 
     }
 }
