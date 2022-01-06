@@ -1,10 +1,14 @@
-﻿namespace SportBox7.Application.Features.Articles.Commands.Create
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace SportBox7.Application.Features.Articles.Commands.Create
 {
     public class CreateArticleOutputModel
     {
-        public CreateArticleOutputModel(int articleId) 
-            => this.ArticleId = articleId;
+        public CreateArticleOutputModel(int Id)
+           => this.Id = Id;
 
-        public int ArticleId { get; }
+        public int Id { get; }
     }
 }

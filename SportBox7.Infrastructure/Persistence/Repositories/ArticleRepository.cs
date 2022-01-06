@@ -1,5 +1,6 @@
 ﻿namespace SportBox7.Infrastructure.Persistence.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -7,11 +8,14 @@
     using Application.Features.Articles.Queries.Category;
     using Domain.Models.Articles;
     using Microsoft.EntityFrameworkCore;
+    using SportBox7.Application.Features.Articles.Commands.Edit;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Common;
     using SportBox7.Application.Features.Articles.Queries.HomePage;
     using SportBox7.Application.Features.Articles.Queries.Id;
+    using SportBox7.Domain.Models.Articles.Enums;
     using SportBox7.Domain.Models.Editors;
+    using SportBox7.Domain.Models.Sources;
 
     internal class ArticleRepository : DataRepository<Article>, IArticleRepository
     {
@@ -106,5 +110,22 @@
 
         public Task<Article> GetArticleObjectById(int id)
             => this.All().Include(x=> x.Source).Include(x=> x.Category).Where(a => a.Id == id).FirstOrDefaultAsync();
+
+        public async Task UpdateArticle(EditArticleCommand command, Source sourceToEdit)
+        {
+            Article articleToEdit = this.All().Where(a => a.Id == command.Id).FirstOrDefault();
+            articleToEdit.UpdateBody(command.Body);
+            articleToEdit.UpdateCategory(await this.GetCategoryByName(command.Category));
+            articleToEdit.UpdateArticleType((ArticleType)command.ArticleType);
+            articleToEdit.UpdateH1Tag(command.H1Tag);
+            articleToEdit.UpdateImageUrl(command.ImageUrl);
+            articleToEdit.UpdateMetaDescription(command.MetaDescription);
+            articleToEdit.UpdateMetaKeywords(command.MetaKeywords);
+            articleToEdit.UpdateSeoUrl(command.SeoUrl);
+            articleToEdit.UpdateSource(sourceToEdit);
+            articleToEdit.UpdateTargetDate(DateTime.Parse(command.TargetDate));
+            articleToEdit.UpdateTitle(command.Title);
+            await this.Save(articleToEdit);
+        }
     }
 }

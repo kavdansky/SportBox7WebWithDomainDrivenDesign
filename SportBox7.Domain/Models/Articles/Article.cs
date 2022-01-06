@@ -107,6 +107,13 @@
             return this;
         }
 
+        public Article UpdateArticleType(ArticleType articleType)
+        {
+            this.ArticleType = articleType;
+
+            return this;
+        }
+
         public Article UpdateBody(string body)
         {
             this.ValidateBody(body);

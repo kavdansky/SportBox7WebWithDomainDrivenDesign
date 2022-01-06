@@ -6,10 +6,12 @@
     using Domain.Models.Articles;
     using Queries.Category;
     using SportBox7.Application.Contracts;
+    using SportBox7.Application.Features.Articles.Commands.Edit;
     using SportBox7.Application.Features.Articles.Queries.Common;
     using SportBox7.Application.Features.Articles.Queries.HomePage;
     using SportBox7.Application.Features.Articles.Queries.Id;
     using SportBox7.Domain.Models.Editors;
+    using SportBox7.Domain.Models.Sources;
 
     public interface IArticleRepository : IRepository<Article>
     {
@@ -44,5 +46,7 @@
         Task<int> Total(CancellationToken cancellationToken = default);
 
         Task<Article> GetArticleObjectById(int id);
+
+        Task UpdateArticle(EditArticleCommand command, Source sourceToEdit);
     }
 }

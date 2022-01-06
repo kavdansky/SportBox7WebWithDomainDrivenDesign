@@ -12,6 +12,8 @@
     using SportBox7.Application.Exceptions;
     using AutoMapper;
     using SportBox7.Application.Features.Articles.Queries.Edit;
+    using System;
+    using SportBox7.Application.Features.Articles.Commands.Edit;
 
     public class ArticlesController: MainController
     {
@@ -42,10 +44,33 @@
         [Authorize]
         public async Task<ActionResult<EditArticleOutputModel>> Edit([FromQuery]EditArticleOutputModelQuery query)
         {
-            var model = await this.Mediator.Send(query);
-            model.Categories = await articleRepository.GetMenuCategories();
-            model.Sources = await sourceRepository.GetSources();
-            return View(model);
+            try
+            {
+                var model = await this.Mediator.Send(query);
+                model.Categories = await articleRepository.GetMenuCategories();
+                model.Sources = await sourceRepository.GetSources();
+                return View(model);
+            }
+            catch (NullReferenceException)
+            {
+                return Redirect("/Home/NotFound");
+            }
+        }
+
+        [Route("/articles/edit")]
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult<EditArticleOutputModel>> Edit(EditArticleCommand command)
+        {
+            try
+            {
+                var model = await this.Mediator.Send(command);
+                return model;
+            }
+            catch (NullReferenceException)
+            {
+                return Redirect("/Home/NotFound");
+            }
         }
 
         [Route("/articles/all")]
@@ -85,7 +110,6 @@
             }
             catch (ModelValidationException ex)
             {
-                
                 command.Errors = ex.Errors;
                 return RedirectToAction("Create", command);
             }
