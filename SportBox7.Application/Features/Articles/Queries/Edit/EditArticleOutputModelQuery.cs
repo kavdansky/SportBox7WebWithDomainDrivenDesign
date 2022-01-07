@@ -4,12 +4,15 @@
     using MediatR;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Sources;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
     public class EditArticleOutputModelQuery: IRequest<EditArticleOutputModel>
     {
         public int Id { get; set; }
+
+        public List<string> Errors { get; set; } = new List<string>();
 
         public class EditArticleOutputModelQueryHandler : IRequestHandler<EditArticleOutputModelQuery, EditArticleOutputModel>
         {
@@ -28,7 +31,7 @@
                 var article = await articleRepository.GetArticleObjectById(request.Id);
                 var model = this.mapper.Map<EditArticleOutputModel>(article);
                 model.Source = article.Source.SourceName;
-
+                model.Errors = request.Errors;
                 model.Categories = await articleRepository.GetMenuCategories();
                 model.Sources = await sourceRepository.GetSources();
                 return model;

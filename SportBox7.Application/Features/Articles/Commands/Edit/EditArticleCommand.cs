@@ -1,20 +1,15 @@
 ﻿namespace SportBox7.Application.Features.Articles.Commands.Edit
 {
     using MediatR;
-    using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Articles.Commands.Common;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Edit;
-    using SportBox7.Application.Features.Editors;
     using SportBox7.Application.Features.Sources;
-    using SportBox7.Domain.Factories.Articles;
     using System.Threading;
     using System.Threading.Tasks;
 
     public class EditArticleCommand: ArticleCommand, IRequest<EditArticleOutputModel>
     {
-        
-
         public class EditArticleCommandHandler : IRequestHandler<EditArticleCommand, EditArticleOutputModel>
         {
             private readonly IArticleRepository articleRepository;

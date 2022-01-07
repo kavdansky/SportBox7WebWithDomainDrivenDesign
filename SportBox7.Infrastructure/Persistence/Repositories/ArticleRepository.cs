@@ -115,7 +115,7 @@
         {
             Article articleToEdit = this.All().Where(a => a.Id == command.Id).FirstOrDefault();
             articleToEdit.UpdateBody(command.Body);
-            articleToEdit.UpdateCategory(await this.GetCategoryByName(command.Category));
+            articleToEdit.UpdateCategory(this.GetCategoryByName(command.Category).GetAwaiter().GetResult());
             articleToEdit.UpdateArticleType((ArticleType)command.ArticleType);
             articleToEdit.UpdateH1Tag(command.H1Tag);
             articleToEdit.UpdateImageUrl(command.ImageUrl);

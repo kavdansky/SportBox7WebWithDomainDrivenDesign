@@ -1,16 +1,15 @@
-﻿namespace SportBox7.Application.Features.Articles.Commands.Common
+﻿namespace SportBox7.Application.Features.Articles.Commands.Edit
 {
-    using System;
-    using FluentValidation;
     using static Domain.Models.ModelConstants.Common;
     using static Domain.Models.ModelConstants.Article;
-    using SportBox7.Domain.Models.Articles.Enums;
+    using FluentValidation;
     using SportBox7.Application.Features.Articles.Contrcts;
-    using SportBox7.Application.Features.Articles.Commands.Create;
+    using System;
+    using SportBox7.Domain.Models.Articles.Enums;
 
-    public class ArticleCommandValidator : AbstractValidator<CreateArticleCommand>
+    public class EditArticleCommandValidator : AbstractValidator<EditArticleCommand>
     {
-        public ArticleCommandValidator(IArticleRepository articleRepository)
+        public EditArticleCommandValidator(IArticleRepository articleRepository)
         {
             this.RuleFor(c => c.Title)
                 .MinimumLength(TitleMinLength)
@@ -55,6 +54,10 @@
             this.RuleFor(s => s.TargetDate)
             .Must(BeAValidDate)
             .WithMessage("Invalid date/time");
+
+            this.RuleFor(s => s.ArticleType)
+            .Must(ContainArticleType)
+            .WithMessage("Unknown article type");
         }
 
         private bool BeAValidDate(string value)
@@ -75,3 +78,4 @@
 
     }
 }
+

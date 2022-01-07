@@ -67,9 +67,9 @@
                 var model = await this.Mediator.Send(command);
                 return model;
             }
-            catch (NullReferenceException)
+            catch (ModelValidationException ex)
             {
-                return Redirect("/Home/NotFound");
+                return RedirectToAction("Edit", new EditArticleOutputModelQuery() {Id = command.Id, Errors = ex.Errors });
             }
         }
 
