@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SportBox7.Application.Features.Articles.Queries.Common
+﻿namespace SportBox7.Application.Features.Articles.Queries.Common
 {
+    using AutoMapper;
+    using SportBox7.Domain.Models.Articles;
+
     public abstract class BaseArticleModel
     {
+        public BaseArticleModel()
+        {}
+
         public BaseArticleModel(int id, string title, string categoryEN, string categoryName, string seoUrl, string imageUrl)
         {
             this.Id = id;
@@ -27,5 +29,12 @@ namespace SportBox7.Application.Features.Articles.Queries.Common
         public string SeoUrl { get; set; } = default!;
 
         public string ImageUrl { get; set; } = default!;
+
+        public virtual void Mapping(Profile mapper)
+        {
+            mapper.CreateMap<Article, BaseArticleModel>()
+                .ForMember(art => art.CategoryEN, act => act.MapFrom(src => src.Category.CategoryNameEN))
+                .ForMember(art => art.CategoryName, act => act.MapFrom(src => src.Source.SourceName));
+        }
     }
 }

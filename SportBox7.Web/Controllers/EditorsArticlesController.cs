@@ -8,6 +8,7 @@
     using SportBox7.Application.Features.Articles.Commands.Edit;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Create;
+    using SportBox7.Application.Features.Articles.Queries.Drafts;
     using SportBox7.Application.Features.Articles.Queries.Edit;
     using SportBox7.Application.Features.Sources;
     using System;
@@ -95,9 +96,10 @@
             }
         }
 
-        public IActionResult Index()
+        [Route("/editorsarticles/drafts")]
+        public async Task<ActionResult<DraftsListingOutputModel>> Drafts(DraftListingQuery query)
         {
-            return View();
+            return View(await this.Mediator.Send(query));
         }
     }
 }

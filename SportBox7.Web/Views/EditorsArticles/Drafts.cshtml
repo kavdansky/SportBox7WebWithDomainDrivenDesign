@@ -1,0 +1,147 @@
+﻿@using SportBox7.Application.Features.Articles.Queries.Drafts;
+@model DraftsListingOutputModel
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <link rel="icon" href="">
+    <title>Drafts</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+    <header class="header-area">
+        <!-- Top Header Area -->
+        <div class="top-header-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="top-header-content d-flex align-items-center justify-content-between">
+                            <!-- Logo -->
+                            <div class="logo">
+                                <a href="/"><img src="~/img/core-img/logoSmall.jpg" alt="sportBox7-logo"></a>
+                            </div>
+                            <!-- Advertisement -->
+                            <div class="login-search-area d-flex align-items-center">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Navbar Area -->
+        <div class="newspaper-main-menu" id="stickyMenu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="newspaperNav">
+                        <!-- Logo -->
+                        <div class="logo">
+                            <a href="index.html"><img src="~/img/core-img/logoSmall-black.jpg" alt="sportBox7 logo"></a>
+                        </div>
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- close btn -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                
+                            </div>
+                            <!-- Nav End -->
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <partial name="_CookieConsentPartial" />
+    <div class="hero-area">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 col-lg-8">
+                    <!-- Breaking News Widget -->
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Hero Area End ##### -->
+    <div class="blog-area section-padding-0-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <div class="blog-posts-area">
+                        @if (Model != null)
+                        {
+                            @foreach (var draft in Model.Drafts)
+                            {
+                                <!-- Single Featured Post -->
+                                <div class="single-blog-post featured-post mb-30">
+                                    <div class="post-data">
+                                        
+                                        <a href="/editorsarticles/edit?id=@draft.Id" class="post-title">
+                                            <h6>@draft.Title</h6>
+                                        </a>
+                                    
+                                    </div>
+                                </div>
+                                <hr />
+                            }
+                        }
+                    </div>
+                </div>
+                <!-- SideBar -->
+                <div class="col-12 col-md-6 col-lg-4">
+                   
+                </div>
+                <!-- SideBar End -->
+            </div>
+        </div>
+    </div>
+    <!-- ##### Blog Area End ##### -->
+    <!-- ##### Featured Post Area End ##### -->
+    <footer>
+        <hr />
+        <div class="bottom-footer-area">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12">
+                        <!-- Copywrite -->
+                        <p>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ##### Footer Area Start ##### -->
+    <!-- ##### All Javascript Files ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="~/js/plugins.js"></script>
+    <!-- Active js -->
+    <script src="~/js/active.js"></script>
+</body>
+</html>
+

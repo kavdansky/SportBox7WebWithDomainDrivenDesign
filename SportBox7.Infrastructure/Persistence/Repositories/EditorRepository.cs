@@ -3,13 +3,16 @@
     using AutoMapper;
     using Microsoft.EntityFrameworkCore;
     using SportBox7.Application.Common;
+    using SportBox7.Application.Features.Articles.Queries.Drafts;
     using SportBox7.Application.Features.Dealers.Queries.Common;
     using SportBox7.Application.Features.Dealers.Queries.Details;
     using SportBox7.Application.Features.Editors;
     using SportBox7.Domain.Exeptions;
+    using SportBox7.Domain.Models.Articles;
     using SportBox7.Domain.Models.Editors;
     using SportBox7.Infrastructure.Identity;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading;
@@ -88,5 +91,26 @@
 
             return await Task.Run(() => true);
         }
+
+        public Task<List<DraftsListingModel>> GetDraftsOutputModel(string userId)
+        {
+            var editorArticles = GetUserArticlesById(userId);
+            var result = new List<DraftsListingModel>();
+            
+            foreach (var article in editorArticles)
+            {
+                var model = new DraftsListingModel() { Title = article.Title, Id = article.Id };
+                result.Add(model);
+                
+            }
+            return Task.Run( ()=> result);
+        }
+
+        private IEnumerable<Article> GetUserArticlesById(string userId)
+        {
+            var editorId = this.GetEditorId(userId).GetAwaiter().GetResult();
+            var result = this.db.Editors.Include(e => e.Articles).Where(e => e.Id == editorId).FirstOrDefault().Articles.Select(x => x).ToList();
+            return result;
+        } 
     }
 }

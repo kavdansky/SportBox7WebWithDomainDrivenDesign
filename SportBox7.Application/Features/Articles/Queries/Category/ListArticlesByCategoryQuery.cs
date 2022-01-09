@@ -1,9 +1,7 @@
-﻿using MediatR;
-using SportBox7.Application.Features.Articles.Contrcts;
-using System;
-using System.Collections.Generic;
-namespace SportBox7.Application.Features.Articles.Queries.Category
+﻿namespace SportBox7.Application.Features.Articles.Queries.Category
 {
+    using MediatR;
+    using SportBox7.Application.Features.Articles.Contrcts;
     using System.Threading;
     using System.Threading.Tasks;
 

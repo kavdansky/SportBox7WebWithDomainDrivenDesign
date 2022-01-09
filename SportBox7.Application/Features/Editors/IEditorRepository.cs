@@ -2,9 +2,11 @@
 {
     using SportBox7.Application.Common;
     using SportBox7.Application.Contracts;
+    using SportBox7.Application.Features.Articles.Queries.Drafts;
     using SportBox7.Application.Features.Dealers.Queries.Common;
     using SportBox7.Application.Features.Dealers.Queries.Details;
     using SportBox7.Domain.Models.Editors;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -23,5 +25,7 @@
         Task<Editor> GetEditorById(int editorId, CancellationToken cancellationToken = default);
 
         Task<bool> UpdateEditor(Editor editor);
+
+        Task<List<DraftsListingModel>> GetDraftsOutputModel(string userId);
     }
 }

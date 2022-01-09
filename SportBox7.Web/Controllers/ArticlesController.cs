@@ -30,8 +30,6 @@
             return Redirect("/Home/NotFound");
         }
 
-       
-
         [Route("/articles/all")]
         [HttpGet]
         public async Task<ActionResult<ArticleByIdOutputModel>> Id([FromQuery] ArticleByIdQuery query)
