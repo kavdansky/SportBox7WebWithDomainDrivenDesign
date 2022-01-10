@@ -2,13 +2,14 @@
 {
     using AutoMapper;
     using Microsoft.EntityFrameworkCore;
-    using SportBox7.Application.Common;
     using SportBox7.Application.Features.Articles.Queries.Drafts;
+    using SportBox7.Application.Features.Articles.Queries.PublishedArticles;
     using SportBox7.Application.Features.Dealers.Queries.Common;
     using SportBox7.Application.Features.Dealers.Queries.Details;
     using SportBox7.Application.Features.Editors;
     using SportBox7.Domain.Exeptions;
     using SportBox7.Domain.Models.Articles;
+    using SportBox7.Domain.Models.Articles.Enums;
     using SportBox7.Domain.Models.Editors;
     using SportBox7.Infrastructure.Identity;
     using System;
@@ -94,10 +95,10 @@
 
         public Task<List<DraftsListingModel>> GetDraftsOutputModel(string userId)
         {
-            var editorArticles = GetUserArticlesById(userId);
+            var editorDrafts = GetUserArticlesById(userId).Where(a=> a.ArticleState == ArticleState.Draft);
             var result = new List<DraftsListingModel>();
             
-            foreach (var article in editorArticles)
+            foreach (var article in editorDrafts)
             {
                 var model = new DraftsListingModel() { Title = article.Title, Id = article.Id };
                 result.Add(model);
@@ -111,6 +112,20 @@
             var editorId = this.GetEditorId(userId).GetAwaiter().GetResult();
             var result = this.db.Editors.Include(e => e.Articles).Where(e => e.Id == editorId).FirstOrDefault().Articles.Select(x => x).ToList();
             return result;
-        } 
+        }
+
+        public Task<List<PublishedArticlesListingModel>> GetPublishedArticlesListingModel(string userId)
+        {
+            var editorPublishedArticles = GetUserArticlesById(userId).Where(a => a.ArticleState == ArticleState.Published);
+            var result = new List<PublishedArticlesListingModel>();
+
+            foreach (var article in editorPublishedArticles)
+            {
+                var model = new PublishedArticlesListingModel() { Title = article.Title, Id = article.Id };
+                result.Add(model);
+
+            }
+            return Task.Run(() => result);
+        }
     }
 }

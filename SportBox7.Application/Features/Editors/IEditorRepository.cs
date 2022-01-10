@@ -3,6 +3,7 @@
     using SportBox7.Application.Common;
     using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Articles.Queries.Drafts;
+    using SportBox7.Application.Features.Articles.Queries.PublishedArticles;
     using SportBox7.Application.Features.Dealers.Queries.Common;
     using SportBox7.Application.Features.Dealers.Queries.Details;
     using SportBox7.Domain.Models.Editors;
@@ -27,5 +28,7 @@
         Task<bool> UpdateEditor(Editor editor);
 
         Task<List<DraftsListingModel>> GetDraftsOutputModel(string userId);
+
+        Task<List<PublishedArticlesListingModel>> GetPublishedArticlesListingModel(string userId);
     }
 }

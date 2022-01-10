@@ -10,6 +10,7 @@
     using SportBox7.Application.Features.Articles.Queries.Create;
     using SportBox7.Application.Features.Articles.Queries.Drafts;
     using SportBox7.Application.Features.Articles.Queries.Edit;
+    using SportBox7.Application.Features.Articles.Queries.PublishedArticles;
     using SportBox7.Application.Features.Sources;
     using System;
     using System.Collections.Generic;
@@ -98,6 +99,12 @@
 
         [Route("/editorsarticles/drafts")]
         public async Task<ActionResult<DraftsListingOutputModel>> Drafts(DraftListingQuery query)
+        {
+            return View(await this.Mediator.Send(query));
+        }
+
+        [Route("/editorsarticles/publishedarticles")]
+        public async Task<ActionResult<PublishedArticlesListingOutpuModel>> PublishedArticles(PublishedArticlesListingQuery query)
         {
             return View(await this.Mediator.Send(query));
         }

@@ -33,6 +33,7 @@
         public virtual void Mapping(Profile mapper)
         {
             mapper.CreateMap<Article, BaseArticleModel>()
+                .IncludeAllDerived()
                 .ForMember(art => art.CategoryEN, act => act.MapFrom(src => src.Category.CategoryNameEN))
                 .ForMember(art => art.CategoryName, act => act.MapFrom(src => src.Source.SourceName));
         }

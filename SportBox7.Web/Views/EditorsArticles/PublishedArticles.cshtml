@@ -1,15 +1,15 @@
-﻿@using SportBox7.Application.Features.Identity.Commands.LoginUser
-@model LoginOutputModel
+﻿@using SportBox7.Application.Features.Articles.Queries.PublishedArticles;
+@model PublishedArticlesListingOutpuModel
 <!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="utf-8" />
-    <meta name="description" content="Editor Login">
-    <meta name="keywords" content="Editor Login)">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <link rel="icon" href="">
-    <title>Editor Dashboard - Sportbox7</title>
+    <title>Drafts</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
 </head>
@@ -26,13 +26,7 @@
                                 <a href="/"><img src="~/img/core-img/logoSmall.jpg" alt="sportBox7-logo"></a>
                             </div>
                             <!-- Advertisement -->
-                            <!-- Login Search Area -->
                             <div class="login-search-area d-flex align-items-center">
-                                <!-- Login -->
-                                <div class="login d-flex">
-                                    <a href="#">Hello @Model.Email</a>
-                                    <a href="/identity/logout">Logout</a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -45,12 +39,10 @@
                 <div class="container">
                     <!-- Menu -->
                     <nav class="classy-navbar justify-content-between" id="newspaperNav">
-
                         <!-- Logo -->
                         <div class="logo">
                             <a href="index.html"><img src="~/img/core-img/logoSmall-black.jpg" alt="sportBox7 logo"></a>
                         </div>
-
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
                             <span class="navbarToggler"><span></span><span></span><span></span></span>
@@ -63,16 +55,9 @@
                             <div class="classycloseIcon">
                                 <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
                             </div>
-
                             <!-- Nav Start -->
                             <div class="classynav">
-                                <ul>
-                                    <li><a href="/editors/index" class="active">Dashboard</a></li>
-                                    <li><a href="/editorsarticles/drafts">Drafts</a></li>
-                                    <li><a href="/editorsarticles/publishedarticles">Articles</a></li>
-                                    <li><a href="/sources">Sources</a></li>
 
-                                </ul>
                             </div>
                             <!-- Nav End -->
                         </div>
@@ -81,40 +66,47 @@
             </div>
         </div>
     </header>
+    <partial name="_CookieConsentPartial" />
     <div class="hero-area">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-12 col-lg-8">
+                    <!-- Breaking News Widget -->
+
                 </div>
             </div>
         </div>
     </div>
     <!-- ##### Hero Area End ##### -->
-    <!-- ##### Blog Area Start ##### -->
     <div class="blog-area section-padding-0-80">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <div class="blog-posts-area">
-                        <!-- Single Featured Post -->
-                        <div class="single-blog-post featured-post single-post">
-                            <div class="post-data">
-                                <a href="#" class="post-catagory"></a>
-                                <div class="post-meta">
-                                    <h4>Dashboard</h4>
-                                    <hr />
-                               
-                                    <!-- Post Like & Post Comment -->
-                                </div>
-                            </div>
+                        @if (Model != null)
+                        {
+                            @foreach (var article in Model.PublishedArticles)
+                            {
+                                <!-- Single Featured Post -->
+                                <div class="single-blog-post featured-post mb-30">
+                                    <div class="post-data">
 
-                        </div>
+                                        <a href="/editorsarticles/edit?id=@article.Id" class="post-title">
+                                            <h6>@article.Title</h6>
+                                        </a>
+
+                                    </div>
+                                </div>
+                                <hr />
+                            }
+                        }
                     </div>
                 </div>
-                <!--SideBar-->
+                <!-- SideBar -->
                 <div class="col-12 col-md-6 col-lg-4">
+
                 </div>
-                <!--SideBar End-->
+                <!-- SideBar End -->
             </div>
         </div>
     </div>
@@ -151,5 +143,10 @@
     <!-- Active js -->
     <script src="~/js/active.js"></script>
 </body>
-
 </html>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
