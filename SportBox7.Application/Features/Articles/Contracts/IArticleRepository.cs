@@ -8,7 +8,6 @@
     using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Articles.Commands.Edit;
     using SportBox7.Application.Features.Articles.Queries.Common;
-    using SportBox7.Application.Features.Articles.Queries.Drafts;
     using SportBox7.Application.Features.Articles.Queries.HomePage;
     using SportBox7.Application.Features.Articles.Queries.Id;
     using SportBox7.Domain.Models.Editors;
@@ -34,7 +33,7 @@
 
         Task<List<MenuCategoriesModel>> GetMenuCategories();
 
-        public List<SideBarModel> GetsideBarNews();
+        List<SideBarModel> GetsideBarNews();
 
         Task<List<LatestNewsModel>> GetLatestNews();
 
@@ -49,5 +48,6 @@
         Task<Article> GetArticleObjectById(int id);
 
         Task UpdateArticle(EditArticleCommand command, Source sourceToEdit);
+
     }
 }

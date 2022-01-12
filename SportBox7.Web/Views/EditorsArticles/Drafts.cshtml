@@ -57,7 +57,13 @@
                             </div>
                             <!-- Nav Start -->
                             <div class="classynav">
-                                
+                                <ul>
+                                    <li><a href="/editors/index" class="active">Dashboard</a></li>
+                                    <li><a href="/editorsarticles/drafts">Drafts</a></li>
+                                    <li><a href="/editorsarticles/publishedarticles">Articles</a></li>
+                                    <li><a href="/sources">Sources</a></li>
+
+                                </ul>
                             </div>
                             <!-- Nav End -->
                         </div>
@@ -83,23 +89,32 @@
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <div class="blog-posts-area">
-                        @if (Model != null)
-                        {
-                            @foreach (var draft in Model.Drafts)
+                        <h4>Drafts</h4>
+                        <hr />
+                        <a href="/editorsarticles/create" class="btn btn-primary btn-group-sm">Add new draft</a>
+                        <br />
+                        <br />
+                        <table>
+                            <tr>
+                                <th>Article Name</th>
+                                <th>Actions</th>
+                            </tr>
+                            @if (Model != null)
                             {
-                                <!-- Single Featured Post -->
-                                <div class="single-blog-post featured-post mb-30">
-                                    <div class="post-data">
-                                        
-                                        <a href="/editorsarticles/edit?id=@draft.Id" class="post-title">
-                                            <h6>@draft.Title</h6>
-                                        </a>
-                                    
-                                    </div>
-                                </div>
-                                <hr />
+                                @foreach (var draft in Model.Drafts)
+                                {
+                                   <tr>
+                                       <td>@draft.Title</td>
+                                       <td>
+                                       <a href="/editorsarticles/edit?id=@draft.Id" class="post-title">Edit</a> | 
+                                       <a href = "/editorsarticles/publishdraft?id=@draft.Id">Publish</a>
+                                       </td>
+                                   </tr>
+                                }
                             }
-                        }
+                        </table>
+
+                       
                     </div>
                 </div>
                 <!-- SideBar -->

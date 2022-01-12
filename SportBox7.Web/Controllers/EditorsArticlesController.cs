@@ -6,6 +6,7 @@
     using SportBox7.Application.Exceptions;
     using SportBox7.Application.Features.Articles.Commands.Create;
     using SportBox7.Application.Features.Articles.Commands.Edit;
+    using SportBox7.Application.Features.Articles.Commands.Publish;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Create;
     using SportBox7.Application.Features.Articles.Queries.Drafts;
@@ -28,7 +29,6 @@
             this.articleRepository = articleRepository;
             this.sourceRepository = sourceRepository;
             this.mapper = mapper;
-
         }
 
         [Route("/editorsarticles/create")]
@@ -107,6 +107,17 @@
         public async Task<ActionResult<PublishedArticlesListingOutpuModel>> PublishedArticles(PublishedArticlesListingQuery query)
         {
             return View(await this.Mediator.Send(query));
+        }
+
+        [Route("/editorsarticles/publishdraft")]
+        public async Task<ActionResult<bool>> PublishDraft([FromQuery]PublishDraftCommand command)
+        {
+            var result = await this.Mediator.Send(command);
+            if (result)
+            {
+                return RedirectToAction("PublishedArticles");
+            }
+            return RedirectToAction("Drafts");
         }
     }
 }

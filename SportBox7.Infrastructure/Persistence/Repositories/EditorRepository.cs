@@ -127,5 +127,17 @@
             }
             return Task.Run(() => result);
         }
+
+        public async Task<bool> PublishArticle(int articleId, string userId)
+        {
+            var checkUserPermission = await this.HasArticle(FindByUser(userId).GetAwaiter().GetResult().Id, articleId);
+            if (checkUserPermission)
+            {
+                this.db.Articles.Where(a => a.Id == articleId).FirstOrDefault().UpdateArticleState(ArticleState.Published);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }
