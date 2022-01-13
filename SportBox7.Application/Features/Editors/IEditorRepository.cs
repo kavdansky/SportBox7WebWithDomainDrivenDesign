@@ -1,12 +1,10 @@
 ﻿namespace SportBox7.Application.Features.Editors
 {
-    using SportBox7.Application.Common;
     using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Articles.Queries.Drafts;
     using SportBox7.Application.Features.Articles.Queries.PublishedArticles;
     using SportBox7.Application.Features.Dealers.Queries.Common;
     using SportBox7.Application.Features.Dealers.Queries.Details;
-    using SportBox7.Domain.Models.Articles.Enums;
     using SportBox7.Domain.Models.Editors;
     using System.Collections.Generic;
     using System.Threading;
@@ -33,5 +31,7 @@
         Task<List<PublishedArticlesListingModel>> GetPublishedArticlesListingModel(string userId);
 
         Task<bool> PublishArticle(int articleId, string userId);
+
+        Task<bool> RevertAsDraft(int articleId, string userId);
     }
 }

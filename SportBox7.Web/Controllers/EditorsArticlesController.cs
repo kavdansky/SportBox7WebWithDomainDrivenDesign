@@ -7,6 +7,7 @@
     using SportBox7.Application.Features.Articles.Commands.Create;
     using SportBox7.Application.Features.Articles.Commands.Edit;
     using SportBox7.Application.Features.Articles.Commands.Publish;
+    using SportBox7.Application.Features.Articles.Commands.RevertAsDraft;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Create;
     using SportBox7.Application.Features.Articles.Queries.Drafts;
@@ -118,6 +119,17 @@
                 return RedirectToAction("PublishedArticles");
             }
             return RedirectToAction("Drafts");
+        }
+
+        [Route("/editorsarticles/revertasdraft")]
+        public async Task<ActionResult<bool>> RevertAsDraft([FromQuery] RevertAsDraftCommand command)
+        {
+            var result = await this.Mediator.Send(command);
+            if (result)
+            {
+                return RedirectToAction("Drafts");
+            }
+            return RedirectToAction("PublishedArticles");
         }
     }
 }

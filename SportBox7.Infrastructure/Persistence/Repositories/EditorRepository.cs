@@ -130,8 +130,7 @@
 
         public async Task<bool> PublishArticle(int articleId, string userId)
         {
-            var checkUserPermission = await this.HasArticle(FindByUser(userId).GetAwaiter().GetResult().Id, articleId);
-            if (checkUserPermission)
+            if (await CheckUserPermissionToChangeArticleStatus(articleId, userId))
             {
                 this.db.Articles.Where(a => a.Id == articleId).FirstOrDefault().UpdateArticleState(ArticleState.Published);
                 db.SaveChanges();
@@ -139,5 +138,19 @@
             }
             return false;
         }
+
+        public async Task<bool> RevertAsDraft(int articleId, string userId)
+        {
+            if (await CheckUserPermissionToChangeArticleStatus(articleId, userId))
+            {
+                this.db.Articles.Where(a => a.Id == articleId).FirstOrDefault().UpdateArticleState(ArticleState.Draft);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        private async Task<bool> CheckUserPermissionToChangeArticleStatus(int articleId, string userId)
+            => await this.HasArticle(FindByUser(userId).GetAwaiter().GetResult().Id, articleId);
     }
 }
