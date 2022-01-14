@@ -8,9 +8,7 @@
     public abstract class PageLayoutOutpuModel
     {
         
-        public PageLayoutOutpuModel()
-        {
-        }
+        public PageLayoutOutpuModel(){}
 
         public IEnumerable<MenuCategoriesModel> MenuCategories { get; set; } = default!;
 

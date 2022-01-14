@@ -11,19 +11,19 @@
     {
         public List<string> Errors { get; set; } = new List<string>();
 
-        public string Title { get; private set; } = default!;
+        public string Title { get; set; } = default!;
 
-        public string Body { get; private set; } = default!;
+        public string Body { get; set; } = default!;
 
-        public string H1Tag { get; private set; } = default!;
+        public string H1Tag { get; set; } = default!;
 
-        public string ImageUrl { get; private set; } = default!;
+        public string ImageUrl { get; set; } = default!;
 
-        public string MetaDescription { get; private set; } = default!;
+        public string MetaDescription { get; set; } = default!;
 
-        public string MetaKeywords { get; private set; } = default!;
+        public string MetaKeywords { get; set; } = default!;
 
-        public string SeoUrl { get; private set; } = default!;
+        public string SeoUrl { get; set; } = default!;
         
         public string Source { get; set; } = default!;
 
@@ -33,11 +33,11 @@
 
         public string Category { get; set; } = default!;
 
-        public DateTime TargetDate { get; private set; }
+        public DateTime TargetDate { get; set; }
 
-        public ArticleState ArticleState { get; private set; }
+        public ArticleState ArticleState { get; set; }
 
-        public ArticleType ArticleType { get; private set; }
+        public ArticleType ArticleType { get; set; }
 
         public virtual void Mapping(Profile mapper)
         {

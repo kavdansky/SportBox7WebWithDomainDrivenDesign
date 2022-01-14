@@ -3,6 +3,7 @@
     using AutoMapper;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using SportBox7.Application.Contracts;
     using SportBox7.Application.Exceptions;
     using SportBox7.Application.Features.Articles.Commands.Create;
     using SportBox7.Application.Features.Articles.Commands.Edit;
@@ -24,26 +25,23 @@
         private readonly IArticleRepository articleRepository;
         private readonly ISourceRepository sourceRepository;
         private readonly IMapper mapper;
+        private readonly ICurrentUser currentUser;
 
-        public EditorsArticlesController(IArticleRepository articleRepository, ISourceRepository sourceRepository, IMapper mapper)
+        public EditorsArticlesController(IArticleRepository articleRepository, ISourceRepository sourceRepository, IMapper mapper, ICurrentUser currentUser)
         {
             this.articleRepository = articleRepository;
             this.sourceRepository = sourceRepository;
             this.mapper = mapper;
+            this.currentUser = currentUser;
         }
 
         [Route("/editorsarticles/create")]
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<CreateDraftArticleOutputModel>> Create(CreateDraftArticleOutputModel model)
+        public async Task<ActionResult<CreateDraftArticleOutputModel>> Create(CreateDraftArticleOutputModelQuery query)
         {
-            if (model.Errors.Count == 0)
-            {
-                return View(await CreateDraftArticleOutputModel.CreateAsync(articleRepository, sourceRepository));
-            }
-            model.Categories = await articleRepository.GetMenuCategories();
-            model.Sources = await sourceRepository.GetSources();
-            return View(model);
+            
+            return View(await this.Mediator.Send(query));
         }
 
         [Route("/editorsarticles/create")]
@@ -99,18 +97,19 @@
         }
 
         [Route("/editorsarticles/drafts")]
+        [Authorize]
         public async Task<ActionResult<DraftsListingOutputModel>> Drafts(DraftListingQuery query)
         {
             return View(await this.Mediator.Send(query));
         }
 
         [Route("/editorsarticles/publishedarticles")]
+        [Authorize]
         public async Task<ActionResult<PublishedArticlesListingOutpuModel>> PublishedArticles(PublishedArticlesListingQuery query)
-        {
-            return View(await this.Mediator.Send(query));
-        }
+            => View(await this.Mediator.Send(query));
 
         [Route("/editorsarticles/publishdraft")]
+        [Authorize]
         public async Task<ActionResult<bool>> PublishDraft([FromQuery]PublishDraftCommand command)
         {
             var result = await this.Mediator.Send(command);
@@ -122,6 +121,7 @@
         }
 
         [Route("/editorsarticles/revertasdraft")]
+        [Authorize]
         public async Task<ActionResult<bool>> RevertAsDraft([FromQuery] RevertAsDraftCommand command)
         {
             var result = await this.Mediator.Send(command);

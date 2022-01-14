@@ -4,12 +4,12 @@
 <html lang="bg">
 <head>
     <meta charset="utf-8" />
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <meta name="description" content="@Model.MetaDescription">
+    <meta name="keywords" content="@Model.MetaKeywords">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <link rel="icon" href="">
-    <title>Drafts</title>
+    <title>@Model.MetaTitle</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
 </head>
@@ -62,11 +62,10 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li><a href="/editors/index" class="active">Dashboard</a></li>
-                                    <li><a href="/editorsarticles/drafts">Drafts</a></li>
-                                    <li><a href="/editorsarticles/publishedarticles">Articles</a></li>
-                                    <li><a href="/sources">Sources</a></li>
-
+                                    @foreach (var menuelement in Model.MenuElements)
+                                    {
+                                        <li><a href="@menuelement.Url" class="active">@menuelement.Name</a></li>
+                                    }
                                 </ul>
                             </div>
                             <!-- Nav End -->

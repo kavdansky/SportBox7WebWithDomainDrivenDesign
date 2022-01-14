@@ -5,6 +5,7 @@
     using SportBox7.Application.Features.Articles.Queries.PublishedArticles;
     using SportBox7.Application.Features.Dealers.Queries.Common;
     using SportBox7.Application.Features.Dealers.Queries.Details;
+    using SportBox7.Application.Features.Editors.Queries.Common;
     using SportBox7.Domain.Models.Editors;
     using System.Collections.Generic;
     using System.Threading;
@@ -33,5 +34,7 @@
         Task<bool> PublishArticle(int articleId, string userId);
 
         Task<bool> RevertAsDraft(int articleId, string userId);
+
+        IEnumerable<EditorMenuElement> GetEditorMenuModel(string userId);
     }
 }

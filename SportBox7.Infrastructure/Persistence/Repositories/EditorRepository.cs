@@ -1,12 +1,15 @@
 ﻿namespace SportBox7.Infrastructure.Persistence.Repositories
 {
     using AutoMapper;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using SportBox7.Application.Features.Articles.Queries.Drafts;
     using SportBox7.Application.Features.Articles.Queries.PublishedArticles;
     using SportBox7.Application.Features.Dealers.Queries.Common;
     using SportBox7.Application.Features.Dealers.Queries.Details;
     using SportBox7.Application.Features.Editors;
+    using SportBox7.Application.Features.Editors.Queries.Common;
+    using SportBox7.Application.Features.Editors.Queries.Common.Constants;
     using SportBox7.Domain.Exeptions;
     using SportBox7.Domain.Models.Articles;
     using SportBox7.Domain.Models.Articles.Enums;
@@ -22,11 +25,13 @@
     internal class EditorRepository: DataRepository<Editor>, IEditorRepository
     {
         private readonly IMapper mapper;
+        private readonly UserManager<User> userManager;
 
-        public EditorRepository(SportBox7DbContext db, IMapper mapper)
+        public EditorRepository(SportBox7DbContext db, IMapper mapper, UserManager<User> userManager)
             : base(db)
         {
             this.mapper = mapper;
+            this.userManager = userManager;
         }
 
         public async Task<bool> HasArticle(int editorId, int articleId, CancellationToken cancellationToken = default)
@@ -150,7 +155,18 @@
             return false;
         }
 
+        public IEnumerable<EditorMenuElement> GetEditorMenuModel(string userId)
+        {
+            if (this.userManager.IsInRoleAsync(userManager.FindByIdAsync(userId).GetAwaiter().GetResult(), "Admin").GetAwaiter().GetResult())
+            {
+                return new AdminMenuModel().MenuElements;
+            }
+            return new EditorMenuModel().MenuElements;
+        }
+
         private async Task<bool> CheckUserPermissionToChangeArticleStatus(int articleId, string userId)
             => await this.HasArticle(FindByUser(userId).GetAwaiter().GetResult().Id, articleId);
+
+        
     }
 }
