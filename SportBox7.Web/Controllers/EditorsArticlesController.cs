@@ -22,27 +22,11 @@
 
     public class EditorsArticlesController : MainController
     {
-        private readonly IArticleRepository articleRepository;
-        private readonly ISourceRepository sourceRepository;
-        private readonly IMapper mapper;
-        private readonly ICurrentUser currentUser;
-
-        public EditorsArticlesController(IArticleRepository articleRepository, ISourceRepository sourceRepository, IMapper mapper, ICurrentUser currentUser)
-        {
-            this.articleRepository = articleRepository;
-            this.sourceRepository = sourceRepository;
-            this.mapper = mapper;
-            this.currentUser = currentUser;
-        }
-
         [Route("/editorsarticles/create")]
         [HttpGet]
         [Authorize]
         public async Task<ActionResult<CreateDraftArticleOutputModel>> Create(CreateDraftArticleOutputModelQuery query)
-        {
-            
-            return View(await this.Mediator.Send(query));
-        }
+            => View(await this.Mediator.Send(query));
 
         [Route("/editorsarticles/create")]
         [HttpPost]
@@ -51,15 +35,13 @@
         {
             try
             {
-                var result = await this.Send(command);
-                return result;
+                return await this.Send(command);
             }
             catch (ModelValidationException ex)
             {
                 command.Errors = ex.Errors;
                 return RedirectToAction("Create", command);
             }
-
         }
 
         [Route("/editorsarticles/edit")]
@@ -69,10 +51,7 @@
         {
             try
             {
-                var model = await this.Mediator.Send(query);
-                model.Categories = await articleRepository.GetMenuCategories();
-                model.Sources = await sourceRepository.GetSources();
-                return View(model);
+                return View(await this.Mediator.Send(query));
             }
             catch (NullReferenceException)
             {
@@ -87,8 +66,7 @@
         {
             try
             {
-                var model = await this.Mediator.Send(command);
-                return model;
+                return await this.Mediator.Send(command);
             }
             catch (ModelValidationException ex)
             {
@@ -105,15 +83,14 @@
 
         [Route("/editorsarticles/publishedarticles")]
         [Authorize]
-        public async Task<ActionResult<PublishedArticlesListingOutpuModel>> PublishedArticles(PublishedArticlesListingQuery query)
+        public async Task<ActionResult<PublishedArticlesListingOutputModel>> PublishedArticles(PublishedArticlesListingQuery query)
             => View(await this.Mediator.Send(query));
 
         [Route("/editorsarticles/publishdraft")]
         [Authorize]
         public async Task<ActionResult<bool>> PublishDraft([FromQuery]PublishDraftCommand command)
         {
-            var result = await this.Mediator.Send(command);
-            if (result)
+            if (await this.Mediator.Send(command))
             {
                 return RedirectToAction("PublishedArticles");
             }
@@ -124,8 +101,7 @@
         [Authorize]
         public async Task<ActionResult<bool>> RevertAsDraft([FromQuery] RevertAsDraftCommand command)
         {
-            var result = await this.Mediator.Send(command);
-            if (result)
+            if (await this.Mediator.Send(command))
             {
                 return RedirectToAction("Drafts");
             }

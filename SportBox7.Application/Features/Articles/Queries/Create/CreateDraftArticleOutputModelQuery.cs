@@ -30,17 +30,10 @@
             {
                 var model = await CreateDraftArticleOutputModel.CreateAsync(articleRepository, sourceRepository, editorRepository, currentUser);
                 if (request != null)
-                {
-                    model.ArticleState = request.ArticleState;
-                    model.ArticleType = request.ArticleType;
-                    model.Body = request.Body;
-                    model.Errors = request.Errors;
-                    model.H1Tag = request.H1Tag;
-                    model.TargetDate = request.TargetDate;
-                    model.Title = request.Title;
+                {  
+                    model.Errors = request.Errors.GetRange(0, request.Errors.Count/2);
                     return model;
                 }
-
                 return model;
             }
         }

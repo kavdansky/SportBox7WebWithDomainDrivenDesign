@@ -6,9 +6,9 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class PublishedArticlesListingQuery: IRequest<PublishedArticlesListingOutpuModel>
+    public class PublishedArticlesListingQuery: IRequest<PublishedArticlesListingOutputModel>
     {
-        public class PublishedArticlesListingQueryHandler : IRequestHandler<PublishedArticlesListingQuery, PublishedArticlesListingOutpuModel>
+        public class PublishedArticlesListingQueryHandler : IRequestHandler<PublishedArticlesListingQuery, PublishedArticlesListingOutputModel>
         {
             private readonly IEditorRepository editorRepository;
             private readonly ICurrentUser currentUser;
@@ -19,9 +19,9 @@
                 this.currentUser = currentUser;
             }
 
-            public async Task<PublishedArticlesListingOutpuModel> Handle(PublishedArticlesListingQuery request, CancellationToken cancellationToken)
+            public async Task<PublishedArticlesListingOutputModel> Handle(PublishedArticlesListingQuery request, CancellationToken cancellationToken)
             {
-                return await PublishedArticlesListingOutpuModel.CreateAsync(editorRepository, currentUser.UserId);
+                return await PublishedArticlesListingOutputModel.CreateAsync(editorRepository, currentUser.UserId);
             }
         }
     }

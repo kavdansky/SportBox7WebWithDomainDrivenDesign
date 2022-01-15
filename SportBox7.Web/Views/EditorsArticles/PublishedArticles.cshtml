@@ -1,5 +1,5 @@
 ﻿@using SportBox7.Application.Features.Articles.Queries.PublishedArticles;
-@model PublishedArticlesListingOutpuModel
+@model PublishedArticlesListingOutputModel
 <!DOCTYPE html>
 <html lang="bg">
 <head>
@@ -62,10 +62,10 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li><a href="/editors/index" class="active">Dashboard</a></li>
-                                    <li><a href="/editorsarticles/drafts">Drafts</a></li>
-                                    <li><a href="/editorsarticles/publishedarticles">Articles</a></li>
-                                    <li><a href="/sources">Sources</a></li>
+                                    @foreach (var menuelement in Model.MenuElements)
+                                    {
+                                        <li><a href="@menuelement.Url" class="active">@menuelement.Name</a></li>
+                                    }
                                 </ul>
                             </div>
                             <!-- Nav End -->

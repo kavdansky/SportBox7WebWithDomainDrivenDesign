@@ -2,7 +2,9 @@
 {
     using AutoMapper;
     using MediatR;
+    using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Articles.Contrcts;
+    using SportBox7.Application.Features.Editors;
     using SportBox7.Application.Features.Sources;
     using System.Collections.Generic;
     using System.Threading;
@@ -19,11 +21,16 @@
             private readonly IArticleRepository articleRepository;
             private readonly ISourceRepository sourceRepository;
             private readonly IMapper mapper;
-            public EditArticleOutputModelQueryHandler(IArticleRepository articleRepository, ISourceRepository sourceRepository, IMapper mapper)
+            private readonly IEditorRepository editorRepository;
+            private readonly ICurrentUser currentUser;
+
+            public EditArticleOutputModelQueryHandler(IArticleRepository articleRepository, ISourceRepository sourceRepository, IMapper mapper, IEditorRepository editorRepository, ICurrentUser currentUser)
             {
                 this.articleRepository = articleRepository;
                 this.sourceRepository = sourceRepository;
                 this.mapper = mapper;
+                this.editorRepository = editorRepository;
+                this.currentUser = currentUser;
             }
 
             public async Task<EditArticleOutputModel> Handle(EditArticleOutputModelQuery request, CancellationToken cancellationToken)
@@ -34,6 +41,7 @@
                 model.Errors = request.Errors;
                 model.Categories = await articleRepository.GetMenuCategories();
                 model.Sources = await sourceRepository.GetSources();
+                model.MenuElements = this.editorRepository.GetEditorMenuModel(this.currentUser.UserId);
                 return model;
             }
 
