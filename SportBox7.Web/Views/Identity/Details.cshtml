@@ -65,6 +65,10 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
+                                    @foreach (var menuelement in Model.MenuElements)
+                                    {
+                                        <li><a href="@menuelement.Url" class="active">@menuelement.Name</a></li>
+                                    }
                                 </ul>
                             </div>
                             <!-- Nav End -->

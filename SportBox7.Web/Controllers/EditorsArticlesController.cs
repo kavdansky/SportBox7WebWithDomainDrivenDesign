@@ -35,7 +35,8 @@
         {
             try
             {
-                return await this.Send(command);
+                var result = await this.Send(command);
+                return RedirectToAction("Drafts");
             }
             catch (ModelValidationException ex)
             {

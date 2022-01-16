@@ -21,8 +21,8 @@ namespace SportBox7.Web.Controllers
     {
         [Route("/sources/createSource")]
         [HttpGet]
-        public async Task<ActionResult<CreateSourceInputModel>> CreateSource(string? errorMessage)
-       => View(await CreateSourceInputModel.CreateAsync(errorMessage));
+        public async Task<ActionResult<CreateSourceInputModel>> CreateSource(CreateSourceQuery query)
+       => View(await this.Mediator.Send(query));
 
 
         [Route("/sources/createSource")]

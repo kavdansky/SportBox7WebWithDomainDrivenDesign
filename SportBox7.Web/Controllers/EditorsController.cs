@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using SportBox7.Application.Features.Editors.Queries.Index;
     using SportBox7.Application.Features.Identity.Commands.LoginUser;
     using System.Threading.Tasks;
 
@@ -9,8 +10,8 @@
     {
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult> Index(string email, int editorId, string userId)
-            => View(await Task.Run(()=> new LoginOutputModel(email, editorId, userId)));
+        public async Task<ActionResult> Index(LoginOutputModelQuery query)
+            => View(await this.Mediator.Send(query));
     }
 }
  

@@ -43,6 +43,11 @@
         public async Task<ActionResult<ListUsersOutputModel>> Index([FromQuery] ListUsersQuery query)
             => View(await this.Mediator.Send(query));
 
+        [HttpGet]
+        [Route("identity/login")]
+        public async Task<ActionResult<LoginUserInputModel>> Login(string? errorMessage)
+            => View(await LoginUserInputModel.CreateAsync(errorMessage));
+
         [HttpPost]
         [Route("identity/login")]
         public async Task<ActionResult<LoginOutputModel>> Login(LoginUserCommand command)
@@ -54,11 +59,6 @@
             }
             return RedirectToAction("Index", "Editors", result.Data ?? new LoginOutputModel("", 0, ""));
         }
-
-        [HttpGet]
-        [Route("identity/login")]
-        public async Task<ActionResult<LoginUserInputModel>> Login(string? errorMessage)
-            => View(await LoginUserInputModel.CreateAsync(errorMessage));
 
         [Authorize]
         [HttpGet]
@@ -113,8 +113,8 @@
 
         [Route("identity/register")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<RegisterUserInputModel>> Register(List<string>? errorMessage)
-          => View(await RegisterUserInputModel.CreateAsync(errorMessage!));
+        public async Task<ActionResult<RegisterUserInputModel>> Register(RegisterUserQuery query)
+          => View(await this.Mediator.Send(query));
 
         [HttpPost]
         [Route("identity/register")]
