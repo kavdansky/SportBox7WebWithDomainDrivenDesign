@@ -25,8 +25,10 @@
             {
                 var editorId = await this.editorRepository.GetEditorId(currentUser.UserId);
                 var editorEmail = this.identityService.GetUserToEdit(editorId).GetAwaiter().GetResult().Email;
-                var model = new LoginOutputModel(editorEmail, editorId, currentUser.UserId);
-                model.MenuElements = editorRepository.GetEditorMenuModel(currentUser.UserId);
+                var model = new LoginOutputModel(editorEmail, editorId, currentUser.UserId)
+                {
+                    MenuElements = editorRepository.GetEditorMenuModel(currentUser.UserId)
+                };
                 return model;
             }
         }

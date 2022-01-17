@@ -11,6 +11,7 @@
     using SportBox7.Application.Features.Editors.Queries.Common;
     using SportBox7.Application.Features.Editors;
     using SportBox7.Application.Contracts;
+    using System;
 
     public class CreateDraftArticleOutputModel: CreateArticleModel, IEditorPage
     {
@@ -27,6 +28,7 @@
             this.MenuElements = editorRepository.GetEditorMenuModel(currentUser.UserId);
             this.Categories = await articleRepository.GetMenuCategories();
             this.Sources = await sourceRepository.GetSources();
+            this.TargetDate = DateTime.Now;
             return this;
         }
 

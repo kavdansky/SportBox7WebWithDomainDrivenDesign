@@ -127,11 +127,11 @@
 
                                         <div class="form-group">
                                             <label asp-for="@Model.Body"></label>
-                                            <input asp-for="@Model.Body" class="form-control" />
+                                            <textarea asp-for="@Model.Body" class="form-control" rows="20" cols="50"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="@Model.TargetDate"></label>
-                                            <input asp-for="@Model.TargetDate" type="date" asp-format="{0:dd/MM/yyyy}" class="form-control" />
+                                            <input asp-for="@Model.TargetDate" type="date" class="form-control" />
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="@Model.SeoUrl"></label>

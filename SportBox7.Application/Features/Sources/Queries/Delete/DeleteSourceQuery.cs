@@ -2,6 +2,8 @@
 {
     using AutoMapper;
     using MediatR;
+    using SportBox7.Application.Contracts;
+    using SportBox7.Application.Features.Editors;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -14,16 +16,20 @@
         public class EditSourceQueryHandler : IRequestHandler<DeleteSourceQuery, DeleteSourceOutputModel>
         {
             private readonly ISourceRepository sourceRepository;
+            private readonly ICurrentUser currentUser;
+            private readonly IEditorRepository editorRepository;
          
-            public EditSourceQueryHandler(ISourceRepository sourceRepository)
+            public EditSourceQueryHandler(ISourceRepository sourceRepository, ICurrentUser currentUser, IEditorRepository editorRepository)
             {
                 this.sourceRepository = sourceRepository;
+                this.currentUser = currentUser;
+                this.editorRepository = editorRepository;
             }
 
             public async Task<DeleteSourceOutputModel> Handle(DeleteSourceQuery request, CancellationToken cancellationToken)
             {
                 var model = await this.sourceRepository.GetSourceToDeleteById(request.Id);
-                //model.ErrorMessage = request.ErrorMessage;
+                model.MenuElements = editorRepository.GetEditorMenuModel(currentUser.UserId);
                 return model;
             }
         }

@@ -2,6 +2,7 @@
 {
     using AutoMapper;
     using SportBox7.Application.Features.Articles.Contracts;
+    using SportBox7.Application.Features.Editors.Contracts;
     using SportBox7.Application.Features.Sources.Commands.Edit;
     using SportBox7.Application.Features.Sources.Queries.Common;
     using SportBox7.Domain.Models.Sources;
