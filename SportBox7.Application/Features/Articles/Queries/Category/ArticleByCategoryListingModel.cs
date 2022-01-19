@@ -1,5 +1,4 @@
-﻿
-namespace SportBox7.Application.Features.Articles.Queries.Category
+﻿namespace SportBox7.Application.Features.Articles.Queries.Category
 {
     using SportBox7.Application.Features.Articles.Queries.Common;
 

@@ -14,6 +14,7 @@
     using SportBox7.Application.Features.Articles.Queries.Edit;
     using System;
     using SportBox7.Application.Features.Articles.Commands.Edit;
+    using SportBox7.Application.Features.Articles.Queries.ArticlesByDate;
 
     public class ArticlesController: MainController
     {
@@ -40,6 +41,14 @@
                 return View(model);
             }
             return Redirect("/Home/NotFound"); 
-        }     
+        }
+
+        [Route("/articles/date")]
+        [HttpGet]
+        public async Task<ActionResult<ArticlesByDateOutputModel>> Date([FromQuery] ArticleByDateQuery query)
+        {
+            var model = await this.Mediator.Send(query);
+            return View(model);
+        }
     }
 }

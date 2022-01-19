@@ -1,5 +1,6 @@
 ﻿namespace SportBox7.Application.Features.Articles.Contrcts
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
@@ -7,6 +8,7 @@
     using Queries.Category;
     using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Articles.Commands.Edit;
+    using SportBox7.Application.Features.Articles.Queries.ArticlesByDate;
     using SportBox7.Application.Features.Articles.Queries.Common;
     using SportBox7.Application.Features.Articles.Queries.HomePage;
     using SportBox7.Application.Features.Articles.Queries.Id;
@@ -48,6 +50,8 @@
         Task<Article> GetArticleObjectById(int id);
 
         Task UpdateArticle(EditArticleCommand command, Source sourceToEdit);
+
+        Task<IEnumerable<ArticlesByDateListingModel>> GetArticlesByDate(DateTime date);
 
     }
 }

@@ -113,14 +113,10 @@
 
         public Article Build()
         {
-            if (isArticleTypeSet && articleType == ArticleType.PeriodicArticle && !isTargetDateSet)
-            {
-                throw new InvalidArticleException("Periodic Articles must have Target Date ");
-            }
-            if (isTitleSet== false || isBodyset == false || isH1TagSet == false || isImageUrlSet == false || isSeoUrlSet == false || isMetaDescriptionSet== false || isMetaKeywordsSet == false || isCategorySet == false || isArticleTypeSet == false || isSourceSet == false)
+            if (isTitleSet== false || isBodyset == false || isH1TagSet == false || isImageUrlSet == false || isSeoUrlSet == false || isMetaDescriptionSet== false || isMetaKeywordsSet == false || isCategorySet == false || isArticleTypeSet == false || isSourceSet == false || isArticleTypeSet == false || isTargetDateSet == false)
             {
                 
-                throw new InvalidArticleException("Title, Body, H1Tag, ImageUrl, SeoUrl, MetaDescription, MetaKeywords, Category and Article must have value!");
+                throw new InvalidArticleException("Title, Body, H1Tag, ImageUrl, SeoUrl, MetaDescription, MetaKeywords, Category and TargetDate must have value!");
             }
 
             return new Article(this.title, this.body, this.h1Tag, this.imageUrl, this.seoUrl, this.metaDescription, this.metaKeywords, this.category, this.articleType, this.targetDate, this.source);

@@ -89,7 +89,7 @@
 
         public Category Category { get; private set; }
        
-        public DateTime? TargetDate { get; private set; } 
+        public DateTime TargetDate { get; private set; } 
 
         public ArticleState ArticleState { get; private set; }
 

@@ -10,6 +10,7 @@
     using Microsoft.EntityFrameworkCore;
     using SportBox7.Application.Features.Articles.Commands.Edit;
     using SportBox7.Application.Features.Articles.Contrcts;
+    using SportBox7.Application.Features.Articles.Queries.ArticlesByDate;
     using SportBox7.Application.Features.Articles.Queries.Common;
     using SportBox7.Application.Features.Articles.Queries.HomePage;
     using SportBox7.Application.Features.Articles.Queries.Id;
@@ -127,5 +128,16 @@
             articleToEdit.UpdateTitle(command.Title);
             await this.Save(articleToEdit);
         }
+
+        public async Task<IEnumerable<ArticlesByDateListingModel>> GetArticlesByDate(DateTime date)
+        {
+            var articlesOnThisTargetDate = await this.All().Include(a=> a.Category).Where(a => a.TargetDate.Day == date.Day && a.TargetDate.Month == date.Month).ToListAsync();
+            var articlesToReturn = new List<ArticlesByDateListingModel>();
+            foreach (var article in articlesOnThisTargetDate)
+            {
+                articlesToReturn.Add(new ArticlesByDateListingModel(article.Id, article.Title, article.Body, article.ImageUrl, article.Category.CategoryName, article.Category.CategoryNameEN, article.SeoUrl, article.TargetDate));
+            }
+            return articlesToReturn;
+        } 
     }
 }
