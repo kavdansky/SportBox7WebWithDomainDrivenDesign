@@ -14,6 +14,8 @@
 
         public IEnumerable<LatestNewsModel> LatestNews { get; set; } = default!;
 
+        public IEnumerable<LatestNewsModel> OnTheDayArticles { get; set; } = default!;
+
         public IEnumerable<SideBarModel> SideBar { get; set; } = default!;
 
         public Category CurrentCategory { get; set; } = default!;

@@ -115,7 +115,7 @@
                                 </ul>
                             </div>
                         </div>
-                    }
+                                        }
                 </div>
             </div>
         </div>
@@ -126,7 +126,7 @@
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <div class="blog-posts-area">
-                        @if (Model != null)
+                        @if (Model.Articles.Count > 0)
                         {
                             @foreach (var article in Model.Articles)
                             {
@@ -148,9 +148,20 @@
                                 <hr />
                             }
                         }
+                        else
+                        {
+                            <!-- Single Featured Post -->
+                            <div class="single-blog-post featured-post mb-30">
+                                <div class="post-data">
+                                    <h6>Няма статии за този ден.</h6>
+                                </div>
+                            </div>
+                            <hr />
+                        }
                     </div>
                 </div>
                 <!-- SideBar -->
+                @{ int targetMonth = Model.TargetDate.Month - 1; }
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="calendar-wrapper"></div>
                     <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
@@ -163,14 +174,13 @@
                             let dateObject = new Date(date);
                             let day = dateObject.getDate();
                             let month = dateObject.getMonth();
-                            window.location.href = `date?month=${month}&day=${day}`;
+                            let year = dateObject.getFullYear();
+                            window.location.href = `/articles/date?year=${year}&month=${month}&day=${day}`;
 
                         }
-                        
-   
                         var defaultConfig = {
                             weekDayLength: 1,
-                            date: new Date(),
+                            date: new Date(@Model.TargetDate.Year, @targetMonth, @Model.TargetDate.Day),
                             onClickDate: selectDate,
                             showYearDropdown: true,
                         };

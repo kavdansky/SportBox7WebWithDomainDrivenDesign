@@ -131,13 +131,18 @@
 
         public async Task<IEnumerable<ArticlesByDateListingModel>> GetArticlesByDate(DateTime date)
         {
-            var articlesOnThisTargetDate = await this.All().Include(a=> a.Category).Where(a => a.TargetDate.Day == date.Day && a.TargetDate.Month == date.Month).ToListAsync();
+            var articlesOnThisTargetDate = await this.All().Include(a=> a.Category).Where(a => a.TargetDate.Day == date.Day && a.TargetDate.Month == date.Month && a.TargetDate.Year == date.Year).ToListAsync();
             var articlesToReturn = new List<ArticlesByDateListingModel>();
             foreach (var article in articlesOnThisTargetDate)
             {
                 articlesToReturn.Add(new ArticlesByDateListingModel(article.Id, article.Title, article.Body, article.ImageUrl, article.Category.CategoryName, article.Category.CategoryNameEN, article.SeoUrl, article.TargetDate));
             }
             return articlesToReturn;
-        } 
+        }
+
+        public Task<IEnumerable<LatestNewsModel>> GetOnTheDayArticles()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

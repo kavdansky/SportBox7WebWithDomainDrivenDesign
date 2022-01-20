@@ -16,6 +16,10 @@
     <title>@Html.Raw(Model.MetaTitle)</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/css/calendar-style.css">
+    <link rel="stylesheet" href="~/css/calendar-theme.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header-area">
@@ -185,6 +189,34 @@
                     </div>
                 </div>
                 <!-- SideBar -->
+                @{ int targetMonth = Model.TargetDate.Month - 1; }
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="calendar-wrapper"></div>
+                    <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
+                    <script src="~/js/calendar.js"></script>
+                    <script>
+                        function selectDate(date) {
+                            $('.calendar-wrapper').updateCalendarOptions({
+                                date: date
+                            });
+                            let dateObject = new Date(date);
+                            let day = dateObject.getDate();
+                            let month = dateObject.getMonth();
+                            let year = dateObject.getFullYear();
+                            window.location.href = `/articles/date?year=${year}&month=${month}&day=${day}`;
+
+                        }
+                        var defaultConfig = {
+                            weekDayLength: 1,
+                            date: new Date(@Model.TargetDate.Year, @targetMonth, @Model.TargetDate.Day),
+                            onClickDate: selectDate,
+                            showYearDropdown: true,
+                        };
+
+                        $('.calendar-wrapper').calendar(defaultConfig);
+                    </script>
+                </div>
+                <!-- SideBar End -->
                 <div class="col-12 col-md-6 col-lg-4">
                     @if (Model != null && Model.SideBar != null)
                     {
@@ -232,8 +264,6 @@
     </footer>
     <!-- ##### Footer Area Start ##### -->
     <!-- ##### All Javascript Files ##### -->
-    <!-- jQuery-2.2.4 js -->
-    <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
     <script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
     <!-- Bootstrap js -->

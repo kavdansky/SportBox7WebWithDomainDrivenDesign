@@ -53,5 +53,7 @@
 
         Task<IEnumerable<ArticlesByDateListingModel>> GetArticlesByDate(DateTime date);
 
+        Task<IEnumerable<LatestNewsModel>> GetOnTheDayArticles();
+
     }
 }

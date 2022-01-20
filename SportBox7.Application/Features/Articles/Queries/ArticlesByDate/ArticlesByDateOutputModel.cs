@@ -14,6 +14,7 @@
         {
             this.Articles = new List<ArticlesByDateListingModel>();
         }
+        public DateTime TargetDate { get; set; }
 
         public List<ArticlesByDateListingModel> Articles { get; set; } = default!;
 
@@ -27,7 +28,7 @@
         {
             await InitializeLayoutComponentsAsync(articleRepository);
             this.Articles = articleRepository.GetArticlesByDate(date).GetAwaiter().GetResult().ToList();
-       
+            this.TargetDate = date;
             return this;
         }
 

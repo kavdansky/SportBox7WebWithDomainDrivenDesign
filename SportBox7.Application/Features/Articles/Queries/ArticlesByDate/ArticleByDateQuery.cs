@@ -12,6 +12,8 @@
 
         public int Month { get; set; }
 
+        public int Year { get; set; }
+
         public class ArticleByDateQueryHandler : IRequestHandler<ArticleByDateQuery, ArticlesByDateOutputModel>
         {
             private readonly IArticleRepository articleRepository;
@@ -22,7 +24,7 @@
             }
             public async Task<ArticlesByDateOutputModel> Handle(ArticleByDateQuery request, CancellationToken cancellationToken)
             {
-                var targetDate = new DateTime(1000, request.Month+1, request.Day);
+                var targetDate = new DateTime(request.Year, request.Month+1, request.Day);
                 return await ArticlesByDateOutputModel.CreateAsync(articleRepository, targetDate);
             } 
         }

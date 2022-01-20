@@ -3,6 +3,7 @@
     using SportBox7.Application.Features.Articles.Contracts;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Common;
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -23,10 +24,13 @@
 
         public string MetaTitle { get; set; } = default!;
 
+        public DateTime TargetDate { get; set; }
+
         private async Task<FrontPageOutputModel> InitializeAsync(IArticleRepository articleRepository)
         {
             await InitializeLayoutComponentsAsync(articleRepository);
-            this.Topnews = await articleRepository.GetTopNews();            
+            this.Topnews = await articleRepository.GetTopNews();
+            this.TargetDate = DateTime.Now;
             return this;
         }
 

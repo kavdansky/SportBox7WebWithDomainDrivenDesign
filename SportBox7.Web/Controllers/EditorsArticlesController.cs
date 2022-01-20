@@ -67,7 +67,8 @@
         {
             try
             {
-                return await this.Mediator.Send(command);
+                await this.Mediator.Send(command);
+                return RedirectToAction("Drafts");
             }
             catch (ModelValidationException ex)
             {
