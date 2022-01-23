@@ -8,6 +8,7 @@
     using AutoMapper;
     using Microsoft.AspNetCore.Identity;
     using SportBox7.Application.Common;
+    using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Editors;
     using SportBox7.Application.Features.Identity.Commands.CreateUser;
     using SportBox7.Application.Features.Identity.Commands.EditUser;
@@ -15,6 +16,7 @@
     using SportBox7.Application.Features.Identity.Queries.AllUsers;
     using SportBox7.Application.Features.Identity.Queries.EditUser;
     using SportBox7.Application.Features.Identity.Queries.UserDetails;
+    using SportBox7.Domain.Exeptions;
     using SportBox7.Domain.Factories.Editors;
 
     public class IdentityService : IIdentity
@@ -26,6 +28,7 @@
         private readonly IEditorFactory editorFactory;
         private readonly IEditorRepository editorRepository;
         private readonly IMapper mapper;
+        private readonly ICurrentUser currentUser;
 
 
         public IdentityService(
@@ -33,13 +36,15 @@
             SignInManager<User> signInManager,
             IEditorFactory editorFactory,
             IEditorRepository editorRepository,
-            IMapper mapper)
+            IMapper mapper,
+            ICurrentUser currentUser)
         {
             this.editorFactory = editorFactory;
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.editorRepository = editorRepository;
             this.mapper = mapper;
+            this.currentUser = currentUser;
         }
 
         public bool CheckPermitForEdit(string userId, int editorId)
@@ -117,23 +122,10 @@
             {
                 return InvalidLoginErrorMessage;
             }
-
-            if (await userManager.IsInRoleAsync(user, "Admin"))
-            {
-                if (user.Editor == null)
-                {
-                    var editor = editorFactory.WithFirstName("Lyubomir")
-                        .WithLastName("Kavdansky")
-                        .Build();
-
-                    user.BecomeEditor(editor);
-                    await editorRepository.Save(editor);
-                }
-            }
-
+            
             await this.signInManager.SignInAsync(user, false);
-
-            return new LoginSuccessModel(user.Id, user.Email);
+            
+            return new LoginSuccessModel(user.Id, user.Email); ;
         }
 
         public async Task<Result> Logout()
@@ -151,6 +143,6 @@
             return identityResult.Succeeded
                 ? Result<IUser>.SuccessWith(user)
                 : Result<IUser>.Failure(errors);
-        }  
+        }
     }
 }

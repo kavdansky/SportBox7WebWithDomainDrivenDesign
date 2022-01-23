@@ -6,6 +6,9 @@ namespace SportBox7.Startup
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using SportBox7.Application.Features.Editors;
+    using SportBox7.Domain.Factories.Editors;
+    using SportBox7.Domain.Models.Editors;
     using SportBox7.Infrastructure.Identity;
     using SportBox7.Infrastructure.Persistence;
 
@@ -21,7 +24,9 @@ namespace SportBox7.Startup
                 {
                     var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
                     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                    UserAndRoleDataInitializer.SeedData(userManager, roleManager);
+                    var editorFactory = serviceProvider.GetRequiredService<IEditorFactory>();
+                    var editorRepository = serviceProvider.GetRequiredService<IEditorRepository>();
+                    UserAndRoleDataInitializer.SeedData(userManager, roleManager, editorFactory, editorRepository);
                 }
                 catch (Exception ex)
                 {

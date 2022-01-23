@@ -24,6 +24,7 @@
         {
             this.MenuCategories = await articleRepository.GetMenuCategories();
             this.LatestNews = await articleRepository.GetLatestNews();
+            this.OnTheDayArticles = await articleRepository.GetOnTheDayArticles();
             this.SideBar = articleRepository.GetsideBarNews();
             return true;
         }

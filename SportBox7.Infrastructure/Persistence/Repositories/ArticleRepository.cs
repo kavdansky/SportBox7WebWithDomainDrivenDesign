@@ -140,9 +140,15 @@
             return articlesToReturn;
         }
 
-        public Task<IEnumerable<LatestNewsModel>> GetOnTheDayArticles()
+        public async Task<IEnumerable<LatestNewsModel>> GetOnTheDayArticles()
         {
-            throw new NotImplementedException();
+            var currentDate = DateTime.Now;
+            var articlesOnThisDay = await this.All()
+                .Include(a=> a.Category)
+                .Where(a => a.ArticleType == ArticleType.PeriodicArticle && a.TargetDate.Day == currentDate.Day && a.TargetDate.Month == currentDate.Month && a.ArticleState == ArticleState.Published)
+                .Select(a=> new LatestNewsModel(a.Id, a.Category.CategoryNameEN, a.Title ))
+                .ToListAsync();
+            return articlesOnThisDay;
         }
     }
 }

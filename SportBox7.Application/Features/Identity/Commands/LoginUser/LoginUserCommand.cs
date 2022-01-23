@@ -36,9 +36,8 @@
                 }
 
                 var user = result.Data;
-                var dealerId = await this.editorRepository.GetEditorId(user.UserId, cancellationToken);
-
-                return new LoginOutputModel(user.Email, dealerId, user.UserId);
+                var editorId = this.editorRepository.FindByUser(user.UserId).Id;
+                return new LoginOutputModel(user.Email, editorId, user.UserId);
             }
         }
     }

@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using SportBox7.Application.Features.Editors;
+using SportBox7.Domain.Factories.Editors;
 using SportBox7.Infrastructure.Identity;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SportBox7.Infrastructure.Persistence
 {
     public static class UserAndRoleDataInitializer
     {
-        public static void SeedData(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public static void SeedData(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IEditorFactory editorFactory, IEditorRepository editorRepository)
         {
             SeedRoles(roleManager);
-            SeedUsers(userManager);
+            SeedUsers(userManager, editorFactory, editorRepository);
         }
 
-        private static void SeedUsers(UserManager<User> userManager)
+        private static void SeedUsers(UserManager<User> userManager, IEditorFactory editorFactory, IEditorRepository editorRepository)
         {
             if (userManager.FindByEmailAsync("johndoe@localhost").Result == null)
             {
@@ -46,7 +45,13 @@ namespace SportBox7.Infrastructure.Persistence
                 if (result.Succeeded)
                 {
                     userManager.AddToRoleAsync(user, "Admin").Wait();
-                }
+                    var editor = editorFactory.WithFirstName("Lyubomir")
+                        .WithLastName("Kavdansky")
+                        .Build();
+                    editorRepository.Save(editor).Wait();
+                    user.BecomeEditor(editor);
+                    userManager.UpdateAsync(user).Wait();
+                }               
             }
         }
 
