@@ -8,13 +8,23 @@
 
     public class CreateSourceInputModel: SourceModel, IEditorPage
     {
+        public CreateSourceInputModel()
+        {
+
+        }
+        public CreateSourceInputModel(string sourceName, string sourceUrl, string sourceImageUrl)
+        {
+            this.SourceName = sourceName;
+            this.SourceUrl = sourceUrl;
+            this.SourceImageUrl = sourceImageUrl;
+        }
         public IEnumerable<EditorMenuElement> MenuElements { get; set; } = default!;
 
-        private async Task<CreateSourceInputModel> InitializeAsync(string? errorMessage)
+        private async Task<CreateSourceInputModel> InitializeAsync(List<string> errors)
         {
-            if (errorMessage != null)
+            if (errors.Count > 0)
             {
-                this.ErrorMessage = errorMessage;
+                this.Errors = errors;
             }
 
             this.SourceName = await Task.Run(() => string.Empty);
@@ -24,11 +34,11 @@
             return this;
         }
 
-        public static async Task<CreateSourceInputModel> CreateAsync(string? errorMessage)
+        public static async Task<CreateSourceInputModel> CreateAsync(List<string> errors)
         {
             CreateSourceInputModel model = new CreateSourceInputModel();
 
-            return await model.InitializeAsync(errorMessage);
+            return await model.InitializeAsync(errors);
         }
     }
 }

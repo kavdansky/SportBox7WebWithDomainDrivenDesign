@@ -15,27 +15,32 @@ namespace SportBox7.Web.Controllers
     using System.Threading.Tasks;
     using SportBox7.Domain.Exeptions;
     using SportBox7.Application.Features.Sources.Queries.Delete;
+    using SportBox7.Application.Exceptions;
 
     [Authorize]
     public class SourcesController: MainController
     {
         [Route("/sources/createSource")]
         [HttpGet]
-        public async Task<ActionResult<CreateSourceInputModel>> CreateSource(CreateSourceQuery query)
+        public async Task<ActionResult<CreateSourceInputModel>> CreateSource([FromQuery]CreateSourceQuery query)
        => View(await this.Mediator.Send(query));
 
 
         [Route("/sources/createSource")]
         [HttpPost]
         public async Task<ActionResult<CreateSourceOutputModel>> CreateSource(CreateSourceCommand command)
-        { 
-            var result = await this.Mediator.Send(command);
-
-            if (!result.Succeeded)
+        {
+            try
             {
-                return await Task.Run(() => View(CreateSourceInputModel.CreateAsync(string.Join(", ", result.Errors))));
+                var result = await this.Mediator.Send(command);
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            catch (ModelValidationException ex)
+            {
+                var model = new CreateSourceInputModel(command.SourceName, command.SourceUrl, command.SourceImageUrl);
+                model.Errors = ex.Errors;
+                return RedirectToAction("CreateSource", model);
+            }
         }
 
         [Route("/sources/details")]

@@ -3,13 +3,13 @@
     using MediatR;
     using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Editors;
+    using SportBox7.Application.Features.Sources.Queries.Common;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class CreateSourceQuery: IRequest<CreateSourceInputModel>
+    public class CreateSourceQuery: SourceModel, IRequest<CreateSourceInputModel>
     {
-        public string Errors { get; set; } = default!;
-
         public class CreateSourceQueryHandler : IRequestHandler<CreateSourceQuery, CreateSourceInputModel>
         {
             private readonly ICurrentUser currentUser;

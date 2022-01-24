@@ -1,7 +1,15 @@
 ﻿namespace SportBox7.Application.Features.Sources.Commands.Create
 {
-    public class CreateSourceOutputModel
+    using SportBox7.Application.Features.Sources.Queries.Common;
+    using System.Collections.Generic;
+
+    public class CreateSourceOutputModel: SourceModel
     {
+        
+
+        public CreateSourceOutputModel()
+        {
+        }
         public CreateSourceOutputModel(int sourceId, string sourceName)
         {
             this.SourceId = sourceId;
@@ -10,6 +18,5 @@
 
         public int SourceId { get; set; }
 
-        public string SourceName { get; set; } = default!;
     }
 }

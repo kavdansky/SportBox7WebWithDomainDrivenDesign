@@ -103,8 +103,12 @@
                                 <div class="post-meta">
                                     <h4>Create Source</h4>
                                     <hr />
+                                    @foreach (var error in Model.Errors)
+                                    {
+                                        @:<p class="text-danger">@error</p>
+                                    }
                                     <form asp-action="CreateSource" enctype="multipart/form-data">
-                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                                         <div class="form-group">
                                             <label asp-for="SourceName" class="control-label"></label>
                                             <input asp-for="SourceName" class="form-control" />
