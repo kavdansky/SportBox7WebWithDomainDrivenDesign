@@ -42,6 +42,11 @@
                 .WithMessage("'{PropertyName}' must be a valid url.")
                 .NotEmpty();
 
+            this.RuleFor(c => c.ImageUrl)
+                .Must(url => Uri.IsWellFormedUriString(url, UriKind.Absolute))
+                .WithMessage("'{PropertyName}' must be a valid url.")
+                .NotEmpty();
+
             this.RuleFor(c => c.MetaDescription)
                .MinimumLength(MetatagsMinLength)
                .MaximumLength(MetatagsMaxLength)

@@ -1,5 +1,6 @@
 ﻿using SportBox7.Domain.Common;
 using SportBox7.Domain.Models.Articles.Enums;
+using SportBox7.Domain.Models.Categories;
 using SportBox7.Domain.Models.Sources;
 using System;
 using System.Collections.Generic;

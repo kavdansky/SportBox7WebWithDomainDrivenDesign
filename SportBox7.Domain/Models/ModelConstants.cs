@@ -17,7 +17,7 @@ namespace SportBox7.Domain.Models
             public const int MaxEmailLength = 50;
             public const int MinNameLength = 3;
             public const int MaxNameLength = 50;
-            public const string UrlRregularExpression = @"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$";
+            public const string UrlRregularExpression = "[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)";
         }
 
         public class Article

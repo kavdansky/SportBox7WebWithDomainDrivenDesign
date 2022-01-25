@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SportBox7.Domain.Models.Articles
+namespace SportBox7.Domain.Models.Categories
 {
     public class CategoryFakes
     {

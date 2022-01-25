@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SportBox7.Domain.Models.Articles;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SportBox7.Domain.Models.Categories;
 
 using static SportBox7.Domain.Models.ModelConstants.Category;
 

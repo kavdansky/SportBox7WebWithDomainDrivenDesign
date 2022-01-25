@@ -129,7 +129,7 @@
                 {
                     return RedirectToAction("Register", await RegisterUserInputModel.CreateAsync(result.Errors));
                 }
-                return Redirect("identity/editors");
+                return Redirect("/identity/editors");
             }
             catch (ModelValidationException ex)
             {

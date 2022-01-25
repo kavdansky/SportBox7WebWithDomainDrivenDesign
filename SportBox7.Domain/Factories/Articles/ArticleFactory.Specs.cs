@@ -2,8 +2,8 @@
 {
     using FluentAssertions;
     using SportBox7.Domain.Exeptions;
-    using SportBox7.Domain.Models.Articles;
     using SportBox7.Domain.Models.Articles.Enums;
+    using SportBox7.Domain.Models.Categories;
     using SportBox7.Domain.Models.Sources;
     using System;
     using Xunit;

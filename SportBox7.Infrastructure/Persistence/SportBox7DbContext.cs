@@ -1,10 +1,9 @@
 ﻿namespace SportBox7.Infrastructure.Persistence
 {
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-    using SportBox7.Application.Features.Identity.Queries.RegisterUser;
     using SportBox7.Domain.Models.Articles;
+    using SportBox7.Domain.Models.Categories;
     using SportBox7.Domain.Models.Editors;
     using SportBox7.Domain.Models.Sources;
     using SportBox7.Infrastructure.Identity;

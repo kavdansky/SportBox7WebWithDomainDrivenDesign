@@ -23,4 +23,7 @@
   <ItemGroup>
     <ProjectCapability Include="DynamicFileNesting" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\Categories\" />
+  </ItemGroup>
 </Project>

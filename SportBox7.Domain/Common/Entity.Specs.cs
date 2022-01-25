@@ -2,6 +2,7 @@
 {
     using FluentAssertions;
     using Models.Articles;
+    using SportBox7.Domain.Models.Categories;
     using Xunit;
 
     public class EntitySpecs

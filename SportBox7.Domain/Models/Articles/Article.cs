@@ -8,6 +8,7 @@
     using System.Linq;
     using static SportBox7.Domain.Models.ModelConstants.Common;
     using static SportBox7.Domain.Models.ModelConstants.Article;
+    using SportBox7.Domain.Models.Categories;
 
     public class Article: EditableEntity<int>, IAggregateRoot
     {

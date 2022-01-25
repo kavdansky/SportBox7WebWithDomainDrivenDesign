@@ -1,9 +1,9 @@
-﻿namespace SportBox7.Domain.Models.Articles
+﻿namespace SportBox7.Domain.Models.Categories
 {
     using SportBox7.Domain.Common;
     using SportBox7.Domain.Exeptions;
 
-    public class Category: Entity<int>
+    public class Category: Entity<int>, IAggregateRoot
     {
         private const byte DescriptionStringMinLength = 3;
         private const byte DescriptionStringMaxLength = 15;
