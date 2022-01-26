@@ -6,6 +6,7 @@
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Editors;
     using SportBox7.Application.Features.Sources;
+    using SportBox7.Application.Features.Sources.Contracts;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
@@ -23,14 +24,16 @@
             private readonly IMapper mapper;
             private readonly IEditorRepository editorRepository;
             private readonly ICurrentUser currentUser;
+            private readonly ICategoryRepository categoryRepository;
 
-            public EditArticleOutputModelQueryHandler(IArticleRepository articleRepository, ISourceRepository sourceRepository, IMapper mapper, IEditorRepository editorRepository, ICurrentUser currentUser)
+            public EditArticleOutputModelQueryHandler(IArticleRepository articleRepository, ISourceRepository sourceRepository, IMapper mapper, IEditorRepository editorRepository, ICurrentUser currentUser, ICategoryRepository categoryRepository)
             {
                 this.articleRepository = articleRepository;
                 this.sourceRepository = sourceRepository;
                 this.mapper = mapper;
                 this.editorRepository = editorRepository;
                 this.currentUser = currentUser;
+                this.categoryRepository = categoryRepository;
             }
 
             public async Task<EditArticleOutputModel> Handle(EditArticleOutputModelQuery request, CancellationToken cancellationToken)
@@ -39,7 +42,7 @@
                 var model = this.mapper.Map<EditArticleOutputModel>(article);
                 model.Source = article.Source.SourceName;
                 model.Errors = request.Errors;
-                model.Categories = await articleRepository.GetMenuCategories();
+                model.Categories = await categoryRepository.GetMenuCategories();
                 model.Sources = await sourceRepository.GetSources();
                 model.MenuElements = this.editorRepository.GetEditorMenuModel(this.currentUser.UserId);
                 return model;

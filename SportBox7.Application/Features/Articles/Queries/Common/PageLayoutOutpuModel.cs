@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using SportBox7.Domain.Models.Categories;
+    using SportBox7.Application.Features.Sources.Contracts;
 
     public abstract class PageLayoutOutpuModel
     {
@@ -20,9 +21,9 @@
 
         public Category CurrentCategory { get; set; } = default!;
 
-        protected async Task<bool> InitializeLayoutComponentsAsync(IArticleRepository articleRepository)
+        protected async Task<bool> InitializeLayoutComponentsAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository)
         {
-            this.MenuCategories = await articleRepository.GetMenuCategories();
+            this.MenuCategories = await categoryRepository.GetMenuCategories();
             this.LatestNews = await articleRepository.GetLatestNews();
             this.OnTheDayArticles = await articleRepository.GetOnTheDayArticles();
             this.SideBar = articleRepository.GetsideBarNews();

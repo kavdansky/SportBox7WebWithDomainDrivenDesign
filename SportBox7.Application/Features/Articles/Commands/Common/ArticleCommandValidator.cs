@@ -7,10 +7,11 @@
     using SportBox7.Domain.Models.Articles.Enums;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Commands.Create;
+    using SportBox7.Application.Features.Sources.Contracts;
 
     public class ArticleCommandValidator : AbstractValidator<CreateArticleCommand>
     {
-        public ArticleCommandValidator(IArticleRepository articleRepository)
+        public ArticleCommandValidator(ICategoryRepository categoryRepository)
         {
             this.RuleFor(c => c.Title)
                 .MinimumLength(TitleMinLength)
@@ -23,8 +24,8 @@
                 .NotEmpty();
 
             this.RuleFor(c => c.Category)
-                .MustAsync(async (category, token) => await articleRepository
-                    .GetCategoryByName(category) != null)
+                .MustAsync(async (category, token) => await categoryRepository
+                .GetCategoryByName(category) != null)
                 .WithMessage("'{PropertyName}' does not exist.");
 
             this.RuleFor(c => c.ImageUrl)
@@ -69,7 +70,9 @@
 #pragma warning restore IDE0059 // Unnecessary assignment of a value
         }
 
+#pragma warning disable IDE0051 // Remove unused private members
         private bool ContainArticleType(int value)
+#pragma warning restore IDE0051 // Remove unused private members
         {
             bool isInType = false;
             if (Enum.IsDefined(typeof(ArticleType), value))

@@ -126,7 +126,7 @@
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <div class="blog-posts-area">
-                        @if (Model.Articles.Count > 0)
+                        @if (Model?.Articles.Count > 0)
                         {
                             @foreach (var article in Model.Articles)
                             {

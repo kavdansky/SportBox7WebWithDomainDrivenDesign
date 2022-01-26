@@ -6,10 +6,11 @@
     using SportBox7.Application.Features.Articles.Contrcts;
     using System;
     using SportBox7.Domain.Models.Articles.Enums;
+    using SportBox7.Application.Features.Sources.Contracts;
 
     public class EditArticleCommandValidator : AbstractValidator<EditArticleCommand>
     {
-        public EditArticleCommandValidator(IArticleRepository articleRepository)
+        public EditArticleCommandValidator(ICategoryRepository categoryRepository)
         {
             this.RuleFor(c => c.Title)
                 .MinimumLength(TitleMinLength)
@@ -22,7 +23,7 @@
                 .NotEmpty();
 
             this.RuleFor(c => c.Category)
-                .MustAsync(async (category, token) => await articleRepository
+                .MustAsync(async (category, token) => await categoryRepository
                     .GetCategoryByName(category) != null)
                 .WithMessage("'{PropertyName}' does not exist.");
 

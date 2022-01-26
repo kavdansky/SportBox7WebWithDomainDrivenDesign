@@ -3,6 +3,7 @@
     using SportBox7.Application.Features.Articles.Contracts;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Common;
+    using SportBox7.Application.Features.Sources.Contracts;
     using SportBox7.Domain.Models.Editors;
     using System.Threading.Tasks;
 
@@ -12,19 +13,19 @@
 
         public Editor Author { get; set; } = default!;
 
-        private async Task<ArticleByIdOutputModel> InitializeAsync(IArticleRepository articleRepository, int id)
+        private async Task<ArticleByIdOutputModel> InitializeAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository, int id)
         {
-            await InitializeLayoutComponentsAsync(articleRepository);
-            this.CurrentCategory = await articleRepository.GetCurrentCategory(id);
+            await InitializeLayoutComponentsAsync(articleRepository, categoryRepository);
+            this.CurrentCategory = await categoryRepository.GetCurrentCategory(id);
             this.Article = await articleRepository.GetArticleById(id);
             this.Author = await articleRepository.GetArticleAuthor(id);
             return this;
         }
 
-        public static Task<ArticleByIdOutputModel> CreateAsync(IArticleRepository articleRepository, int id)
+        public static Task<ArticleByIdOutputModel> CreateAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository, int id)
         {
             var pgModel = new ArticleByIdOutputModel();
-            return pgModel.InitializeAsync(articleRepository, id);
+            return pgModel.InitializeAsync(articleRepository, categoryRepository, id);
         }
 
     }

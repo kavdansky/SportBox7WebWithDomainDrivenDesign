@@ -2,6 +2,7 @@
 {
     using MediatR;
     using SportBox7.Application.Features.Articles.Contrcts;
+    using SportBox7.Application.Features.Sources.Contracts;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -12,13 +13,16 @@
         public class ListArticleByCategotyHandler : IRequestHandler<ListArticlesByCategoryQuery, ListArticlesByCategoryOutputModel>
         {
             private readonly IArticleRepository articleRepository;
+            private readonly ICategoryRepository categoryRepository;
 
-            public ListArticleByCategotyHandler(IArticleRepository repository) 
-                => this.articleRepository = repository;
+            public ListArticleByCategotyHandler(IArticleRepository repository, ICategoryRepository categoryRepository)
+            {
+                this.articleRepository = repository;
+                this.categoryRepository = categoryRepository;
+            }
            
-
             public async Task<ListArticlesByCategoryOutputModel> Handle(ListArticlesByCategoryQuery request, CancellationToken cancellationToken)
-                => await ListArticlesByCategoryOutputModel.CreateAsync(this.articleRepository, request.Category);
+                => await ListArticlesByCategoryOutputModel.CreateAsync(this.articleRepository, categoryRepository, request.Category);
             
         }
     }

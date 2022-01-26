@@ -12,6 +12,7 @@
     using SportBox7.Application.Features.Editors;
     using SportBox7.Application.Contracts;
     using System;
+    using SportBox7.Application.Features.Sources.Contracts;
 
     public class CreateDraftArticleOutputModel: CreateArticleModel, IEditorPage
     {
@@ -19,29 +20,26 @@
 
         public string MetaTitle => "Create article draft";
 
-        public CreateDraftArticleOutputModel()
-        {
-        }
+        public CreateDraftArticleOutputModel(){}
 
-        private async Task<CreateDraftArticleOutputModel> InitializeAsync(IArticleRepository articleRepository, ISourceRepository sourceRepository, IEditorRepository editorRepository, ICurrentUser currentUser)
+        private async Task<CreateDraftArticleOutputModel> InitializeAsync(ICategoryRepository categoryRepository, ISourceRepository sourceRepository, IEditorRepository editorRepository, ICurrentUser currentUser)
         {
             this.MenuElements = editorRepository.GetEditorMenuModel(currentUser.UserId);
-            this.Categories = await articleRepository.GetMenuCategories();
+            this.Categories = await categoryRepository.GetMenuCategories();
             this.Sources = await sourceRepository.GetSources();
             this.TargetDate = DateTime.Now;
             return this;
         }
 
-        public static Task<CreateDraftArticleOutputModel> CreateAsync(IArticleRepository articleRepository, ISourceRepository sourceRepository, IEditorRepository editorRepository, ICurrentUser currentUser)
+        public static Task<CreateDraftArticleOutputModel> CreateAsync(ICategoryRepository categoryRepository, ISourceRepository sourceRepository, IEditorRepository editorRepository,  ICurrentUser currentUser)
         {
             var outputModel = new CreateDraftArticleOutputModel();
-            return outputModel.InitializeAsync(articleRepository, sourceRepository, editorRepository, currentUser);
+            return outputModel.InitializeAsync(categoryRepository, sourceRepository, editorRepository,  currentUser);
         }
 
         public override void Mapping(Profile mapper)
             => mapper
                 .CreateMap<CreateArticleCommand, CreateDraftArticleOutputModel>()
                 .IncludeBase<CreateArticleCommand, CreateArticleModel>();
-
     }
 }

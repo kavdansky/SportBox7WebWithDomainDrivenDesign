@@ -30,12 +30,6 @@
 
         Task<ArticleByIdModel> GetArticleById(int id);
 
-        Task<Category> GetCurrentCategory(
-            int categoryId,
-            CancellationToken cancellationToken = default);
-
-        Task<List<MenuCategoriesModel>> GetMenuCategories();
-
         List<SideBarModel> GetsideBarNews();
 
         Task<List<LatestNewsModel>> GetLatestNews();
@@ -43,8 +37,6 @@
         Task<List<TopNewsModel>> GetTopNews();
 
         Task<Editor> GetArticleAuthor(int id);
-
-        Task<Category> GetCategoryByName(string? name);
 
         Task<int> Total(CancellationToken cancellationToken = default);
 

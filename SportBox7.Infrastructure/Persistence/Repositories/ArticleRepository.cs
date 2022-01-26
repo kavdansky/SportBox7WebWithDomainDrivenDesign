@@ -14,6 +14,7 @@
     using SportBox7.Application.Features.Articles.Queries.Common;
     using SportBox7.Application.Features.Articles.Queries.HomePage;
     using SportBox7.Application.Features.Articles.Queries.Id;
+    using SportBox7.Application.Features.Sources.Contracts;
     using SportBox7.Domain.Models.Articles.Enums;
     using SportBox7.Domain.Models.Categories;
     using SportBox7.Domain.Models.Editors;
@@ -21,9 +22,12 @@
 
     internal class ArticleRepository : DataRepository<Article>, IArticleRepository
     {
-        public ArticleRepository(SportBox7DbContext db)
+        private readonly ICategoryRepository categoryRepository;
+
+        public ArticleRepository(SportBox7DbContext db, ICategoryRepository categoryRepository)
             : base(db)
         {
+            this.categoryRepository = categoryRepository;
         }
 
         public async Task<IEnumerable<ArticleByCategoryListingModel>> GetArticleListingsByCategory(
@@ -52,10 +56,10 @@
         }
 
         public async Task<FrontPageOutputModel> GetArticlesForHomePage(CancellationToken cancellationToken = default)
-            => await FrontPageOutputModel.CreateAsync(this);
+            => await FrontPageOutputModel.CreateAsync(this, categoryRepository);
 
         public async Task<ArticleByIdOutputModel> GetArticlePage(CancellationToken cancellationToken = default, int id = default)
-            => await ArticleByIdOutputModel.CreateAsync(this, id);
+            => await ArticleByIdOutputModel.CreateAsync(this, categoryRepository, id);
 
         public List<SideBarModel> GetsideBarNews()
         {
@@ -88,20 +92,6 @@
             .Select(a => new TopNewsModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.SeoUrl, a.ImageUrl, a.Body))
             .ToListAsync();
 
-        public async Task<List<MenuCategoriesModel>> GetMenuCategories()
-            => await this.db.Categories.Select(x => new MenuCategoriesModel(x.CategoryName, x.CategoryNameEN)).ToListAsync();
-       
-        public async Task<Category> GetCurrentCategory(
-            int articleId,
-            CancellationToken cancellationToken = default)
-            =>  await this.db
-                .Categories
-                .Where(c=> c.CategoryNameEN == this.GetArticleById(articleId).GetAwaiter().GetResult().CategoryEn)
-                .FirstOrDefaultAsync();
-
-        public async Task<Category> GetCategoryByName(string? name)
-            => await this.db.Categories.Where(c => c.CategoryNameEN == name).FirstOrDefaultAsync();
-
         public async Task<int> Total(CancellationToken cancellationToken = default)
             => await this
                 .All()
@@ -117,7 +107,7 @@
         {
             Article articleToEdit = this.All().Where(a => a.Id == command.Id).FirstOrDefault();
             articleToEdit.UpdateBody(command.Body);
-            articleToEdit.UpdateCategory(this.GetCategoryByName(command.Category).GetAwaiter().GetResult());
+            articleToEdit.UpdateCategory(this.categoryRepository.GetCategoryByName(command.Category).GetAwaiter().GetResult());
             articleToEdit.UpdateArticleType((ArticleType)command.ArticleType);
             articleToEdit.UpdateH1Tag(command.H1Tag);
             articleToEdit.UpdateImageUrl(command.ImageUrl);

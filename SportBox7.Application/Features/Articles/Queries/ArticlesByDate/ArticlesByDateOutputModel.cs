@@ -3,6 +3,7 @@
     using SportBox7.Application.Features.Articles.Contracts;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Common;
+    using SportBox7.Application.Features.Sources.Contracts;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -24,18 +25,18 @@
 
         public string MetaTitle => "На този ден";
 
-        private async Task<ArticlesByDateOutputModel> InitializeAsync(IArticleRepository articleRepository, DateTime date)
+        private async Task<ArticlesByDateOutputModel> InitializeAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository, DateTime date)
         {
-            await InitializeLayoutComponentsAsync(articleRepository);
+            await InitializeLayoutComponentsAsync(articleRepository, categoryRepository);
             this.Articles = articleRepository.GetArticlesByDate(date).GetAwaiter().GetResult().ToList();
             this.TargetDate = date;
             return this;
         }
 
-        public static Task<ArticlesByDateOutputModel> CreateAsync(IArticleRepository articleRepository, DateTime date)
+        public static Task<ArticlesByDateOutputModel> CreateAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository, DateTime date)
         {
             var frpgouput = new ArticlesByDateOutputModel();
-            return frpgouput.InitializeAsync(articleRepository, date);
+            return frpgouput.InitializeAsync(articleRepository, categoryRepository, date);
         }
     }
 }

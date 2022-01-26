@@ -3,6 +3,7 @@
     using SportBox7.Application.Features.Articles.Contracts;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Common;
+    using SportBox7.Application.Features.Sources.Contracts;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -26,18 +27,18 @@
 
         public DateTime TargetDate { get; set; }
 
-        private async Task<FrontPageOutputModel> InitializeAsync(IArticleRepository articleRepository)
+        private async Task<FrontPageOutputModel> InitializeAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository)
         {
-            await InitializeLayoutComponentsAsync(articleRepository);
+            await InitializeLayoutComponentsAsync(articleRepository, categoryRepository);
             this.Topnews = await articleRepository.GetTopNews();
             this.TargetDate = DateTime.Now;
             return this;
         }
 
-        public static Task<FrontPageOutputModel> CreateAsync(IArticleRepository articleRepository)
+        public static Task<FrontPageOutputModel> CreateAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository)
         {
             var frpgouput = new FrontPageOutputModel();
-            return frpgouput.InitializeAsync(articleRepository);
+            return frpgouput.InitializeAsync(articleRepository, categoryRepository);
         }
     }
 }

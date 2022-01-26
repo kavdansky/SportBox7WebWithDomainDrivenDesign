@@ -25,26 +25,20 @@
 
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-        private readonly IEditorFactory editorFactory;
         private readonly IEditorRepository editorRepository;
         private readonly IMapper mapper;
-        private readonly ICurrentUser currentUser;
 
 
         public IdentityService(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IEditorFactory editorFactory,
             IEditorRepository editorRepository,
-            IMapper mapper,
-            ICurrentUser currentUser)
+            IMapper mapper)
         {
-            this.editorFactory = editorFactory;
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.editorRepository = editorRepository;
             this.mapper = mapper;
-            this.currentUser = currentUser;
         }
 
         public bool CheckPermitForEdit(string userId, int editorId)

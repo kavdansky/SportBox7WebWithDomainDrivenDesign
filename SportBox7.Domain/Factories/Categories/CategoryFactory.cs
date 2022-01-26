@@ -13,7 +13,7 @@ namespace SportBox7.Domain.Factories.Categories
 
         public Category Build()
         {
-            if (this.isCategoryNameENSet == false || this.isCategoryNameENSet == false)
+            if (this.isCategoryNameENSet == false || this.isCategoryNameSet == false)
             {
                 throw new InvalidCategoryException("Category name and CategoryNameEN must have value.");
             }
@@ -30,7 +30,7 @@ namespace SportBox7.Domain.Factories.Categories
         public ICategoryFactory WithCategoryNameEN(string categoryNameEN)
         {
             this.categoryNameEN = categoryNameEN;
-            isCategoryNameENSet = true;
+            this.isCategoryNameENSet = true;
             return this;
         }
     }

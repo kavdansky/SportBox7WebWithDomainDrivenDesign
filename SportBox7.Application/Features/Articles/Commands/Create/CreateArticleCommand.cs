@@ -6,6 +6,7 @@
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Editors;
     using SportBox7.Application.Features.Sources;
+    using SportBox7.Application.Features.Sources.Contracts;
     using SportBox7.Domain.Factories.Articles;
     using System;
     using System.Threading;
@@ -20,19 +21,22 @@
             private readonly IArticleRepository articleRepository;
             private readonly IArticleFactory articleFactory;
             private readonly ISourceRepository sourceRepository;
+            private readonly ICategoryRepository categoryRepository;
 
             public CreateArticleCommandHandler(
                 ICurrentUser currentUser,
                 IEditorRepository editorRepository,
                 IArticleRepository articleRepository,
                 IArticleFactory articleFactory,
-                ISourceRepository sourceRepository)
+                ISourceRepository sourceRepository,
+                ICategoryRepository categoryRepository)
             {
                 this.currentUser = currentUser;
                 this.editorRepository = editorRepository;
                 this.articleRepository = articleRepository;
                 this.articleFactory = articleFactory;
                 this.sourceRepository = sourceRepository;
+                this.categoryRepository = categoryRepository;
             }
 
             public async Task<CreateArticleOutputModel> Handle(
@@ -43,7 +47,7 @@
                     this.currentUser.UserId,
                     cancellationToken);
 
-                var category = await this.articleRepository.GetCategoryByName(
+                var category = await this.categoryRepository.GetCategoryByName(
                     request.Category);
 
                 var source = await sourceRepository.GetSourceByName(request.Source);
