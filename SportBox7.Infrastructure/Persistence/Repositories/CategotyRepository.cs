@@ -1,8 +1,10 @@
 ﻿namespace SportBox7.Infrastructure.Persistence.Repositories
 {
+    using AutoMapper;
     using Microsoft.EntityFrameworkCore;
     using SportBox7.Application.Features.Articles.Queries.Common;
-    using SportBox7.Application.Features.Sources.Contracts;
+    using SportBox7.Application.Features.Categories.Contracts;
+    using SportBox7.Application.Features.Categories.Queries.Home;
     using SportBox7.Domain.Models.Categories;
     using System.Collections.Generic;
     using System.Linq;
@@ -11,11 +13,17 @@
 
     internal class CategoryRepository : DataRepository<Category>, ICategoryRepository
     {
-        public CategoryRepository(SportBox7DbContext db)
+        private readonly IMapper mapper;
+
+        public CategoryRepository(SportBox7DbContext db, IMapper mapper)
             : base(db)
         {
+            this.mapper = mapper;
         }
 
+        public async Task<List<CategoryListingModel>> GetCategoriesListingModel()
+            => await this.mapper.ProjectTo<CategoryListingModel>(this.All()).ToListAsync();
+        
         public async Task<Category> GetCategoryByName(string? name)
             => await this.All().Where(c => c.CategoryNameEN == name).FirstOrDefaultAsync();
 

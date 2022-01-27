@@ -5,6 +5,7 @@
         public AdminMenuModel()
         {
             this.MenuElements.Add(new EditorMenuElement("Users", "/identity/editors"));
+            this.MenuElements.Add(new EditorMenuElement("Categories", "/categories"));
         }
     }
 }

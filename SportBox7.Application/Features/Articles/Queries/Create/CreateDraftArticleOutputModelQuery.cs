@@ -5,7 +5,7 @@
     using SportBox7.Application.Features.Articles.Queries.Common;
     using SportBox7.Application.Features.Editors;
     using SportBox7.Application.Features.Sources;
-    using SportBox7.Application.Features.Sources.Contracts;
+    using SportBox7.Application.Features.Categories.Contracts;
     using System.Threading;
     using System.Threading.Tasks;
 

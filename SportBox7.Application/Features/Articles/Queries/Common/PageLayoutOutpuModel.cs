@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using SportBox7.Domain.Models.Categories;
-    using SportBox7.Application.Features.Sources.Contracts;
+    using SportBox7.Application.Features.Categories.Contracts;
 
     public abstract class PageLayoutOutpuModel
     {

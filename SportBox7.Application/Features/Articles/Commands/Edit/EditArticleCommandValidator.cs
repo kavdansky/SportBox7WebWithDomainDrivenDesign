@@ -3,10 +3,9 @@
     using static Domain.Models.ModelConstants.Common;
     using static Domain.Models.ModelConstants.Article;
     using FluentValidation;
-    using SportBox7.Application.Features.Articles.Contrcts;
     using System;
     using SportBox7.Domain.Models.Articles.Enums;
-    using SportBox7.Application.Features.Sources.Contracts;
+    using SportBox7.Application.Features.Categories.Contracts;
 
     public class EditArticleCommandValidator : AbstractValidator<EditArticleCommand>
     {

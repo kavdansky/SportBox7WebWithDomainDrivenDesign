@@ -2,7 +2,7 @@
 {
     using MediatR;
     using SportBox7.Application.Features.Articles.Contrcts;
-    using SportBox7.Application.Features.Sources.Contracts;
+    using SportBox7.Application.Features.Categories.Contracts;
     using System.Threading;
     using System.Threading.Tasks;
 

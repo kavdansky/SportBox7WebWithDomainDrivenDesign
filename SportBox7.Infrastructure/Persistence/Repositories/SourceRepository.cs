@@ -57,7 +57,9 @@
             return await this.All().Where(s => s.SourceName == name).FirstOrDefaultAsync();
         }
 
+#pragma warning disable IDE1006 // Naming Styles
         Func<int, IQueryable<Source>> getSourceById => GetSource;
-        
+#pragma warning restore IDE1006 // Naming Styles
+
     }
 }

@@ -3,7 +3,6 @@
     using AutoMapper;
     using SportBox7.Application.Features.Articles.Commands.Create;
     using SportBox7.Application.Features.Articles.Queries.Common;
-    using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Sources;
     using System.Threading.Tasks;
     using SportBox7.Application.Features.Editors.Contracts;
@@ -12,7 +11,7 @@
     using SportBox7.Application.Features.Editors;
     using SportBox7.Application.Contracts;
     using System;
-    using SportBox7.Application.Features.Sources.Contracts;
+    using SportBox7.Application.Features.Categories.Contracts;
 
     public class CreateDraftArticleOutputModel: CreateArticleModel, IEditorPage
     {

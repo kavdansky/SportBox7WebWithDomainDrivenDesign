@@ -24,8 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Categories\Contracts\" />
+    <Folder Include="Features\Categories\Commands\" />
     <Folder Include="Features\Editors\Commands\" />
+    <Folder Include="Features\Sources\Contracts\" />
   </ItemGroup>
 
 </Project>

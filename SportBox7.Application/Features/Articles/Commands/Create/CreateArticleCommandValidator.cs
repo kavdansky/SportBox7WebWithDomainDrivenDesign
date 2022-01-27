@@ -2,8 +2,7 @@
 {
     using Common;
     using FluentValidation;
-    using SportBox7.Application.Features.Articles.Contrcts;
-    using SportBox7.Application.Features.Sources.Contracts;
+    using SportBox7.Application.Features.Categories.Contracts;
 
     public class CreateArticleCommandValidator : AbstractValidator<CreateArticleCommand>
     {

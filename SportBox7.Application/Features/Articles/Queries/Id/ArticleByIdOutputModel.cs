@@ -1,9 +1,8 @@
 ﻿namespace SportBox7.Application.Features.Articles.Queries.Id
 {
-    using SportBox7.Application.Features.Articles.Contracts;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Common;
-    using SportBox7.Application.Features.Sources.Contracts;
+    using SportBox7.Application.Features.Categories.Contracts;
     using SportBox7.Domain.Models.Editors;
     using System.Threading.Tasks;
 

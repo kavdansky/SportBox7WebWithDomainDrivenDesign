@@ -1,7 +1,8 @@
-﻿namespace SportBox7.Application.Features.Sources.Contracts
+﻿namespace SportBox7.Application.Features.Categories.Contracts
 {
     using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Articles.Queries.Common;
+    using SportBox7.Application.Features.Categories.Queries.Home;
     using SportBox7.Domain.Models.Categories;
     using System.Collections.Generic;
     using System.Threading;
@@ -16,5 +17,7 @@
         Task<Category> GetCurrentCategory(
             int articleId,
             CancellationToken cancellationToken = default);
+
+        Task<List<CategoryListingModel>> GetCategoriesListingModel();
     }
 }

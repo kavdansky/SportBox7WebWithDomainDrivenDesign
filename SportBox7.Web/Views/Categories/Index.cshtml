@@ -1,0 +1,7 @@
+﻿@using SportBox7.Application.Features.Categories.Queries.Home
+@model CategoryHomePageOutputModel
+
+@foreach (var category in Model.Categories)
+{
+    <h1>@category.CategoryName</h1>
+}
