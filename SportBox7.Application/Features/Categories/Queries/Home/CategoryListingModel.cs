@@ -6,10 +6,10 @@
 
     public class CategoryListingModel: BaseCategoryModel
     {
-        public CategoryListingModel()
-        {
+        public int Id { get; set; }
 
-        }
+        public CategoryListingModel()
+        {}
         public override void Mapping(Profile mapper)
             => mapper
                 .CreateMap<Category, CategoryListingModel>()

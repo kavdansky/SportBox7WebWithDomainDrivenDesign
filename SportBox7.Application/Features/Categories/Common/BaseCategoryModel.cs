@@ -6,10 +6,8 @@
 
     public class BaseCategoryModel: IMapFrom<Category>
     {
-        public BaseCategoryModel()
-        {
+        public BaseCategoryModel(){}
 
-        }
         public string CategoryName { get; private set; } = default!;
 
         public string CategoryNameEN { get; private set; } = default!;

@@ -1,16 +1,16 @@
-﻿@using SportBox7.Application.Features.Categories.Queries.Home
-@model CategoryHomePageOutputModel
+﻿@using SportBox7.Application.Features.Categories.Queries.Create
+@model CreateCategoryOutputModel
 
 <!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="utf-8" />
-    <meta name="description" content="Editor Login">
-    <meta name="keywords" content="Editor Login)">
+    <meta name="description" content="@Model.MetaDescription">
+    <meta name="keywords" content="@Model.MetaKeywords">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <link rel="icon" href="">
-    <title>Editor Login - Sportbox7</title>
+    <title>@Model.MetaTitle</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
 </head>
@@ -79,6 +79,7 @@
             </div>
         </div>
     </header>
+    <partial name="_CookieConsentPartial" />
     <div class="hero-area">
         <div class="container">
             <div class="row align-items-center">
@@ -99,26 +100,23 @@
                             <div class="post-data">
                                 <a href="#" class="post-catagory"></a>
                                 <div class="post-meta">
-                                    <h4>Categories</h4>
-                                    <hr />
-                                    <a href="/categories/create" class="btn btn-primary btn-group-sm">Add new category</a>
-                                    <br />
-                                    <br />
+                                    <form asp-action="Create" enctype="multipart/form-data">
+                                        <h4>Create new Category</h4>
+                                        <hr />
+                                       
+                                        <div class="form-group">
+                                            <label asp-for="@Model.CreateCategoryModel.CategoryName"></label>
+                                            <input asp-for="@Model.CreateCategoryModel.CategoryName" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="@Model.CreateCategoryModel.CategoryNameEN"></label>
+                                            <input asp-for="@Model.CreateCategoryModel.CategoryNameEN" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">Save draft</button>
+                                        </div>
+                                    </form>
                                     <!-- Post Like & Post Comment -->
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Actions</th>
-                                        </tr>
-
-                                        @foreach (var category in Model.Categories)
-                                        {
-                                            <tr>
-                                                <td>@category.CategoryName</td>
-                                                <td><a id="adminLink" href="/categories/details?id=@category.Id">Details</a> | <a id="adminLink" href="/categories/edit?id=@category.Id">Edit</a></td>
-                                            </tr>
-                                        }
-                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -166,3 +164,4 @@
 </body>
 
 </html>
+
