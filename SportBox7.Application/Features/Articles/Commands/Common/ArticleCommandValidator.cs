@@ -5,7 +5,6 @@
     using static Domain.Models.ModelConstants.Common;
     using static Domain.Models.ModelConstants.Article;
     using SportBox7.Domain.Models.Articles.Enums;
-    using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Commands.Create;
     using SportBox7.Application.Features.Categories.Contracts;
 

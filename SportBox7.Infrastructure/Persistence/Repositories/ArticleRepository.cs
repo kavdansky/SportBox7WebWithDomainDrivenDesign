@@ -67,7 +67,11 @@
             List<SideBarModel> model = new List<SideBarModel>();
             foreach (Category category in this.db.Categories.ToList())
             {
-                model.Add(this.All().Include(c=> c.Category).Where(a => a.Category.CategoryNameEN == category.CategoryNameEN).OrderByDescending(a => a.CreationDate).Select(a => new SideBarModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.SeoUrl, a.ImageUrl)).FirstOrDefault());
+                var articleToAdd = this.All().Include(c => c.Category).Where(a => a.Category.CategoryNameEN == category.CategoryNameEN).OrderByDescending(a => a.CreationDate).Select(a => new SideBarModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.SeoUrl, a.ImageUrl)).FirstOrDefault();
+                if (articleToAdd != null)
+                {
+                    model.Add(articleToAdd);
+                }    
             }
             return model;
         }

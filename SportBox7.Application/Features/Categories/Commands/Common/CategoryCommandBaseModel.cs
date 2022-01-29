@@ -1,12 +1,11 @@
-﻿namespace SportBox7.Application.Features.Categories.Common
+﻿namespace SportBox7.Application.Features.Categories.Commands.Common
 {
     using AutoMapper;
-    using SportBox7.Application.Mapping;
     using SportBox7.Domain.Models.Categories;
 
-    public class BaseCategoryModel: IMapFrom<Category>
+    public class CategoryCommandBaseModel
     {
-        public BaseCategoryModel(){}
+        public CategoryCommandBaseModel() { }
 
         public string CategoryName { get; set; } = default!;
 
@@ -14,6 +13,6 @@
 
         public virtual void Mapping(Profile mapper)
             => mapper
-                .CreateMap<Category, BaseCategoryModel>();
+                .CreateMap<Category, CategoryCommandBaseModel>();
     }
 }
