@@ -19,6 +19,8 @@
 
         public IEnumerable<TopNewsModel> Topnews { get; set; } = default!;
 
+        public IEnumerable<LatestNewsModel> OnTheDayArticles { get; set; } = default!;
+
         public string MetaDescription { get; set; } = default!;
 
         public string MetaKeywords { get; set; } = default!;
@@ -32,6 +34,7 @@
             await InitializeLayoutComponentsAsync(articleRepository, categoryRepository);
             this.Topnews = await articleRepository.GetTopNews();
             this.TargetDate = DateTime.Now;
+            this.OnTheDayArticles = await articleRepository.GetOnTheDayArticles();
             return this;
         }
 

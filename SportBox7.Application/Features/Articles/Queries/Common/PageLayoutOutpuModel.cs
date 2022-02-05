@@ -15,8 +15,6 @@
 
         public IEnumerable<LatestNewsModel> LatestNews { get; set; } = default!;
 
-        public IEnumerable<LatestNewsModel> OnTheDayArticles { get; set; } = default!;
-
         public IEnumerable<SideBarModel> SideBar { get; set; } = default!;
 
         public Category CurrentCategory { get; set; } = default!;
@@ -25,7 +23,6 @@
         {
             this.MenuCategories = await categoryRepository.GetMenuCategories();
             this.LatestNews = await articleRepository.GetLatestNews();
-            this.OnTheDayArticles = await articleRepository.GetOnTheDayArticles();
             this.SideBar = articleRepository.GetsideBarNews();
             return true;
         }

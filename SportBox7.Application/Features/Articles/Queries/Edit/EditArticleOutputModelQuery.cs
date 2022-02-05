@@ -46,14 +46,7 @@
                 model.Sources = await sourceRepository.GetSources();
                 model.MenuElements = this.editorRepository.GetEditorMenuModel(this.currentUser.UserId);
                 return model;
-            }
-
-          
+            } 
         }
-
-        
-
-        
-
     }
 }

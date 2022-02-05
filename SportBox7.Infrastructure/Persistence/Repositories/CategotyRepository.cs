@@ -23,7 +23,10 @@
 
         public async Task<List<CategoryListingModel>> GetCategoriesListingModel()
             => await this.mapper.ProjectTo<CategoryListingModel>(this.All()).ToListAsync();
-        
+
+        public async Task<Category> GetCategoryById(int id)
+            => await this.All().Where(c => c.Id == id).FirstOrDefaultAsync();
+
         public async Task<Category> GetCategoryByName(string? name)
             => await this.All().Where(c => c.CategoryNameEN == name).FirstOrDefaultAsync();
 

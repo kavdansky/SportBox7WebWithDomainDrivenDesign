@@ -186,10 +186,6 @@
 
         public Article UpdateTargetDate(DateTime targetDate)
         {
-            if (this.ArticleType == ArticleType.NewsArticle)
-            {
-                throw new InvalidArticleException("News Articles cannot have a Target Date");
-            }
             this.TargetDate = targetDate;
             this.LastModDate = DateTime.Now;
 

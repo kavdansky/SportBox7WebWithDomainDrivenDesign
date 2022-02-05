@@ -107,7 +107,7 @@
         public Task<Article> GetArticleObjectById(int id)
             => this.All().Include(x=> x.Source).Include(x=> x.Category).Where(a => a.Id == id).FirstOrDefaultAsync();
 
-        public async Task UpdateArticle(EditArticleCommand command, Source sourceToEdit)
+        public Task UpdateArticle(EditArticleCommand command, Source sourceToEdit)
         {
             Article articleToEdit = this.All().Where(a => a.Id == command.Id).FirstOrDefault();
             articleToEdit.UpdateBody(command.Body);
@@ -121,7 +121,9 @@
             articleToEdit.UpdateSource(sourceToEdit);
             articleToEdit.UpdateTargetDate(DateTime.Parse(command.TargetDate));
             articleToEdit.UpdateTitle(command.Title);
-            await this.Save(articleToEdit);
+            this.db.Articles.Update(articleToEdit);
+            this.db.SaveChanges();
+            return Task.Run(() => true);
         }
 
         public async Task<IEnumerable<ArticlesByDateListingModel>> GetArticlesByDate(DateTime date)

@@ -19,5 +19,7 @@
             CancellationToken cancellationToken = default);
 
         Task<List<CategoryListingModel>> GetCategoriesListingModel();
+
+        Task<Category> GetCategoryById(int id);
     }
 }

@@ -19,7 +19,7 @@
             CancellationToken cancellationToken = default)
         {
             this.db.Update(entity);
-
+    
             await this.db.SaveChangesAsync(cancellationToken);
         }
 

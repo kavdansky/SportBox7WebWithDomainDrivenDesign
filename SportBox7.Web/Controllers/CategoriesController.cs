@@ -4,6 +4,7 @@
     using SportBox7.Application.Exceptions;
     using SportBox7.Application.Features.Categories.Commands.Create;
     using SportBox7.Application.Features.Categories.Queries.Create;
+    using SportBox7.Application.Features.Categories.Queries.Edit;
     using SportBox7.Application.Features.Categories.Queries.Home;
     using System;
     using System.Collections.Generic;
@@ -36,6 +37,11 @@
                 command.Errors = ex.Errors;
                 return RedirectToAction("Create", command);
             }
-        } 
+        }
+
+        [Route("/categories/edit")]
+        [HttpGet]
+        public async Task<ActionResult<EditCategoryOutputModel>> Edit([FromQuery] EditCategoryQuery query)
+        => View(await this.Mediator.Send(query));
     }
 }

@@ -88,7 +88,6 @@
             </div>
         </div>
     </header>
-    <partial name="_CookieConsentPartial" />
     <div class="hero-area">
         <div class="container">
             <div class="row align-items-center">
@@ -124,18 +123,27 @@
                     <div class="row">
                         <!-- TopNews -->
                         <div class="col-12 col-lg-7">
-                            @if (Model != null && Model.OnTheDayArticles != null)
+                            @if (Model != null && Model.Topnews != null)
                             {
-                                @foreach (var article in Model.OnTheDayArticles)
+                                @foreach (var article in Model.Topnews)
                                 {
                                     <div class="single-blog-post featured-post">
                                         <div class="post-data">
                                             @if (article != null)
                                             {
-                                                <a href="articles?category=@article.CategoryNameEn" class="post-catagory">@Html.Raw(article.CategoryNameEn)</a>
-                                                <a href="/Articles/all?id=@article.ArticleId" class="post-title">
+                                                <a href="articles?category=@article.CategoryEN" class="post-catagory">@Html.Raw(article.CategoryName)</a>
+                                                <a href="/Articles/all?id=@article.Id" class="post-title">
                                                     <h6>@Html.Raw(article.Title)</h6>
                                                 </a>
+                                                <div class="post-thumb single-video-post">
+                                                    <a href="/Articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
+                                                </div>
+                                                <div class="post-meta">
+                                                    <p class="post-excerp">@Html.Raw(article.Body.Substring(0, 2))<a href="/Articles/all?id=@article.Id" class="text-black-50">... повече</a></p>
+                                                    <!-- Post Like & Post Comment -->
+                                                    <div class="d-flex align-items-center">
+                                                    </div>
+                                                </div>
                                             }
 
                                         </div>
