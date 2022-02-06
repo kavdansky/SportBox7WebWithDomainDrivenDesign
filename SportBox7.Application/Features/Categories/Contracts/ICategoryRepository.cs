@@ -2,6 +2,7 @@
 {
     using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Articles.Queries.Common;
+    using SportBox7.Application.Features.Categories.Commands.Edit;
     using SportBox7.Application.Features.Categories.Queries.Home;
     using SportBox7.Domain.Models.Categories;
     using System.Collections.Generic;
@@ -21,5 +22,7 @@
         Task<List<CategoryListingModel>> GetCategoriesListingModel();
 
         Task<Category> GetCategoryById(int id);
+
+        Task<EditedCategoryOutputModel> UpdateCategory(EditCategoryCommand command);
     }
 }

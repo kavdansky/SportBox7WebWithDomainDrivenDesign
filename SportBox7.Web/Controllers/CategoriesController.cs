@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using SportBox7.Application.Exceptions;
     using SportBox7.Application.Features.Categories.Commands.Create;
+    using SportBox7.Application.Features.Categories.Commands.Edit;
     using SportBox7.Application.Features.Categories.Queries.Create;
     using SportBox7.Application.Features.Categories.Queries.Edit;
     using SportBox7.Application.Features.Categories.Queries.Home;
@@ -41,7 +42,24 @@
 
         [Route("/categories/edit")]
         [HttpGet]
-        public async Task<ActionResult<EditCategoryOutputModel>> Edit([FromQuery] EditCategoryQuery query)
+        public async Task<ActionResult<EditCategoryOutputModel>> Edit(EditCategoryQuery query)
         => View(await this.Mediator.Send(query));
+
+        [Route("/categories/edit")]
+        [HttpPost]
+        public async Task<ActionResult<EditedCategoryOutputModel>> Edit(EditCategoryCommand command)
+        {
+            try
+            {
+                await this.Mediator.Send(command);
+                return RedirectToAction("Index");
+            }
+            catch (ModelValidationException ex)
+            {
+                command.Errors = ex.Errors;
+                return RedirectToAction("Edit", command);
+            }
+            
+        } 
     }
 }

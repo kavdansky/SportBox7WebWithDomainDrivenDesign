@@ -3,6 +3,7 @@
     using AutoMapper;
     using Microsoft.EntityFrameworkCore;
     using SportBox7.Application.Features.Articles.Queries.Common;
+    using SportBox7.Application.Features.Categories.Commands.Edit;
     using SportBox7.Application.Features.Categories.Contracts;
     using SportBox7.Application.Features.Categories.Queries.Home;
     using SportBox7.Domain.Models.Categories;
@@ -37,5 +38,18 @@
 
         public async Task<List<MenuCategoriesModel>> GetMenuCategories()
             => await this.All().Select(x => new MenuCategoriesModel(x.CategoryName, x.CategoryNameEN)).ToListAsync();
+
+        public async Task<EditedCategoryOutputModel> UpdateCategory(EditCategoryCommand command)
+        {
+            var categoryToUpdate = await this.All().Where(c => c.Id == command.Id).FirstOrDefaultAsync();
+            categoryToUpdate.UpdateCategoryName(command.CategoryName);
+            categoryToUpdate.UpdateCategoryNameEN(command
+                .CategoryNameEN);
+            this.db.Categories.Update(categoryToUpdate);
+            this.db.SaveChanges();
+
+            return new EditedCategoryOutputModel() {Id = command.Id };
+
+        }
     }
 }

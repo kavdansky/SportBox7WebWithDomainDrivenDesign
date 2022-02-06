@@ -19,6 +19,19 @@
 
         public string CategoryNameEN { get; private set; } = default!;
 
+        public Category UpdateCategoryName(string categoryName)
+        {
+            this.ValidateCategoryName(categoryName);
+            this.CategoryName = categoryName;
+            return this;
+        }
+
+        public Category UpdateCategoryNameEN(string categoryNameEN)
+        {
+            this.ValidateCategoryName(categoryNameEN);
+            this.CategoryNameEN = categoryNameEN;
+            return this;
+        }
 
         private void Validate(string categoryName, string categoryNameEN)
         {

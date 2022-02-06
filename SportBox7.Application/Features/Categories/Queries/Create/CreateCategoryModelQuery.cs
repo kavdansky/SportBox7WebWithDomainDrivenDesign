@@ -10,7 +10,7 @@
 
     public class CreateCategoryModelQuery: BaseCategoryModel, IRequest<CreateCategoryOutputModel>
     {
-        public List<string> Errors { get; set; } = default!;
+        public List<string> Errors { get; set; } = new List<string>();
 
         public class CreateCategoryModelQueryHandler : IRequestHandler<CreateCategoryModelQuery, CreateCategoryOutputModel>
         {
