@@ -5,6 +5,7 @@
     using SportBox7.Application.Features.Categories.Commands.Create;
     using SportBox7.Application.Features.Categories.Commands.Edit;
     using SportBox7.Application.Features.Categories.Queries.Create;
+    using SportBox7.Application.Features.Categories.Queries.Delete;
     using SportBox7.Application.Features.Categories.Queries.Edit;
     using SportBox7.Application.Features.Categories.Queries.Home;
     using System;
@@ -39,6 +40,11 @@
                 return RedirectToAction("Create", command);
             }
         }
+
+        [Route("/categories/delete")]
+        [HttpGet]
+        public async Task<ActionResult<DeleteCategoryOutputModel>> Delete([FromQuery] DeleteCategoryQuery query)
+        => View(await this.Mediator.Send(query));
 
         [Route("/categories/edit")]
         [HttpGet]

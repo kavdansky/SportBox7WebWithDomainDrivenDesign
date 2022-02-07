@@ -19,6 +19,8 @@
 
         public string CategoryNameEN { get; private set; } = default!;
 
+        public bool IsDeleted { get; private set; }
+
         public Category UpdateCategoryName(string categoryName)
         {
             this.ValidateCategoryName(categoryName);
@@ -30,6 +32,12 @@
         {
             this.ValidateCategoryName(categoryNameEN);
             this.CategoryNameEN = categoryNameEN;
+            return this;
+        }
+
+        public Category Delete()
+        {
+            this.IsDeleted = true;
             return this;
         }
 

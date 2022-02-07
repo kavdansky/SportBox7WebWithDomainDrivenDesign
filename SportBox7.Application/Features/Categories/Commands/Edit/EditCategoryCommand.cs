@@ -17,14 +17,10 @@
 
         public class EditCategoryCommandHandler : IRequestHandler<EditCategoryCommand, EditedCategoryOutputModel>
         {
-            private readonly ICurrentUser currentUser;
-            private readonly IEditorRepository editorRepository;
             private readonly ICategoryRepository categoryRepository;
 
-            public EditCategoryCommandHandler(ICurrentUser currentUser, IEditorRepository editorRepository, ICategoryRepository categoryRepository)
+            public EditCategoryCommandHandler(ICategoryRepository categoryRepository)
             {
-                this.currentUser = currentUser;
-                this.editorRepository = editorRepository;
                 this.categoryRepository = categoryRepository;
             }
 

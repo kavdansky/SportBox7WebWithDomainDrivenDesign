@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportBox7.Infrastructure.Persistence;
 
 namespace SportBox7.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SportBox7DbContext))]
-    partial class SportBox7DbContextModelSnapshot : ModelSnapshot
+    [Migration("20220207125321_AddDeleteToCategory")]
+    partial class AddDeleteToCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
