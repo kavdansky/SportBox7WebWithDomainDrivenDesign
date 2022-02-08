@@ -24,5 +24,7 @@
         Task<Category> GetCategoryById(int id);
 
         Task<EditedCategoryOutputModel> UpdateCategory(EditCategoryCommand command);
+
+        Task<bool> DeleteCategory(int id);
     }
 }

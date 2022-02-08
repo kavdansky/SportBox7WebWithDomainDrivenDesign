@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using SportBox7.Application.Exceptions;
     using SportBox7.Application.Features.Categories.Commands.Create;
+    using SportBox7.Application.Features.Categories.Commands.Delete;
     using SportBox7.Application.Features.Categories.Commands.Edit;
     using SportBox7.Application.Features.Categories.Queries.Create;
     using SportBox7.Application.Features.Categories.Queries.Delete;
@@ -45,6 +46,14 @@
         [HttpGet]
         public async Task<ActionResult<DeleteCategoryOutputModel>> Delete([FromQuery] DeleteCategoryQuery query)
         => View(await this.Mediator.Send(query));
+
+        [Route("/categories/delete")]
+        [HttpPost]
+        public async Task<ActionResult<bool>> Delete(DeleteCategoryCommand command)
+        {
+            await this.Mediator.Send(command);
+            return RedirectToAction("Index");
+        }
 
         [Route("/categories/edit")]
         [HttpGet]

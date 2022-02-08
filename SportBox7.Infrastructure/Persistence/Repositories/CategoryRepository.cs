@@ -22,6 +22,19 @@
             this.mapper = mapper;
         }
 
+        public async Task<bool> DeleteCategory(int id)
+        {
+            var categoryToDelete = await this.All().Where(c => c.Id == id).FirstOrDefaultAsync();
+            if (categoryToDelete != null)
+            {
+                categoryToDelete.Delete();
+                this.db.Categories.Update(categoryToDelete);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
         public async Task<List<CategoryListingModel>> GetCategoriesListingModel()
             => await this.mapper.ProjectTo<CategoryListingModel>(this.All()).ToListAsync();
 
@@ -37,7 +50,7 @@
                 .Where(c => c.CategoryNameEN == this.db.Articles.Include(a=> a.Category).Where(a=> a.Id == articleId).FirstOrDefault().Category.CategoryNameEN).FirstOrDefaultAsync();
 
         public async Task<List<MenuCategoriesModel>> GetMenuCategories()
-            => await this.All().Select(x => new MenuCategoriesModel(x.CategoryName, x.CategoryNameEN)).ToListAsync();
+            => await this.All().Where(c=> !c.IsDeleted).Select(x => new MenuCategoriesModel(x.CategoryName, x.CategoryNameEN)).ToListAsync();
 
         public async Task<EditedCategoryOutputModel> UpdateCategory(EditCategoryCommand command)
         {
