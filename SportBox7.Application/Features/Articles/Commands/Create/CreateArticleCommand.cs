@@ -11,6 +11,8 @@
     using System;
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Hosting;
+    using System.IO;
 
     public class CreateArticleCommand : ArticleCommand, IRequest<CreateArticleOutputModel>
     {
@@ -22,6 +24,7 @@
             private readonly IArticleFactory articleFactory;
             private readonly ISourceRepository sourceRepository;
             private readonly ICategoryRepository categoryRepository;
+            private IHostingEnvironment hostingEnvironment;
 
             public CreateArticleCommandHandler(
                 ICurrentUser currentUser,
@@ -29,7 +32,8 @@
                 IArticleRepository articleRepository,
                 IArticleFactory articleFactory,
                 ISourceRepository sourceRepository,
-                ICategoryRepository categoryRepository)
+                ICategoryRepository categoryRepository,
+                IHostingEnvironment hostingEnvironment)
             {
                 this.currentUser = currentUser;
                 this.editorRepository = editorRepository;
@@ -37,6 +41,7 @@
                 this.articleFactory = articleFactory;
                 this.sourceRepository = sourceRepository;
                 this.categoryRepository = categoryRepository;
+                this.hostingEnvironment = hostingEnvironment;
             }
 
             public async Task<CreateArticleOutputModel> Handle(
@@ -52,11 +57,29 @@
 
                 var source = await sourceRepository.GetSourceByName(request.Source);
 
+                var webRootPath = hostingEnvironment.ContentRootPath;
+                webRootPath = webRootPath.Replace("Startup", "Web")+ "\\wwwroot";
+                var imageUrl = request.ImageUrl;
+                var imageName = Guid.NewGuid();
+
+                if (request.Image != null)
+                {
+                    imageUrl = @$"{webRootPath}/Images/{imageName}.jpg";
+
+                    using (var fileStream = new FileStream(imageUrl, FileMode.Create))
+                    {
+                        request.Image.CopyTo(fileStream);
+                    }
+                    byte[] myBinaryImage = File.ReadAllBytes(imageUrl);
+                    File.WriteAllBytes(imageUrl, myBinaryImage);
+
+                }
+
                 var article = articleFactory
                     .WithTitle(request.Title)
                     .WithBody(request.Body)
                     .WithH1Tag(request.H1Tag)
-                    .WithImageUrl(request.ImageUrl)
+                    .WithImageUrl(imageUrl)
                     .WithSeoUrl(request.SeoUrl)
                     .WithMetaDescription(request.MetaDescription)
                     .WithMetaKeywords(request.MetaKeywords)

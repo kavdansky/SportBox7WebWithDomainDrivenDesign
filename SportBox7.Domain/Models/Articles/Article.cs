@@ -215,7 +215,7 @@
 
         private void ValidateImageUrl(string imageUrl)
         {
-            Validator.CheckValidUrl<InvalidArticleException>(imageUrl, "ImageUrl");
+            Validator.CheckForEmptyString<InvalidArticleException>(imageUrl, "ImageUrl");
             
         }
 

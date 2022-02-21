@@ -2,6 +2,7 @@
 {
     using SportBox7.Application.Features.Articles.Contracts;
     using SportBox7.Application.Features.Articles.Contrcts;
+    using SportBox7.Application.Features.Articles.Queries.ArticlesByDate;
     using SportBox7.Application.Features.Articles.Queries.Common;
     using SportBox7.Application.Features.Categories.Contracts;
     using System;
@@ -19,7 +20,7 @@
 
         public IEnumerable<TopNewsModel> Topnews { get; set; } = default!;
 
-        public IEnumerable<LatestNewsModel> OnTheDayArticles { get; set; } = default!;
+        public IEnumerable<ArticlesByDateListingModel> OnTheDayArticles { get; set; } = default!;
 
         public string MetaDescription { get; set; } = default!;
 
@@ -34,7 +35,7 @@
             await InitializeLayoutComponentsAsync(articleRepository, categoryRepository);
             this.Topnews = await articleRepository.GetTopNews();
             this.TargetDate = DateTime.Now;
-            this.OnTheDayArticles = await articleRepository.GetOnTheDayArticles();
+            this.OnTheDayArticles = await articleRepository.GetArticlesByDate(this.TargetDate);
             return this;
         }
 

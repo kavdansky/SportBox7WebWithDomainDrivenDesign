@@ -100,13 +100,13 @@ namespace SportBox7.Domain.Models.Articles
         }
 
         [Fact]
-        public void UpdateImageUrlWithInvalidStringShouldThrowException()
+        public void UpdateImageUrlWithEmtyStringShouldThrowException()
         {
             //Arrange
             Article article = A.Dummy<Article>();
 
             //Act
-            Action act = () => article.UpdateImageUrl("a");
+            Action act = () => article.UpdateImageUrl(string.Empty);
 
             //Assert
             act.Should().Throw<InvalidArticleException>();

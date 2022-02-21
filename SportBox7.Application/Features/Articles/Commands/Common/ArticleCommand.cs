@@ -1,5 +1,6 @@
 ﻿namespace SportBox7.Application.Features.Articles.Commands.Common
 {
+    using Microsoft.AspNetCore.Http;
     using System.Collections.Generic;
 
     public abstract class ArticleCommand : EntityCommand<int>
@@ -14,6 +15,8 @@
 
         public string ImageUrl { get; set; } = default!;
 
+        public IFormFile Image { get; set; } = default!;
+
         public string H1Tag { get; set; } = default!;
 
         public string SeoUrl { get; set; } = default!;
@@ -27,5 +30,7 @@
         public string TargetDate { get; set; } = default!;
 
         public string Source { get; set; } = default!;
+
+
     }
 }
