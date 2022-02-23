@@ -7,7 +7,7 @@
     using SportBox7.Application.Exceptions;
     using SportBox7.Application.Features.Articles.Commands.Create;
     using SportBox7.Application.Features.Articles.Commands.Edit;
-    using SportBox7.Application.Features.Articles.Commands.Publish;
+    using SportBox7.Application.Features.Articles.Commands.PublishDraft;
     using SportBox7.Application.Features.Articles.Commands.RevertAsDraft;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Create;

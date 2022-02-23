@@ -11,7 +11,6 @@ namespace SportBox7.Startup
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Logging;
     using SportBox7.Application;
-    using SportBox7.Application.Exceptions;
     using SportBox7.Domain;
     using SportBox7.Infrastructure;
     using SportBox7.Web;
@@ -43,12 +42,12 @@ namespace SportBox7.Startup
                 IdentityModelEventSource.ShowPII = true;
             }
 
-            
-            //app.UseHttpsRedirection();
 
+            //app.UseHttpsRedirection();
+         
             app.UseStaticFiles(new StaticFileOptions()
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory().Replace("Startup", "Web"), "wwwroot")),
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory().Replace("Startup","Web"),"wwwroot")),
             });
 
             app.UseStatusCodePages(async context => {
@@ -61,7 +60,6 @@ namespace SportBox7.Startup
                 }
 
             });
-
 
             app.UseRouting();
             app.UseAuthentication();

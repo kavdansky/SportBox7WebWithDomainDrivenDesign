@@ -1,13 +1,11 @@
 ﻿namespace SportBox7.Startup
 {
-    using CarRentalSystem.Infrastructure.Identity;
     using MediatR;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using MyTested.AspNetCore.Mvc;
-    using SportBox7.Application.Features.Articles;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Domain.Factories.Articles;
     using SportBox7.Infrastructure.Identity;
@@ -23,11 +21,9 @@
         public void ConfigureTestServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
-
             ValidateServices(services);
 
             services.ReplaceTransient<UserManager<User>>(_ => IdentityFakes.FakeUserManager);
-            //services.ReplaceTransient<IJwtTokenGenerator>(_ => JwtTokenGeneratorFakes.FakeJwtTokenGenerator);
         }
 
         private static void ValidateServices(IServiceCollection services)

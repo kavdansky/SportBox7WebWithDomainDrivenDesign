@@ -26,4 +26,7 @@
   <ItemGroup>
     <Folder Include="Models\Categories\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
 </Project>

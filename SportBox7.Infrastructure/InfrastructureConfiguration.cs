@@ -6,8 +6,10 @@
     using Microsoft.Extensions.DependencyInjection;
     using Persistence;
     using SportBox7.Application.Contracts;
+    using SportBox7.Application.Features.Articles.Contracts;
     using SportBox7.Application.Features.Identity;
     using SportBox7.Infrastructure.Identity;
+    using SportBox7.Infrastructure.ImageHandling;
 
     public static class InfrastructureConfiguration
     {
@@ -17,7 +19,8 @@
             => services
                 .AddDatabase(configuration)
                 .AddRepositories()
-                .AddIdentity();
+                .AddIdentity()
+                .AddImageManipulationProvider();
 
 
         private static IServiceCollection AddDatabase(
@@ -72,5 +75,7 @@
             return services;
         }
 
+        private static IServiceCollection AddImageManipulationProvider(this IServiceCollection services)
+            => services.AddTransient<IImageManipulatioнService, ImageManipulationService>();
     }
 }

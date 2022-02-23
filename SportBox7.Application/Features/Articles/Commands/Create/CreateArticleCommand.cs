@@ -11,8 +11,9 @@
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Hosting;
     using System.IO;
+    using SportBox7.Application.Features.Articles.Contracts;
+    using Microsoft.AspNetCore.Hosting;
 
     public class CreateArticleCommand : ArticleCommand, IRequest<CreateArticleOutputModel>
     {
@@ -24,7 +25,8 @@
             private readonly IArticleFactory articleFactory;
             private readonly ISourceRepository sourceRepository;
             private readonly ICategoryRepository categoryRepository;
-            private IHostingEnvironment hostingEnvironment;
+            private readonly IImageManipulatioнService imageManipulationService;
+            private readonly IHostingEnvironment hostingEnvironment;
 
             public CreateArticleCommandHandler(
                 ICurrentUser currentUser,
@@ -33,6 +35,7 @@
                 IArticleFactory articleFactory,
                 ISourceRepository sourceRepository,
                 ICategoryRepository categoryRepository,
+                IImageManipulatioнService imageManipulationService,
                 IHostingEnvironment hostingEnvironment)
             {
                 this.currentUser = currentUser;
@@ -41,6 +44,7 @@
                 this.articleFactory = articleFactory;
                 this.sourceRepository = sourceRepository;
                 this.categoryRepository = categoryRepository;
+                this.imageManipulationService = imageManipulationService;
                 this.hostingEnvironment = hostingEnvironment;
             }
 
@@ -56,23 +60,20 @@
                     request.Category);
 
                 var source = await sourceRepository.GetSourceByName(request.Source);
-
-                var webRootPath = hostingEnvironment.ContentRootPath;
-                webRootPath = webRootPath.Replace("Startup", "Web")+ "\\wwwroot";
                 var imageUrl = request.ImageUrl;
-                var imageName = Guid.NewGuid();
+                var imageName = Guid.NewGuid() + ".jpg";
 
                 if (request.Image != null)
                 {
-                    imageUrl = @$"{webRootPath}/Images/{imageName}.jpg";
-
-                    using (var fileStream = new FileStream(imageUrl, FileMode.Create))
+                    imageUrl = @$"/Images/{imageName}";
+                    var imageLocation = this.hostingEnvironment.ContentRootPath.Replace("Startup", "Web") + "/wwwroot/Images";
+                    using (var fileStream = new FileStream(Path.Combine(imageLocation, imageName), FileMode.Create))
                     {
                         request.Image.CopyTo(fileStream);
                     }
-                    byte[] myBinaryImage = File.ReadAllBytes(imageUrl);
-                    File.WriteAllBytes(imageUrl, myBinaryImage);
-
+                    byte[] myBinaryImage = File.ReadAllBytes(Path.Combine(imageLocation, imageName));
+                    var resizedImage = imageManipulationService.ResizeImageStaticProportions(myBinaryImage, 460);
+                    File.WriteAllBytes(Path.Combine(imageLocation, imageName), resizedImage);
                 }
 
                 var article = articleFactory
