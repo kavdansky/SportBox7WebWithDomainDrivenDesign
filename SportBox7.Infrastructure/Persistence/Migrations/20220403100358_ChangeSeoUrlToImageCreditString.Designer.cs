@@ -10,14 +10,14 @@ using SportBox7.Infrastructure.Persistence;
 namespace SportBox7.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SportBox7DbContext))]
-    [Migration("20201006060144_InitialDomainTablesAndIdentity")]
-    partial class InitialDomainTablesAndIdentity
+    [Migration("20220403100358_ChangeSeoUrlToImageCreditString")]
+    partial class ChangeSeoUrlToImageCreditString
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8")
+                .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -152,31 +152,6 @@ namespace SportBox7.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SportBox7.Data.Models.SocialSignal", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsLiked")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("VisitorIp")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(16)")
-                        .HasMaxLength(16);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
-
-                    b.ToTable("SocialSignals");
-                });
-
             modelBuilder.Entity("SportBox7.Domain.Models.Articles.Article", b =>
                 {
                     b.Property<int>("Id")
@@ -206,8 +181,12 @@ namespace SportBox7.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("H1Tag")
                         .IsRequired()
-                        .HasColumnType("nvarchar(60)")
-                        .HasMaxLength(60);
+                        .HasColumnType("nvarchar(120)")
+                        .HasMaxLength(120);
+
+                    b.Property<string>("ImageCredit")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -226,20 +205,16 @@ namespace SportBox7.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(60)")
                         .HasMaxLength(60);
 
-                    b.Property<string>("ImageCredit")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("SourceId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("TargetDate")
+                    b.Property<DateTime>("TargetDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(60)")
-                        .HasMaxLength(60);
+                        .HasColumnType("nvarchar(120)")
+                        .HasMaxLength(120);
 
                     b.HasKey("Id");
 
@@ -252,7 +227,32 @@ namespace SportBox7.Infrastructure.Persistence.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("SportBox7.Domain.Models.Articles.Category", b =>
+            modelBuilder.Entity("SportBox7.Domain.Models.Articles.SocialSignal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsLiked")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("VisitorIp")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(16)")
+                        .HasMaxLength(16);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("SocialSignals");
+                });
+
+            modelBuilder.Entity("SportBox7.Domain.Models.Categories.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -269,34 +269,12 @@ namespace SportBox7.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("SportBox7.Domain.Models.Articles.Source", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("SourceImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SourceName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("SourceUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Sources");
                 });
 
             modelBuilder.Entity("SportBox7.Domain.Models.Editors.Editor", b =>
@@ -319,6 +297,31 @@ namespace SportBox7.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Editors");
+                });
+
+            modelBuilder.Entity("SportBox7.Domain.Models.Sources.Source", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("SourceImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SourceName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("SourceUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sources");
                 });
 
             modelBuilder.Entity("SportBox7.Infrastructure.Identity.User", b =>
@@ -444,16 +447,9 @@ namespace SportBox7.Infrastructure.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SportBox7.Data.Models.SocialSignal", b =>
-                {
-                    b.HasOne("SportBox7.Domain.Models.Articles.Article", null)
-                        .WithMany("SocialSignals")
-                        .HasForeignKey("ArticleId");
-                });
-
             modelBuilder.Entity("SportBox7.Domain.Models.Articles.Article", b =>
                 {
-                    b.HasOne("SportBox7.Domain.Models.Articles.Category", "Category")
+                    b.HasOne("SportBox7.Domain.Models.Categories.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -463,11 +459,18 @@ namespace SportBox7.Infrastructure.Persistence.Migrations
                         .WithMany("Articles")
                         .HasForeignKey("EditorId");
 
-                    b.HasOne("SportBox7.Domain.Models.Articles.Source", "Source")
+                    b.HasOne("SportBox7.Domain.Models.Sources.Source", "Source")
                         .WithMany()
                         .HasForeignKey("SourceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SportBox7.Domain.Models.Articles.SocialSignal", b =>
+                {
+                    b.HasOne("SportBox7.Domain.Models.Articles.Article", null)
+                        .WithMany("SocialSignals")
+                        .HasForeignKey("ArticleId");
                 });
 
             modelBuilder.Entity("SportBox7.Infrastructure.Identity.User", b =>

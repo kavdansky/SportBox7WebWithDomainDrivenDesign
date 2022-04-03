@@ -226,7 +226,7 @@ namespace SportBox7.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(60)")
                         .HasMaxLength(60);
 
-                    b.Property<string>("SeoUrl")
+                    b.Property<string>("ImageCredit")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

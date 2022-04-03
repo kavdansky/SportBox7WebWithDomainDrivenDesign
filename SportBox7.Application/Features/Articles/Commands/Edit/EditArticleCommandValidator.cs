@@ -36,9 +36,7 @@
                 .MaximumLength(H1MaxLength)
                 .NotEmpty();
 
-            this.RuleFor(c => c.SeoUrl)
-                .Must(url => Uri.IsWellFormedUriString(url, UriKind.Absolute))
-                .WithMessage("'{PropertyName}' must be a valid url.")
+            this.RuleFor(c => c.ImageCredit)
                 .NotEmpty();
 
             this.RuleFor(c => c.MetaDescription)

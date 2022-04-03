@@ -13,7 +13,7 @@
         private string body = default!;
         private string h1Tag = default!;
         private string imageUrl = default!;
-        private string seoUrl = default!;
+        private string imageCredit = default!;
         private string metaDescription = default!;
         private string metaKeywords = default!;
         private Category category = default!;
@@ -25,7 +25,7 @@
         private bool isBodyset;
         private bool isH1TagSet;
         private bool isImageUrlSet;
-        private bool isSeoUrlSet;
+        private bool isImageCreditSet;
         private bool isMetaDescriptionSet;
         private bool isMetaKeywordsSet;
         private bool isCategorySet;
@@ -84,10 +84,10 @@
             return this;
         }
 
-        public IArticleFactory WithSeoUrl(string seoUrl)
+        public IArticleFactory WithImageCredit(string imageCredit)
         {
-            this.seoUrl = seoUrl;
-            this.isSeoUrlSet = true;
+            this.imageCredit = imageCredit;
+            this.isImageCreditSet = true;
             return this;
         }
 
@@ -114,13 +114,13 @@
 
         public Article Build()
         {
-            if (isTitleSet== false || isBodyset == false || isH1TagSet == false || isImageUrlSet == false || isSeoUrlSet == false || isMetaDescriptionSet== false || isMetaKeywordsSet == false || isCategorySet == false || isArticleTypeSet == false || isSourceSet == false || isArticleTypeSet == false || isTargetDateSet == false)
+            if (isTitleSet== false || isBodyset == false || isH1TagSet == false || isImageUrlSet == false || isImageCreditSet == false || isMetaDescriptionSet== false || isMetaKeywordsSet == false || isCategorySet == false || isArticleTypeSet == false || isSourceSet == false || isArticleTypeSet == false || isTargetDateSet == false)
             {
                 
-                throw new InvalidArticleException("Title, Body, H1Tag, ImageUrl, SeoUrl, MetaDescription, MetaKeywords, Category and TargetDate must have value!");
+                throw new InvalidArticleException("Title, Body, H1Tag, ImageUrl, ImageCredit, MetaDescription, MetaKeywords, Category and TargetDate must have value!");
             }
 
-            return new Article(this.title, this.body, this.h1Tag, this.imageUrl, this.seoUrl, this.metaDescription, this.metaKeywords, this.category, this.articleType, this.targetDate, this.source);
+            return new Article(this.title, this.body, this.h1Tag, this.imageUrl, this.imageCredit, this.metaDescription, this.metaKeywords, this.category, this.articleType, this.targetDate, this.source);
         }
     }
 }

@@ -5,7 +5,7 @@
     using System;
     using System.IO;
 
-    public class ImageManipulationService: IImageManipulatioнService
+    public class ImageManipulationService: IImageManipulationService
     {
         public byte[] ResizeImageStaticProportions(byte[] fileContents,
             int maxWidth)
@@ -14,11 +14,8 @@
             using MemoryStream ms = new MemoryStream(fileContents);
             using SKBitmap sourceBitmap = SKBitmap.Decode(ms);
             double heightWidthRatio = (double)sourceBitmap.Height / sourceBitmap.Width;
-
-
             int height = (int)Math.Min(maxWidth * heightWidthRatio, sourceBitmap.Height);
             int width = Math.Min(maxWidth, sourceBitmap.Width);
-
             using SKBitmap scaledBitmap = sourceBitmap.Resize(new SKImageInfo(width, height), quality);
             using SKImage scaledImage = SKImage.FromBitmap(scaledBitmap);
             using SKData data = scaledImage.Encode();

@@ -51,7 +51,7 @@
                     art.ImageUrl,
                     art.Category.CategoryName,
                     art.Category.CategoryNameEN,
-                    art.SeoUrl))
+                    art.ImageCredit))
                 .ToListAsync(cancellationToken);
         }
 
@@ -67,7 +67,7 @@
             List<SideBarModel> model = new List<SideBarModel>();
             foreach (Category category in this.db.Categories.ToList())
             {
-                var articleToAdd = this.All().Include(c => c.Category).Where(a => a.Category.CategoryNameEN == category.CategoryNameEN).OrderByDescending(a => a.CreationDate).Select(a => new SideBarModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.SeoUrl, a.ImageUrl)).FirstOrDefault();
+                var articleToAdd = this.All().Include(c => c.Category).Where(a => a.Category.CategoryNameEN == category.CategoryNameEN).OrderByDescending(a => a.CreationDate).Select(a => new SideBarModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl)).FirstOrDefault();
                 if (articleToAdd != null)
                 {
                     model.Add(articleToAdd);
@@ -78,7 +78,7 @@
 
         public async Task<ArticleByIdModel> GetArticleById(int id)
         {
-            return await this.All().Where(a => a.Id == id).Select(a=> new ArticleByIdModel(a.Id, a.Title, a.Body, a.ImageUrl, a.Category.CategoryName, a.Category.CategoryNameEN, a.SeoUrl, a.MetaDescription, a.MetaKeywords, a.Title)).FirstOrDefaultAsync();
+            return await this.All().Where(a => a.Id == id).Select(a=> new ArticleByIdModel(a.Id, a.Title, a.Body, a.ImageUrl, a.Category.CategoryName, a.Category.CategoryNameEN, a.ImageCredit, a.MetaDescription, a.MetaKeywords, a.Title)).FirstOrDefaultAsync();
         }
 
         public async Task<List<LatestNewsModel>> GetLatestNews()
@@ -93,7 +93,7 @@
             => await this.All()
             .OrderByDescending(x => x.CreationDate)
             .Take(5)
-            .Select(a => new TopNewsModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.SeoUrl, a.ImageUrl, a.Body))
+            .Select(a => new TopNewsModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl, a.Body))
             .ToListAsync();
 
         public async Task<int> Total(CancellationToken cancellationToken = default)
@@ -117,7 +117,7 @@
             articleToEdit.UpdateImageUrl(command.ImageUrl);
             articleToEdit.UpdateMetaDescription(command.MetaDescription);
             articleToEdit.UpdateMetaKeywords(command.MetaKeywords);
-            articleToEdit.UpdateSeoUrl(command.SeoUrl);
+            articleToEdit.UpdateImageCredit(command.ImageCredit);
             articleToEdit.UpdateSource(sourceToEdit);
             articleToEdit.UpdateTargetDate(DateTime.Parse(command.TargetDate));
             articleToEdit.UpdateTitle(command.Title);
@@ -132,7 +132,7 @@
             var articlesToReturn = new List<ArticlesByDateListingModel>();
             foreach (var article in articlesOnThisTargetDate)
             {
-                articlesToReturn.Add(new ArticlesByDateListingModel(article.Id, article.Title, article.Body, article.ImageUrl, article.Category.CategoryName, article.Category.CategoryNameEN, article.SeoUrl, article.TargetDate));
+                articlesToReturn.Add(new ArticlesByDateListingModel(article.Id, article.Title, article.Body, article.ImageUrl, article.Category.CategoryName, article.Category.CategoryNameEN, article.ImageCredit, article.TargetDate));
             }
             return articlesToReturn;
         }

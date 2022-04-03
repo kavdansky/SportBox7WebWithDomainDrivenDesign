@@ -25,7 +25,7 @@
             private readonly IArticleFactory articleFactory;
             private readonly ISourceRepository sourceRepository;
             private readonly ICategoryRepository categoryRepository;
-            private readonly IImageManipulatioнService imageManipulationService;
+            private readonly IImageManipulationService imageManipulationService;
             private readonly IHostingEnvironment hostingEnvironment;
 
             public CreateArticleCommandHandler(
@@ -35,7 +35,7 @@
                 IArticleFactory articleFactory,
                 ISourceRepository sourceRepository,
                 ICategoryRepository categoryRepository,
-                IImageManipulatioнService imageManipulationService,
+                IImageManipulationService imageManipulationService,
                 IHostingEnvironment hostingEnvironment)
             {
                 this.currentUser = currentUser;
@@ -81,7 +81,7 @@
                     .WithBody(request.Body)
                     .WithH1Tag(request.H1Tag)
                     .WithImageUrl(imageUrl)
-                    .WithSeoUrl(request.SeoUrl)
+                    .WithImageCredit(request.ImageCredit)
                     .WithMetaDescription(request.MetaDescription)
                     .WithMetaKeywords(request.MetaKeywords)
                     .WithCategory(category)

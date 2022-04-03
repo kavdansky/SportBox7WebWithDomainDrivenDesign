@@ -26,7 +26,7 @@
 
         public string MetaKeywords { get; set; } = default!;
 
-        public string SeoUrl { get; set; } = default!;
+        public string ImageCredit { get; set; } = default!;
         
         public string Source { get; set; } = default!;
 

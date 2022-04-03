@@ -26,7 +26,7 @@
                 .WithMetaDescription("test meta descr")
                 .WithMetaKeywords("Meta keywords test")
                 .WithTargetDate(new DateTime(2020, 11, 8))
-                .WithSeoUrl("https://seourl")
+                .WithImageCredit("https://ImageCredit")
                 .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
 
@@ -49,7 +49,7 @@
                 .WithMetaDescription("test meta descr")
                 .WithMetaKeywords("Meta keywords test")
                 .WithTargetDate(new DateTime(2020, 11, 8))
-                .WithSeoUrl("https://seourl")
+                .WithImageCredit("https://ImageCredit")
                 .WithTitle("Test title")
                 .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
@@ -73,7 +73,7 @@
                 .WithMetaDescription("test meta descr")
                 .WithMetaKeywords("Meta keywords test")
                 .WithTargetDate(new DateTime(2020, 11, 8))
-                .WithSeoUrl("https://seourl")
+                .WithImageCredit("https://ImageCredit")
                 .WithTitle("Test title")
                 .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
@@ -97,7 +97,7 @@
                 .WithMetaDescription("test meta descr")
                 .WithMetaKeywords("Meta keywords test")
                 .WithTargetDate(new DateTime(2020, 11, 8))
-                .WithSeoUrl("https://seourl")
+                .WithImageCredit("https://ImageCredit")
                 .WithTitle("Test title")
                 .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
@@ -121,7 +121,7 @@
                 .WithMetaDescription("test meta descr")
                 .WithMetaKeywords("Meta keywords test")
                 .WithTargetDate(new DateTime(2020, 11, 8))
-                .WithSeoUrl("https://seourl")
+                .WithImageCredit("https://ImageCredit")
                 .WithTitle("Test title")
                 .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
@@ -145,7 +145,7 @@
                 .WithImageUrl("https://imgurl")
                 .WithMetaKeywords("Meta keywords test")
                 .WithTargetDate(new DateTime(2020, 11, 8))
-                .WithSeoUrl("https://seourl")
+                .WithImageCredit("https://ImageCredit")
                 .WithTitle("Test title")
                 .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
@@ -169,7 +169,7 @@
                 .WithImageUrl("https://imgurl")
                 .WithMetaDescription("test meta descr")
                 .WithTargetDate(new DateTime(2020, 11, 8))
-                .WithSeoUrl("https://seourl")
+                .WithImageCredit("https://ImageCredit")
                 .WithTitle("Test title")
                 .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
@@ -179,7 +179,7 @@
         }
 
         [Fact]
-        public void BuildShouldThrowExceptionIfSeoUrlIsNotSet()
+        public void BuildShouldThrowExceptionIfImageCreditIsNotSet()
         {
             // Assert
             var articleFactory = new ArticleFactory();
@@ -219,7 +219,7 @@
                 .WithMetaKeywords("Meta keywords test")
                 .WithTargetDate(new DateTime(2020, 11, 8))
                 .WithTitle("Test title")
-                .WithSeoUrl("https://seourl")
+                .WithImageCredit("https://ImageCredit")
                 .Build();
 
             // Assert
@@ -243,7 +243,7 @@
                 .WithMetaKeywords("Meta keywords test")
                 .WithTargetDate(new DateTime(2020, 11, 8))
                 .WithTitle("Test title")
-                .WithSeoUrl("https://seourl")
+                .WithImageCredit("https://ImageCredit")
                 .WithSource(new Source("sportbox7", "https://imgurl", "https://imgurl"))
                 .Build();
 

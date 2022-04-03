@@ -126,26 +126,26 @@ namespace SportBox7.Domain.Models.Articles
         }
 
         [Fact]
-        public void UpdateSeoUrlWithInvalidUrlShouldThrowException()
+        public void UpdateImageCreditWithEmptyStringShouldThrowException()
         {
             //Arrange
             Article article = A.Dummy<Article>();
 
             //Act
-            Action act = () => article.UpdateSeoUrl("a");
+            Action act = () => article.UpdateImageCredit(String.Empty);
 
             //Assert
             act.Should().Throw<InvalidArticleException>();
         }
 
         [Fact]
-        public void UpdateSeoUrlWithValidUrlShouldSaveNewData()
+        public void UpdateImageCreditWithValidUrlShouldSaveNewData()
         {
             //Arrange
             Article article = A.Dummy<Article>();
 
             //Act
-            Action act = () => article.UpdateSeoUrl("https://oop.bg");
+            Action act = () => article.UpdateImageCredit("https://oop.bg");
 
             //Assert
             act.Should().Equals("https://oop.bg");

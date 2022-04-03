@@ -76,6 +76,6 @@
         }
 
         private static IServiceCollection AddImageManipulationProvider(this IServiceCollection services)
-            => services.AddTransient<IImageManipulatioнService, ImageManipulationService>();
+            => services.AddTransient<IImageManipulationService, ImageManipulationService>();
     }
 }

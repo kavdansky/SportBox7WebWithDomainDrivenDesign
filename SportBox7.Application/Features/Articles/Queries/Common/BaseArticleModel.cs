@@ -8,13 +8,13 @@
         public BaseArticleModel()
         {}
 
-        public BaseArticleModel(int id, string title, string categoryEN, string categoryName, string seoUrl, string imageUrl)
+        public BaseArticleModel(int id, string title, string categoryEN, string categoryName, string imageCredit, string imageUrl)
         {
             this.Id = id;
             this.Title = title;
             this.CategoryEN = categoryEN;
             this.CategoryName = categoryName;
-            this.SeoUrl = seoUrl;
+            this.ImageCredit = imageCredit;
             this.ImageUrl = imageUrl;
 
         }
@@ -26,7 +26,7 @@
 
         public string CategoryName { get; set; } = default!;
 
-        public string SeoUrl { get; set; } = default!;
+        public string ImageCredit { get; set; } = default!;
 
         public string ImageUrl { get; set; } = default!;
 

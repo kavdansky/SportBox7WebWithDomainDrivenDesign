@@ -16,7 +16,7 @@
 
         IArticleFactory WithImageUrl(string imageUrl);
 
-        IArticleFactory WithSeoUrl(string seoUrl);
+        IArticleFactory WithImageCredit(string ImageCredit);
 
         IArticleFactory WithMetaDescription(string metaDescription);
 

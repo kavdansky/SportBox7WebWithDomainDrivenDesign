@@ -12,9 +12,9 @@
             string imageUrl,
             string category,
             string categoryEn,
-            string seoUrl,
+            string ImageCredit,
             DateTime targetDate)
-            : base(id, title, body, imageUrl, category, categoryEn, seoUrl)
+            : base(id, title, body, imageUrl, category, categoryEn, ImageCredit)
         {
             this.TargetDate = targetDate;
         }

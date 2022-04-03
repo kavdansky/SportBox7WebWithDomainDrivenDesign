@@ -12,11 +12,11 @@
             string imageUrl,
             string category,
             string categoryEn,
-            string seoUrl,
+            string imageCredit,
             string metaDescription,
             string metaKeywords,
             string metaTitle)
-            : base(id, title, body, imageUrl, category, categoryEn, seoUrl)
+            : base(id, title, body, imageUrl, category, categoryEn, imageCredit)
         {
             this.MetaDescription = metaDescription;
             this.MetaKeywords = metaKeywords;

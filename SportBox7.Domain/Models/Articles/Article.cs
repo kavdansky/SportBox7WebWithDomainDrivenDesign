@@ -14,7 +14,7 @@
     {
         private readonly HashSet<SocialSignal> socialSignals;
 
-        internal Article(string title, string body, string h1Tag, string imageUrl, string seoUrl, string metaDescription, string metaKeywords, Category category, ArticleType articleType, DateTime targetDate, Models.Sources.Source source)
+        internal Article(string title, string body, string h1Tag, string imageUrl, string imageCredit, string metaDescription, string metaKeywords, Category category, ArticleType articleType, DateTime targetDate, Models.Sources.Source source)
         {
             this.Validate(title, body, h1Tag, imageUrl, metaKeywords, metaDescription);
            
@@ -26,7 +26,7 @@
             this.Body = body;
             this.H1Tag = h1Tag;
             this.ImageUrl = imageUrl;
-            this.SeoUrl = seoUrl;
+            this.ImageCredit = imageCredit;
             this.MetaKeywords = metaKeywords;
             this.MetaDescription = metaDescription;
             this.Category = category;
@@ -37,7 +37,7 @@
         }
 
 #pragma warning disable IDE0051 // Remove unused private members
-        private Article(string title, string body, string h1Tag, string imageUrl, string seoUrl, string metaDescription, string metaKeywords)
+        private Article(string title, string body, string h1Tag, string imageUrl, string imageCredit, string metaDescription, string metaKeywords)
 #pragma warning restore IDE0051 // Remove unused private members
         {
             this.Validate(title, body, h1Tag, imageUrl, metaKeywords, metaDescription);
@@ -48,7 +48,7 @@
             this.Body = body;
             this.H1Tag = h1Tag;
             this.ImageUrl = imageUrl;
-            this.SeoUrl = seoUrl;
+            this.ImageCredit = imageCredit;
             this.MetaKeywords = metaKeywords;
             this.MetaDescription = metaDescription;
             this.ArticleType = ArticleType;         
@@ -84,7 +84,7 @@
 
         public string MetaKeywords { get; private set; } = default!;
 
-        public string SeoUrl { get; private set; } = default!;
+        public string ImageCredit { get; private set; } = default!;
 
         public Models.Sources.Source Source { get; private set; }
 
@@ -175,10 +175,10 @@
             return this;
         }
 
-        public Article UpdateSeoUrl(string seoUrl)
+        public Article UpdateImageCredit(string imageCredit)
         {
-            this.ValidateSeoUrl(seoUrl);
-            this.SeoUrl = seoUrl;
+            this.ValidateImageCredit(imageCredit);
+            this.ImageCredit = imageCredit;
             this.LastModDate = DateTime.Now;
 
             return this;
@@ -202,9 +202,9 @@
             return this;
         }
 
-        private void ValidateSeoUrl(string seoUrl)
+        private void ValidateImageCredit(string imageCredit)
         {
-            Validator.CheckValidUrl<InvalidArticleException>(seoUrl, "SeoUrl");
+            Validator.CheckForEmptyString<InvalidArticleException>(imageCredit, "ImageCredit");
         }
 
         private void ValidateMetaKeywords(string metaKeywords)

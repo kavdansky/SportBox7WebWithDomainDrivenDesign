@@ -48,7 +48,7 @@ namespace SportBox7.Infrastructure.Persistence.Configurations
                 .IsRequired();
 
             builder
-                .Property(s => s.SeoUrl)
+                .Property(s => s.ImageCredit)
                 .IsRequired();
 
             builder

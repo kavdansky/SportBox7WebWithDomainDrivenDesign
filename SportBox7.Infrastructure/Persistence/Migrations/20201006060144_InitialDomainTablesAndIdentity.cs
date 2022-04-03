@@ -131,7 +131,7 @@ namespace SportBox7.Infrastructure.Persistence.Migrations
                     ImageUrl = table.Column<string>(nullable: false),
                     MetaDescription = table.Column<string>(maxLength: 60, nullable: false),
                     MetaKeywords = table.Column<string>(maxLength: 60, nullable: false),
-                    SeoUrl = table.Column<string>(nullable: false),
+                    ImageCredit = table.Column<string>(nullable: false),
                     SourceId = table.Column<int>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
                     TargetDate = table.Column<DateTime>(nullable: true),

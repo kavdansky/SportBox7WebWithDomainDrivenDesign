@@ -115,18 +115,19 @@
                                 </ul>
                             </div>
                         </div>
-                                        }
+                    }
                 </div>
             </div>
         </div>
     </div>
+    <!-- ##### Hero Area End ##### -->
     <!-- ##### Hero Area End ##### -->
     <div class="blog-area section-padding-0-80">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <div class="blog-posts-area">
-                        @if (Model?.Articles.Count > 0)
+                        @if (Model.Articles.Any())
                         {
                             @foreach (var article in Model.Articles)
                             {

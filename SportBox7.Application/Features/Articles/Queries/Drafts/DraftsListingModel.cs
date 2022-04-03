@@ -9,7 +9,5 @@ using System.Text;
 namespace SportBox7.Application.Features.Articles.Queries.Drafts
 {
     public class DraftsListingModel: BaseArticleModel
-    {
-        
-    }
+    {}
 }

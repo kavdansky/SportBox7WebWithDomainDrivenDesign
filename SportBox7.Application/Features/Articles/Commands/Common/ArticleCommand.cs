@@ -19,7 +19,7 @@
 
         public string H1Tag { get; set; } = default!;
 
-        public string SeoUrl { get; set; } = default!;
+        public string ImageCredit { get; set; } = default!;
 
         public string MetaDescription { get; set; } = default!;
 

@@ -11,8 +11,8 @@
             string imageUrl,
             string category,
             string categoryEn,
-            string seoUrl)
-            :base(id, title, body, imageUrl, category, categoryEn, seoUrl)
+            string ImageCredit)
+            :base(id, title, body, imageUrl, category, categoryEn, ImageCredit)
         {     }
     }
 }
