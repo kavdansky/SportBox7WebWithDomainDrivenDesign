@@ -7,6 +7,7 @@
     using SportBox7.Application.Features.Categories.Contracts;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class FrontPageOutputModel: PageLayoutOutpuModel, IMetaTagable
@@ -28,14 +29,21 @@
 
         public string MetaTitle { get; set; } = default!;
 
-        public DateTime TargetDate { get; set; }
+        public int PasedYears
+        {
+            get 
+            { 
+                if(this.OnTheDayArticles.Any())
+                    return DateTime.Now.Year - this.OnTheDayArticles.FirstOrDefault().TargetDate.Year;
+                return 0;
+            }
+        }
 
         private async Task<FrontPageOutputModel> InitializeAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository)
         {
             await InitializeLayoutComponentsAsync(articleRepository, categoryRepository);
             this.Topnews = await articleRepository.GetTopNews();
-            this.TargetDate = DateTime.Now;
-            this.OnTheDayArticles = await articleRepository.GetArticlesByDate(this.TargetDate);
+            this.OnTheDayArticles = await articleRepository.GetArticlesByDate(DateTime.Now);
             return this;
         }
 

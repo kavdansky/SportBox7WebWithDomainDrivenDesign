@@ -25,7 +25,7 @@
         [Route("/editorsarticles/create")]
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<CreateDraftArticleOutputModel>> Create(CreateDraftArticleOutputModelQuery query)
+        public async Task<ActionResult<CreateDraftArticleOutputModel>> Create([FromQuery]CreateDraftArticleOutputModelQuery query)
             => View(await this.Mediator.Send(query));
 
         [Route("/editorsarticles/create")]

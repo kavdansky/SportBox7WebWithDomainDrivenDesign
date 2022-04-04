@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SportBox7.Domain.Models
+﻿namespace SportBox7.Domain.Models
 {
     public class ModelConstants
     {
@@ -12,9 +8,9 @@ namespace SportBox7.Domain.Models
             public const int MinUrlLength = 5;
             public const int Zero = 0;
             public const int MetatagsMinLength = 5;
-            public const int MetatagsMaxLength = 60;
+            public const int MetatagsMaxLength = 200;
             public const int MinEmailLength = 3;
-            public const int MaxEmailLength = 50;
+            public const int MaxEmailLength = 60;
             public const int MinNameLength = 3;
             public const int MaxNameLength = 50;
             public const string UrlRregularExpression = "[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)";
@@ -23,11 +19,11 @@ namespace SportBox7.Domain.Models
         public class Article
         {
             public const int TitleMinLength = 5;
-            public const int TitleMaxLength = 120;
+            public const int TitleMaxLength = 250;
             public const int BodyMinLength = 5;
-            public const int BodyMaxLength = 11000;
+            public const int BodyMaxLength = 30000;
             public const int H1MinLength = 5;
-            public const int H1MaxLength = 120;
+            public const int H1MaxLength = 250;
         }
 
         public class Editor

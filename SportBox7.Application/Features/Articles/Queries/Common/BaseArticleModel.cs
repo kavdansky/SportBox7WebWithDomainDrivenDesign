@@ -2,13 +2,14 @@
 {
     using AutoMapper;
     using SportBox7.Domain.Models.Articles;
+    using System;
 
     public abstract class BaseArticleModel
     {
         public BaseArticleModel()
         {}
 
-        public BaseArticleModel(int id, string title, string categoryEN, string categoryName, string imageCredit, string imageUrl)
+        public BaseArticleModel(int id, string title, string categoryEN, string categoryName, string imageCredit, string imageUrl, DateTime targetDate)
         {
             this.Id = id;
             this.Title = title;
@@ -16,6 +17,7 @@
             this.CategoryName = categoryName;
             this.ImageCredit = imageCredit;
             this.ImageUrl = imageUrl;
+            this.TargetDate = targetDate;
 
         }
         public int Id { get; set; }
@@ -29,6 +31,8 @@
         public string ImageCredit { get; set; } = default!;
 
         public string ImageUrl { get; set; } = default!;
+
+        public DateTime TargetDate { get; set; } = default!;
 
         public virtual void Mapping(Profile mapper)
         {

@@ -8,8 +8,8 @@ namespace SportBox7.Application.Features.Articles.Queries.HomePage
     public class TopNewsModel: BaseArticleModel
     {
         
-        public TopNewsModel(int id, string title, string categoryEN, string categoryName, string imageCredit, string imageUrl, string body)
-            :base(id, title, categoryEN, categoryName, imageCredit, imageUrl)
+        public TopNewsModel(int id, string title, string categoryEN, string categoryName, string imageCredit, string imageUrl, string body, DateTime targetDate)
+            :base(id, title, categoryEN, categoryName, imageCredit, imageUrl, targetDate)
         {
             this.Body = body;
         }

@@ -40,7 +40,8 @@
             {
                 query = query
                     .Where(a => a.Category.CategoryNameEN == category)
-                    .OrderBy(a => a.CreationDate);
+                    .Where(a => a.ArticleType == ArticleType.PeriodicArticle)
+                    .OrderBy(a => a.TargetDate);
             }
 
             return await query
@@ -62,19 +63,7 @@
             => await ArticleByIdOutputModel.CreateAsync(this, categoryRepository, id);
 
         public List<SideBarModel> GetsideBarNews()
-        {
-
-            List<SideBarModel> model = new List<SideBarModel>();
-            foreach (Category category in this.db.Categories.ToList())
-            {
-                var articleToAdd = this.All().Include(c => c.Category).Where(a => a.Category.CategoryNameEN == category.CategoryNameEN).OrderByDescending(a => a.CreationDate).Select(a => new SideBarModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl)).FirstOrDefault();
-                if (articleToAdd != null)
-                {
-                    model.Add(articleToAdd);
-                }    
-            }
-            return model;
-        }
+            => this.All().Where(a => DateTime.Compare(DateTime.Now, a.TargetDate) > 0).Take(5).Select(a => new SideBarModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl, a.TargetDate)).ToList();
 
         public async Task<ArticleByIdModel> GetArticleById(int id)
         {
@@ -93,7 +82,7 @@
             => await this.All()
             .OrderByDescending(x => x.CreationDate)
             .Take(5)
-            .Select(a => new TopNewsModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl, a.Body))
+            .Select(a => new TopNewsModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl, a.Body, a.TargetDate))
             .ToListAsync();
 
         public async Task<int> Total(CancellationToken cancellationToken = default)

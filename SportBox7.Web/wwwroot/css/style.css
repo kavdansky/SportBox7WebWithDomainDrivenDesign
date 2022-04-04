@@ -1203,4 +1203,21 @@ textarea:focus {
       .contact-area .contact-title h2 {
         font-size: 30px; } }
 
+#passed-events {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    background: #168817;
+    height: 50px;
+    width: 100%;
+    position: relative;
+}
+
+#passed-events-par {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 120%;
+}
 /*# sourceMappingURL=style.css.map */

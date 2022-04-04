@@ -97,7 +97,7 @@
                     {
                         <div class="breaking-news-area d-flex align-items-center">
                             <div class="news-title">
-                                <p><a href="/articles" id="latestNews">@DateTime.Now.ToString("dd MMMM").ToUpper()</a></p>
+                                <p><a href="/articles" id="latestNews">Предстоящи събития</a></p>
                             </div>
                             <div id="breakingNewsTicker" class="ticker">
                                 <ul>
@@ -131,13 +131,14 @@
                                     <div class="post-data">
                                         <a href="#" class="post-catagory">@article.Category</a>
                                         <a href="/articles/all?id=@article.Id" class="post-title">
-                                            <h6>@article.Title</h6>
+                                            <h6>Изминаха @Model.PasedYears години от @article.Title</h6>
                                         </a>
                                         <div class="post-thumb">
-                                            <a href="/articles/all?id=@article.Id"><img src="" height="200" alt=""></a>
+                                            <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" width="420" alt=""></a>
+                                            <p>@Html.Raw(article.ImageCredit)<p>
                                         </div>
                                         <div class="post-meta">
-                                            <p class="post-excerp">@article.Body <a href="/articles/all?id=@article.Id">...вижте повече</a></p>
+                                            <p class="post-excerp">@article.Body.Substring(0, 430) <a href="/articles/all?id=@article.Id">...вижте повече</a></p>
                                         </div>
                                     </div>
                                 </div>
@@ -157,12 +158,12 @@
                     </div>
                 </div>
                 <!-- SideBar -->
-                @{ int targetMonth = Model.TargetDate.Month - 1; }
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="calendar-wrapper"></div>
-                    <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
-                    <script src="~/js/calendar.js"></script>
-                    <script>
+                @{ int targetMonth = DateTime.Now.Month - 1; }
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="calendar-wrapper"></div>
+                <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
+                <script src="~/js/calendar.js"></script>
+                <script>
                         function selectDate(date) {
                             $('.calendar-wrapper').updateCalendarOptions({
                                 date: date
@@ -176,14 +177,37 @@
                         }
                         var defaultConfig = {
                             weekDayLength: 1,
-                            date: new Date(@Model.TargetDate.Year, @targetMonth, @Model.TargetDate.Day),
+                            date: new Date(@DateTime.Now.Year, @targetMonth, @DateTime.Now.Day),
                             onClickDate: selectDate,
                             showYearDropdown: true,
                         };
 
                         $('.calendar-wrapper').calendar(defaultConfig);
-                    </script>
+                </script>
+                <div id="passed-events">
+                    <p id="passed-events-par">Минали събития</p>
                 </div>
+                @if (Model != null && Model.SideBar != null)
+                {
+                    foreach (var article in Model.SideBar)
+                    {
+                        <div class="single-blog-post small-featured-post d-flex">
+                            <div class="post-thumb single-video-post">
+                                <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
+                            </div>
+                            <div class="post-data">
+                                <a href="/articles?category=@article.CategoryEN" class="post-catagory">@Html.Raw(article.CategoryName)</a>
+                                <div class="post-meta">
+                                    <a href="/articles/all?id=@article.Id" class="post-title">
+                                        <h6>@Html.Raw(article.Title)</h6>
+                                    </a>
+                                    <p class="post-date"><span>@article.TargetDate.ToString("dd MMMM", new System.Globalization.CultureInfo("bg-BG"))</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
                 <!-- SideBar End -->
             </div>
         </div>
