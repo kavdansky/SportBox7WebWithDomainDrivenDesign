@@ -13,7 +13,8 @@ namespace SportBox7.Application.Features.Articles.Queries.Common
             string imageUrl,
             string category,
             string categoryEn,
-            string imageCredit)
+            string imageCredit,
+            DateTime tagetDate)
         {
             this.Id = id;
             this.Title = title;
@@ -22,6 +23,7 @@ namespace SportBox7.Application.Features.Articles.Queries.Common
             this.Category = category;
             this.CategoryEn = categoryEn;
             this.ImageCredit = imageCredit;
+            this.TargetDate = tagetDate;
         }
 
         public int Id { get; }
@@ -37,5 +39,7 @@ namespace SportBox7.Application.Features.Articles.Queries.Common
         public string CategoryEn { get; set; }
 
         public string ImageCredit { get; set; }
+
+        public DateTime TargetDate { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 {
     using SportBox7.Application.Features.Articles.Contracts;
     using SportBox7.Application.Features.Articles.Queries.Common;
+    using System;
 
     public class ArticleByIdModel: ArticleListingModel, IMetaTagable
     {
@@ -15,8 +16,9 @@
             string imageCredit,
             string metaDescription,
             string metaKeywords,
-            string metaTitle)
-            : base(id, title, body, imageUrl, category, categoryEn, imageCredit)
+            string metaTitle,
+            DateTime targetDate)
+            : base(id, title, body, imageUrl, category, categoryEn, imageCredit, targetDate)
         {
             this.MetaDescription = metaDescription;
             this.MetaKeywords = metaKeywords;

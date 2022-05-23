@@ -30,7 +30,7 @@
 
         Task<ArticleByIdModel> GetArticleById(int id);
 
-        List<SideBarModel> GetsideBarNews();
+        Task<List<SideBarModel>> GetsideBarNews();
 
         Task<List<LatestNewsModel>> GetLatestNews();
 

@@ -135,7 +135,7 @@
                                 <div class="post-data">
                                     <a href="#" class="post-catagory">@Model.Article.Category</a>
                                     <a href="#" class="post-title">
-                                        <h6>@Model.Article.Title</h6>
+                                        <h6>@Model.Article.TargetDate.ToString("dd-MMMM-yyyy")г. - @Model.Article.Title</h6>
                                     </a>
                                     <div class="post-thumb">
                                         <a href="#"><img src="@Model.Article.ImageUrl" alt=""></a>
@@ -145,7 +145,7 @@
                                         {
                                             <p class="post-author">By @Model.Author.FirstName @Model.Author.LastName<a href="#"></a></p>
                                         }
-                                        <p>@Model.Article.Body</p>
+                                        <p>На @Model.Article.TargetDate.ToString("dd-MMMM-yyyy")г. @Model.Article.Body</p>
                                         <!-- Post Like & Post Comment -->
 
                                     </div>

@@ -23,7 +23,7 @@
         {
             this.MenuCategories = await categoryRepository.GetMenuCategories();
             this.LatestNews = await articleRepository.GetLatestNews();
-            this.SideBar = articleRepository.GetsideBarNews();
+            this.SideBar = await articleRepository.GetsideBarNews();
             return true;
         }
 

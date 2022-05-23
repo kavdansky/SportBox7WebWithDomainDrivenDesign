@@ -10,16 +10,16 @@
     using static SportBox7.Domain.Models.ModelConstants.Article;
     using SportBox7.Domain.Models.Categories;
 
-    public class Article: EditableEntity<int>, IAggregateRoot
+    public class Article : EditableEntity<int>, IAggregateRoot
     {
         private readonly HashSet<SocialSignal> socialSignals;
 
         internal Article(string title, string body, string h1Tag, string imageUrl, string imageCredit, string metaDescription, string metaKeywords, Category category, ArticleType articleType, DateTime targetDate, Models.Sources.Source source)
         {
             this.Validate(title, body, h1Tag, imageUrl, metaKeywords, metaDescription);
-           
+
             this.TargetDate = targetDate;
-            this.ArticleType = articleType;           
+            this.ArticleType = articleType;
             this.CreationDate = DateTime.Now;
             this.LastModDate = this.CreationDate;
             this.Title = title;
@@ -51,7 +51,7 @@
             this.ImageCredit = imageCredit;
             this.MetaKeywords = metaKeywords;
             this.MetaDescription = metaDescription;
-            this.ArticleType = ArticleType;         
+            this.ArticleType = ArticleType;
             this.ArticleState = default!;
             this.ArticleType = default!;
             this.TargetDate = default!;
@@ -69,7 +69,7 @@
             this.ValidateImageUrl(imageUrl);
             this.ValidateMetaKeywords(metaKeywords);
             this.ValidateMetaDescription(metaDescription);
-            
+
         }
 
         public string Title { get; private set; } = default!;
@@ -89,8 +89,8 @@
         public Models.Sources.Source Source { get; private set; }
 
         public Category Category { get; private set; }
-       
-        public DateTime TargetDate { get; private set; } 
+
+        public DateTime TargetDate { get; private set; }
 
         public ArticleState ArticleState { get; private set; }
 
@@ -216,7 +216,7 @@
         private void ValidateImageUrl(string imageUrl)
         {
             Validator.CheckForEmptyString<InvalidArticleException>(imageUrl, "ImageUrl");
-            
+
         }
 
         private void ValidateH1Tag(string h1Tag)

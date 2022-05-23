@@ -14,11 +14,9 @@
             string categoryEn,
             string ImageCredit,
             DateTime targetDate)
-            : base(id, title, body, imageUrl, category, categoryEn, ImageCredit)
+            : base(id, title, body, imageUrl, category, categoryEn, ImageCredit, targetDate)
         {
             this.TargetDate = targetDate;
         }
-
-        public DateTime TargetDate { get; set; }
     }
 }

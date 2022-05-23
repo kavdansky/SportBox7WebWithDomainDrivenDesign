@@ -1,6 +1,7 @@
 ﻿namespace SportBox7.Application.Features.Articles.Queries.Category
 {
     using SportBox7.Application.Features.Articles.Queries.Common;
+    using System;
 
     public class ArticleByCategoryListingModel: ArticleListingModel
     {
@@ -11,8 +12,9 @@
             string imageUrl,
             string category,
             string categoryEn,
-            string ImageCredit)
-            :base(id, title, body, imageUrl, category, categoryEn, ImageCredit)
+            string imageCredit, 
+            DateTime targetDate)
+            :base(id, title, body, imageUrl, category, categoryEn, imageCredit, targetDate)
         {     }
     }
 }

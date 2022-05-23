@@ -16,5 +16,13 @@ namespace SportBox7.Application.Features.Articles.Queries.HomePage
 
         public string Body { get; set; }
 
+        public int PasedYears
+        {
+            get
+            {
+                return DateTime.Now.Year - this.TargetDate.Year;
+            }
+        }
+
     }
 }

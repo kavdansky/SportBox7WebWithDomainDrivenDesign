@@ -16,7 +16,6 @@
     using SportBox7.Application.Features.Articles.Queries.Id;
     using SportBox7.Application.Features.Categories.Contracts;
     using SportBox7.Domain.Models.Articles.Enums;
-    using SportBox7.Domain.Models.Categories;
     using SportBox7.Domain.Models.Editors;
     using SportBox7.Domain.Models.Sources;
 
@@ -52,7 +51,8 @@
                     art.ImageUrl,
                     art.Category.CategoryName,
                     art.Category.CategoryNameEN,
-                    art.ImageCredit))
+                    art.ImageCredit,
+                    art.TargetDate))
                 .ToListAsync(cancellationToken);
         }
 
@@ -62,12 +62,21 @@
         public async Task<ArticleByIdOutputModel> GetArticlePage(CancellationToken cancellationToken = default, int id = default)
             => await ArticleByIdOutputModel.CreateAsync(this, categoryRepository, id);
 
-        public List<SideBarModel> GetsideBarNews()
-            => this.All().Where(a => DateTime.Compare(DateTime.Now, a.TargetDate) > 0).Take(5).Select(a => new SideBarModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl, a.TargetDate)).ToList();
+        public async Task<List<SideBarModel>> GetsideBarNews()
+        {
+            var articles = await SortNextDaysArticles();
+            articles.Reverse();
+            var passedArticles = articles.Select(a => new SideBarModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl, a.TargetDate)).Take(5).ToList();
+
+            return passedArticles;
+
+        } 
+        
+       
 
         public async Task<ArticleByIdModel> GetArticleById(int id)
         {
-            return await this.All().Where(a => a.Id == id).Select(a=> new ArticleByIdModel(a.Id, a.Title, a.Body, a.ImageUrl, a.Category.CategoryName, a.Category.CategoryNameEN, a.ImageCredit, a.MetaDescription, a.MetaKeywords, a.Title)).FirstOrDefaultAsync();
+            return await this.All().Where(a => a.Id == id).Select(a=> new ArticleByIdModel(a.Id, a.Title, a.Body, a.ImageUrl, a.Category.CategoryName, a.Category.CategoryNameEN, a.ImageCredit, a.MetaDescription, a.MetaKeywords, a.Title,a.TargetDate)).FirstOrDefaultAsync();
         }
 
         public async Task<List<LatestNewsModel>> GetLatestNews()
@@ -75,15 +84,15 @@
             .OrderByDescending(a => a.CreationDate)
             .Take(100).OrderByDescending(a => a.CreationDate)
             .Select(a =>
-            new LatestNewsModel(a.Id, a.Category.CategoryNameEN, a.Title))
+            new LatestNewsModel(a.Id, a.Category.CategoryNameEN, a.Title, a.TargetDate))
             .ToListAsync();
-        
+
         public async Task<List<TopNewsModel>> GetTopNews()
-            => await this.All()
-            .OrderByDescending(x => x.CreationDate)
+            => await Task.Run(() => SortNextDaysArticles().GetAwaiter().GetResult()
+            .Where(a=> a.ArticleState == ArticleState.Published)
             .Take(5)
             .Select(a => new TopNewsModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl, a.Body, a.TargetDate))
-            .ToListAsync();
+            .ToList()); 
 
         public async Task<int> Total(CancellationToken cancellationToken = default)
             => await this
@@ -132,9 +141,56 @@
             var articlesOnThisDay = await this.All()
                 .Include(a=> a.Category)
                 .Where(a => a.ArticleType == ArticleType.PeriodicArticle && a.TargetDate.Day == currentDate.Day && a.TargetDate.Month == currentDate.Month && a.ArticleState == ArticleState.Published)
-                .Select(a=> new LatestNewsModel(a.Id, a.Category.CategoryNameEN, a.Title ))
+                .Select(a=> new LatestNewsModel(a.Id, a.Category.CategoryNameEN, a.Title, a.TargetDate))
                 .ToListAsync();
             return articlesOnThisDay;
+        }
+
+        private async Task<List<Article>> SortNextDaysArticles()
+        {
+            var sortedArticles = await this.db.Articles
+                .Include(c=> c.Category)
+                .OrderBy(o => o.TargetDate.Day)
+                .OrderBy(o => o.TargetDate.Month).ToListAsync();
+
+            List<Article> resultList = new List<Article>();
+            var currentDate = DateTime.Now;
+            foreach (var obj in sortedArticles)
+            {
+                if (obj.TargetDate.Month > currentDate.Month)
+                {
+                    resultList.Add(obj);
+                }
+                if (obj.TargetDate.Month == currentDate.Month)
+                {
+                    if (obj.TargetDate.Day > currentDate.Day)
+                    {
+                        resultList.Add(obj);
+                    }
+                    if (obj.TargetDate.Day == currentDate.Day)
+                    {
+                        resultList.Insert(0, obj);
+                    }
+                }
+                
+            }
+
+            foreach (var obj in sortedArticles)
+            {
+                if (obj.TargetDate.Month < currentDate.Month)
+                {
+                    resultList.Add(obj);
+                }
+
+                if (obj.TargetDate.Month == currentDate.Month)
+                {
+                    if (obj.TargetDate.Day < currentDate.Day)
+                    {
+                        resultList.Add(obj);
+                    }
+                }
+            }
+            return resultList;
         }
     }
 }

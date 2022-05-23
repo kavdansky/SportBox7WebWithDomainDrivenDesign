@@ -29,16 +29,6 @@
 
         public string MetaTitle { get; set; } = default!;
 
-        public int PasedYears
-        {
-            get 
-            { 
-                if(this.OnTheDayArticles.Any())
-                    return DateTime.Now.Year - this.OnTheDayArticles.FirstOrDefault().TargetDate.Year;
-                return 0;
-            }
-        }
-
         private async Task<FrontPageOutputModel> InitializeAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository)
         {
             await InitializeLayoutComponentsAsync(articleRepository, categoryRepository);
