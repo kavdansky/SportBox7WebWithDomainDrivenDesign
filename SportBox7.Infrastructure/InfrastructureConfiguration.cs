@@ -10,6 +10,7 @@
     using SportBox7.Application.Features.Identity;
     using SportBox7.Infrastructure.Identity;
     using SportBox7.Infrastructure.ImageHandling;
+    using SportBox7.Infrastructure.TextHandling;
 
     public static class InfrastructureConfiguration
     {
@@ -20,7 +21,8 @@
                 .AddDatabase(configuration)
                 .AddRepositories()
                 .AddIdentity()
-                .AddImageManipulationProvider();
+                .AddImageManipulationProvider()
+                .AddTextManipulationProvider();
 
 
         private static IServiceCollection AddDatabase(
@@ -77,5 +79,8 @@
 
         private static IServiceCollection AddImageManipulationProvider(this IServiceCollection services)
             => services.AddTransient<IImageManipulationService, ImageManipulationService>();
+
+        private static IServiceCollection AddTextManipulationProvider(this IServiceCollection services)
+            => services.AddTransient<ITextManipulationService, TextManipulationService>();
     }
 }

@@ -108,7 +108,7 @@
                             <div id="breakingNewsTicker" class="ticker">
                                 <ul>
                                     @{
-                                        foreach (var article in Model.LatestNews)
+                                        foreach (var article in Model.RunningTextNews)
                                         {
                                             <li><a href="/articles/all?id=@article.ArticleId">@Html.Raw(article.Title)</a></li>
                                         }

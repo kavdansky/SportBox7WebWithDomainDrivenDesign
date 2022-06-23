@@ -13,7 +13,7 @@
 
         public IEnumerable<MenuCategoriesModel> MenuCategories { get; set; } = default!;
 
-        public IEnumerable<LatestNewsModel> LatestNews { get; set; } = default!;
+        public IEnumerable<LatestNewsModel> RunningTextNews { get; set; } = default!;
 
         public IEnumerable<SideBarModel> SideBar { get; set; } = default!;
 
@@ -22,7 +22,7 @@
         protected async Task<bool> InitializeLayoutComponentsAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository)
         {
             this.MenuCategories = await categoryRepository.GetMenuCategories();
-            this.LatestNews = await articleRepository.GetLatestNews();
+            this.RunningTextNews = await articleRepository.GetRunningTextNews();
             this.SideBar = await articleRepository.GetsideBarNews();
             return true;
         }

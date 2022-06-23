@@ -99,7 +99,7 @@
             <div class="row align-items-center">
                 <div class="col-12 col-lg-8">
                     <!-- Breaking News Widget -->
-                    @if (Model != null && Model.LatestNews != null)
+                    @if (Model != null && Model.RunningTextNews != null)
                     {
                         <div class="breaking-news-area d-flex align-items-center">
                             <div class="news-title">
@@ -108,7 +108,7 @@
                             <div id="breakingNewsTicker" class="ticker">
                                 <ul>
                                     @{
-                                        foreach (var article in Model.LatestNews)
+                                        foreach (var article in Model.RunningTextNews)
                                         {
                                             <li><a href="/Articles/all?id=@article.ArticleId">@Html.Raw(article.Title)</a></li>
                                         }

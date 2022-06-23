@@ -32,7 +32,7 @@
 
         Task<List<SideBarModel>> GetsideBarNews();
 
-        Task<List<LatestNewsModel>> GetLatestNews();
+        Task<List<LatestNewsModel>> GetRunningTextNews();
 
         Task<List<TopNewsModel>> GetTopNews();
 
