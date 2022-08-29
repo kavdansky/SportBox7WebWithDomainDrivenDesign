@@ -145,7 +145,7 @@
                                         {
                                             <p class="post-author">By @Model.Author.FirstName @Model.Author.LastName<a href="#"></a></p>
                                         }
-                                        <p>На @Model.Article.TargetDate.ToString("dd-MMMM-yyyy")г. @Model.Article.Body</p>
+                                        <p>@Html.Raw(@Model.Article.Body)</p>
                                         <!-- Post Like & Post Comment -->
 
                                     </div>

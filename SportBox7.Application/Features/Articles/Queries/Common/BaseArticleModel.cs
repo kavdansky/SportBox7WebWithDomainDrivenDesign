@@ -9,7 +9,7 @@
         public BaseArticleModel()
         {}
 
-        public BaseArticleModel(int id, string title, string categoryEN, string categoryName, string imageCredit, string imageUrl, DateTime targetDate)
+        public BaseArticleModel(int id, string title, string h1Tag, string categoryEN, string categoryName, string imageCredit, string imageUrl, DateTime targetDate)
         {
             this.Id = id;
             this.Title = title;
@@ -18,11 +18,14 @@
             this.ImageCredit = imageCredit;
             this.ImageUrl = imageUrl;
             this.TargetDate = targetDate;
+            this.H1Tag = h1Tag;
 
         }
         public int Id { get; set; }
 
         public string Title { get; set; } = default!;
+
+        public string H1Tag { get; set; } = default!;
 
         public string CategoryEN { get; set; } = default!;
 

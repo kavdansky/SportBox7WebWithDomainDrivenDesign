@@ -48,15 +48,8 @@
             }
 
             return await query
-                .Select(art => new ArticleByCategoryListingModel(
-                    art.Id,
-                    art.Title,
-                    art.Body,
-                    art.ImageUrl,
-                    art.Category.CategoryName,
-                    art.Category.CategoryNameEN,
-                    art.ImageCredit,
-                    art.TargetDate))
+                .Select(art => new ArticleByCategoryListingModel(art.Id, art.Title, art.Body, art.ImageUrl,
+                    art.Category.CategoryName, art.Category.CategoryNameEN, art.ImageCredit, art.TargetDate))
                 .ToListAsync(cancellationToken);
         }
 
@@ -64,19 +57,17 @@
             => await FrontPageOutputModel.CreateAsync(this, categoryRepository);
 
         public async Task<ArticleByIdOutputModel> GetArticlePage(CancellationToken cancellationToken = default, int id = default)
-            => await ArticleByIdOutputModel.CreateAsync(this, categoryRepository, id);
+            => await ArticleByIdOutputModel.CreateAsync(this, categoryRepository, textManipulationService, id);
 
         public async Task<List<SideBarModel>> GetsideBarNews()
         {
             var articles = await SortNextDaysArticles();
             articles.Reverse();
-            var passedArticles = articles.Select(a => new SideBarModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl, a.TargetDate)).Take(5).ToList();
+            var passedArticles = articles.Select(a => new SideBarModel(a.Id, a.Title, a.H1Tag, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl, a.TargetDate)).Take(5).ToList();
 
             return passedArticles;
 
         }
-
-
 
         public async Task<ArticleByIdModel> GetArticleById(int id)
         {
@@ -96,7 +87,7 @@
             => await Task.Run(() => SortNextDaysArticles().GetAwaiter().GetResult()
             .Take(5)
             .Select(a => textManipulationService.SetPassedYearsInText(a))
-            .Select(a => new TopNewsModel(a.Id, a.Title, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl, a.Body, a.TargetDate))
+            .Select(a => new TopNewsModel(a.Id, a.Title, a.H1Tag, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl, a.Body, a.TargetDate))
             .ToList());
 
         public async Task<int> Total(CancellationToken cancellationToken = default)
@@ -112,6 +103,7 @@
 
         public Task UpdateArticle(EditArticleCommand command, Source sourceToEdit)
         {
+            command.Body = command.Body.Replace("\r\n", "<br />");
             Article articleToEdit = this.All().Where(a => a.Id == command.Id).FirstOrDefault();
             articleToEdit.UpdateBody(command.Body);
             articleToEdit.UpdateCategory(this.categoryRepository.GetCategoryByName(command.Category).GetAwaiter().GetResult());
@@ -130,13 +122,12 @@
         }
 
         public async Task<IEnumerable<ArticlesByDateListingModel>> GetArticlesByDate(DateTime date)
-        {
-            return await this.All()
+            => await this.All()
                 .Include(a => a.Category)
                 .Where(a => a.TargetDate.Day == date.Day && a.TargetDate.Month == date.Month)
                 .Select(a => textManipulationService.SetPassedYearsInText(a))
                 .Select(a => new ArticlesByDateListingModel(a.Id, a.Title, a.Body, a.ImageUrl, a.Category.CategoryName, a.Category.CategoryNameEN, a.ImageCredit, a.TargetDate)).ToListAsync();
-        } 
+
 
         public async Task<IEnumerable<LatestNewsModel>> GetOnTheDayArticles()
         {

@@ -76,6 +76,7 @@
                     File.WriteAllBytes(Path.Combine(imageLocation, imageName), resizedImage);
                 }
 
+                request.Body = request.Body.Replace("\r\n", "<br />");
                 var article = articleFactory
                     .WithTitle(request.Title)
                     .WithBody(request.Body)

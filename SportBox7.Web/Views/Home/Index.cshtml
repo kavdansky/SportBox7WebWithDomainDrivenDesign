@@ -163,7 +163,7 @@
                                         <div class="post-data">
                                             <a href="#" class="post-catagory">@Model.Topnews.FirstOrDefault().TargetDate.ToString("dd MMMM")</a>
                                             <a href="/articles/all?id=@Model.Topnews.FirstOrDefault().Id" class="post-title">
-                                                <h6>@Model.Topnews.FirstOrDefault().Title</h6>
+                                                <h6>@Model.Topnews.FirstOrDefault().H1Tag</h6>
                                             </a>
                                             <div class="post-thumb">
                                                 <a href="/articles/all?id=@Model.Topnews.FirstOrDefault().Id"><img src="@Model.Topnews.FirstOrDefault().ImageUrl" width="420" alt=""></a>
@@ -186,7 +186,7 @@
                                                 <a href="/articles/all?id=@article.Id" class="post-title">
                                                     @if (article.Title.ToLower().Contains(new String("рожден ден").ToString()))
                                                     {
-                                                        <h6>@article.Title</h6>
+                                                        <h6>@article.H1Tag</h6>
                                                     }
                                                     else
                                                     {
