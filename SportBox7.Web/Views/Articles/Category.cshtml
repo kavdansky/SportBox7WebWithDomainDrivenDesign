@@ -29,6 +29,9 @@
                             <div class="logo">
                                 <a href="/"><img src="~/img/core-img/logoSmall.jpg" alt="sportBox7-logo"></a>
                             </div>
+                            <div>
+                                <span id="slogan">Големите дни в българския спорт</span>
+                            </div>
                             <!-- Advertisement -->
                             <div class="login-search-area d-flex align-items-center">
                             </div>
@@ -103,14 +106,14 @@
                     {
                         <div class="breaking-news-area d-flex align-items-center">
                             <div class="news-title">
-                                <p><a href="/articles" id="latestNews">Последни</a></p>
+                                <p><a href="/articles" id="latestNews">Предстоящи</a></p>
                             </div>
                             <div id="breakingNewsTicker" class="ticker">
                                 <ul>
                                     @{
                                         foreach (var article in Model.RunningTextNews)
                                         {
-                                            <li><a href="/Articles/all?id=@article.ArticleId">@Html.Raw(article.Title)</a></li>
+                                            <li><a href="/Articles/all?id=@article.ArticleId">@article.TargetDate.ToString("dd MMMM"):  @Html.Raw(article.Title)</a></li>
                                         }
                                     }
                                 </ul>
@@ -131,18 +134,20 @@
                         {
                             @foreach (ArticleByCategoryListingModel article in Model.Articles)
                             {
+                                int targetMonth = article.TargetDate.Month - 1;
                                 <!-- Single Featured Post -->
                                 <div class="single-blog-post featured-post mb-30">
                                     <div class="post-data">
-                                        <a href="#" class="post-catagory">@article.Category</a>
+                                        <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
                                         <a href="/articles/all?id=@article.Id" class="post-title">
                                             <h6>@article.Title</h6>
                                         </a>
                                         <div class="post-thumb">
-                                            <a href="/articles/all?id=@article.Id"><img src="" height="200" alt=""></a>
+                                            <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" width="420" alt=""></a>
+                                            <p>Източник на изображението: @Html.Raw(article.ImageCredit)<p>
                                         </div>
                                         <div class="post-meta">
-                                            <p class="post-excerp">@article.Body <a href="/articles/all?id=@article.Id">...вижте повече</a></p>
+                                            <p class="post-excerp">@Html.Raw(article.Body.Substring(0, 220)) <a href="/articles/all?id=@article.Id">...вижте повече</a></p>
                                         </div>
                                     </div>
                                 </div>
@@ -154,27 +159,33 @@
                 <!-- SideBar -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="calendar-wrapper"></div>
+                    <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
+                    <script src="~/js/calendar.min.js"></script>
+                    <script src="~/js/calendar-initializer.js"></script>
+                    <div id="passed-events">
+                        <p id="passed-events-par">Минали събития</p>
+                    </div>
                     @if (Model != null && Model.SideBar != null)
                     {
                         foreach (var article in Model.SideBar)
                         {
+                            int targetMonth = article.TargetDate.Month - 1;
                             <div class="single-blog-post small-featured-post d-flex">
                                 <div class="post-thumb single-video-post">
                                     <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
                                 </div>
                                 <div class="post-data">
-                                    <a href="articles?category=@article.CategoryEN" class="post-catagory">@Html.Raw(article.CategoryName)</a>
+                                    <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
                                     <div class="post-meta">
                                         <a href="/articles/all?id=@article.Id" class="post-title">
                                             <h6>@Html.Raw(article.Title)</h6>
                                         </a>
-                                        <p class="post-date"><span></span></p>
+                                        <p class="post-date"><span>@article.TargetDate.ToString("dd MMMM", new System.Globalization.CultureInfo("bg-BG"))</span></p>
                                     </div>
                                 </div>
                             </div>
                         }
                     }
-
                 </div>
                 <!-- SideBar End -->
             </div>

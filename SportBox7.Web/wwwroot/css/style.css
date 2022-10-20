@@ -470,10 +470,10 @@ textarea:focus {
     border-bottom: none; }
     @media only screen and (min-width: 768px) and (max-width: 991px) {
       .header-area .is-sticky #stickyMenu {
-        background-color: #152535; } }
+        background-color: #d00614; } }
     @media only screen and (max-width: 767px) {
       .header-area .is-sticky #stickyMenu {
-        background-color: #152535; } }
+        background-color: #d00614; } }
 
 /* :: 5.0 Hero Area */
 .hero-area {
@@ -1220,5 +1220,12 @@ textarea:focus {
     transform: translate(-50%, -50%);
     color: white;
     font-size: 120%;
+}
+
+#slogan {
+    font-size: 200%;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #ffffff;
 }
 /*# sourceMappingURL=style.css.map */

@@ -23,14 +23,11 @@
     internal class ArticleRepository : DataRepository<Article>, IArticleRepository
     {
         private readonly ICategoryRepository categoryRepository;
-        private readonly ITextManipulationService textManipulationService;
 
-        public ArticleRepository(SportBox7DbContext db, ICategoryRepository categoryRepository,
-            ITextManipulationService textManipulationService)
+        public ArticleRepository(SportBox7DbContext db, ICategoryRepository categoryRepository)
             : base(db)
         {
             this.categoryRepository = categoryRepository;
-            this.textManipulationService = textManipulationService;
         }
 
         public async Task<IEnumerable<ArticleByCategoryListingModel>> GetArticleListingsByCategory(
@@ -57,7 +54,7 @@
             => await FrontPageOutputModel.CreateAsync(this, categoryRepository);
 
         public async Task<ArticleByIdOutputModel> GetArticlePage(CancellationToken cancellationToken = default, int id = default)
-            => await ArticleByIdOutputModel.CreateAsync(this, categoryRepository, textManipulationService, id);
+            => await ArticleByIdOutputModel.CreateAsync(this, categoryRepository, id);
 
         public async Task<List<SideBarModel>> GetsideBarNews()
         {
@@ -86,7 +83,6 @@
         public async Task<List<TopNewsModel>> GetTopNews()
             => await Task.Run(() => SortNextDaysArticles().GetAwaiter().GetResult()
             .Take(5)
-            .Select(a => textManipulationService.SetPassedYearsInText(a))
             .Select(a => new TopNewsModel(a.Id, a.Title, a.H1Tag, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl, a.Body, a.TargetDate))
             .ToList());
 
@@ -125,7 +121,6 @@
             => await this.All()
                 .Include(a => a.Category)
                 .Where(a => a.TargetDate.Day == date.Day && a.TargetDate.Month == date.Month)
-                .Select(a => textManipulationService.SetPassedYearsInText(a))
                 .Select(a => new ArticlesByDateListingModel(a.Id, a.Title, a.Body, a.ImageUrl, a.Category.CategoryName, a.Category.CategoryNameEN, a.ImageCredit, a.TargetDate)).ToListAsync();
 
 
@@ -135,7 +130,6 @@
             return await this.All()
                 .Include(a => a.Category)
                 .Where(a => a.ArticleType == ArticleType.PeriodicArticle && a.TargetDate.Day == currentDate.Day && a.TargetDate.Month == currentDate.Month && a.ArticleState == ArticleState.Published)
-                .Select(a => textManipulationService.SetPassedYearsInText(a))
                 .Select(a => new LatestNewsModel(a.Id, a.Category.CategoryNameEN, a.Title, a.TargetDate))
                 .ToListAsync();
         }
@@ -153,34 +147,24 @@
             foreach (var obj in sortedArticles)
             {
                 if (obj.TargetDate.Month > currentDate.Month)
-                {
                     resultList.Add(obj);
-                }
                 if (obj.TargetDate.Month == currentDate.Month)
                 {
                     if (obj.TargetDate.Day > currentDate.Day)
-                    {
                         resultList.Add(obj);
-                    }
                     if (obj.TargetDate.Day == currentDate.Day)
-                    {
                         resultList.Insert(0, obj);
-                    }
                 }     
             }
 
             foreach (var obj in sortedArticles)
             {
                 if (obj.TargetDate.Month < currentDate.Month)
-                {
                     resultList.Add(obj);
-                }
                 if (obj.TargetDate.Month == currentDate.Month)
                 {
                     if (obj.TargetDate.Day < currentDate.Day)
-                    {
                         resultList.Add(obj);
-                    }
                 }
             }
             return resultList;

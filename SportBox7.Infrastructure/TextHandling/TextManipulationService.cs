@@ -6,14 +6,16 @@
 
     public class TextManipulationService : ITextManipulationService
     {
+        private const string PassedYearsTemplate = "{dd}";
+
         public Article SetPassedYearsInText(Article article)
         {
-            string passedYearsTemplate = "{dd}";
+
             int passedYears = DateTime.Now.Year - article.TargetDate.Year;
 
-            article.UpdateH1Tag(article.H1Tag.Replace(passedYearsTemplate, passedYears.ToString()));
-            article.UpdateBody(article.Body.Replace(passedYearsTemplate, passedYears.ToString()));
-            article.UpdateTitle(article.Title.Replace(passedYearsTemplate, passedYears.ToString()));
+            article.UpdateH1Tag(article.H1Tag.Replace(PassedYearsTemplate, passedYears.ToString()));
+            article.UpdateBody(article.Body.Replace(PassedYearsTemplate, passedYears.ToString()));
+            article.UpdateTitle(article.Title.Replace(PassedYearsTemplate, passedYears.ToString()));
 
             return article;
         }

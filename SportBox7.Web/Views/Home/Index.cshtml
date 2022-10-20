@@ -29,8 +29,12 @@
                             <div class="logo">
                                 <a href="/"><img src="~/img/core-img/logoSmall.jpg" alt="sportBox7-logo"></a>
                             </div>
+                            <div>
+                                <span id="slogan">Големите дни в българския спорт</span>
+                            </div>
                             <!-- Advertisement -->
                             <div class="login-search-area d-flex align-items-center">
+                                
                             </div>
                         </div>
                     </div>
@@ -48,7 +52,7 @@
                         <div class="logo">
                             <a href="index.html"><img src="~/img/core-img/logoSmall-black.jpg" alt="sportBox7 logo"></a>
                         </div>
-
+                      
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
                             <span class="navbarToggler"><span></span><span></span><span></span></span>
@@ -97,14 +101,14 @@
                     {
                         <div class="breaking-news-area d-flex align-items-center">
                             <div class="news-title">
-                                <p><a href="/articles" id="latestNews">Предстоящи</a></p>
+                                <p><a href="#" id="latestNews">Предстоящи</a></p>
                             </div>
                             <div id="breakingNewsTicker" class="ticker">
                                 <ul>
                                     @{
                                         foreach (var article in Model.RunningTextNews)
                                         {
-                                            <li><a href="/Articles/all?id=@article.ArticleId">@article.TargetDate.ToString("dd MMMM")  @Html.Raw(article.Title)</a></li>
+                                            <li><a href="/Articles/all?id=@article.ArticleId">@article.TargetDate.ToString("dd MMMM"):  @Html.Raw(article.Title)</a></li>
                                         }
                                     }
                                 </ul>
@@ -121,7 +125,7 @@
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <div class="blog-posts-area">
-                        @if (Model.Topnews.Any())
+                        @if (Model != null && Model.Topnews.Any())
                         {
                             if (Model.Topnews.FirstOrDefault().TargetDate.Month != DateTime.Now.Month || Model.Topnews.FirstOrDefault().TargetDate.Day != DateTime.Now.Day)
                             {
@@ -129,22 +133,23 @@
                                 <div class="single-blog-post featured-post mb-30">
                                     <div class="post-data">
                                         <a href="#" class="post-catagory">@DateTime.Now.ToString("dd MMMM")</a>
-                                        <h6>Няма статии за този ден. Вижте предстоящите събития:</h6>
+                                        <h4>Няма статии за този ден. Вижте предстоящите събития:</h4>
                                     </div>
                                 </div>
 
                                 @foreach (var article in Model.Topnews)
                                 {
+                                    int targetMonth = article.TargetDate.Month - 1;
                                     <!-- Single Featured Post -->
                                     <div class="single-blog-post featured-post mb-30">
                                         <div class="post-data">
-                                            <a href="#" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
+                                            <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
                                             <a href="/articles/all?id=@article.Id" class="post-title">
                                                <h6>@article.Title</h6>
                                             </a>
                                             <div class="post-thumb">
                                                 <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" width="420" alt=""></a>
-                                                <p>Image credit: @Html.Raw(article.ImageCredit)<p>
+                                                <p>Източник на изображението: @Html.Raw(article.ImageCredit)<p>
                                             </div>
                                             <div class="post-meta">
                                                 <p class="post-excerp">@Html.Raw(article.Body.Substring(0, 220)) <a href="/articles/all?id=@article.Id">...вижте повече</a></p>
@@ -161,7 +166,7 @@
                                 {
                                     <div class="single-blog-post featured-post mb-30">
                                         <div class="post-data">
-                                            <a href="#" class="post-catagory">@Model.Topnews.FirstOrDefault().TargetDate.ToString("dd MMMM")</a>
+                                            <a href="#" class="post-catagory">@Model.Topnews.FirstOrDefault().TargetDate.ToString("dd MMMM yyyy")</a>
                                             <a href="/articles/all?id=@Model.Topnews.FirstOrDefault().Id" class="post-title">
                                                 <h6>@Model.Topnews.FirstOrDefault().H1Tag</h6>
                                             </a>
@@ -184,15 +189,7 @@
                                             <div class="post-data">
                                                 <a href="#" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
                                                 <a href="/articles/all?id=@article.Id" class="post-title">
-                                                    @if (article.Title.ToLower().Contains(new String("рожден ден").ToString()))
-                                                    {
-                                                        <h6>@article.H1Tag</h6>
-                                                    }
-                                                    else
-                                                    {
-                                                        <h6>Изминаха @article.PasedYears години от @article.Title</h6>
-                                                    }
-
+                                                    <h6>@article.H1Tag</h6>
                                                 </a>
                                                 <div class="post-thumb">
                                                     <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" width="420" alt=""></a>
@@ -223,12 +220,13 @@
                 {
                     foreach (var article in Model.SideBar)
                     {
+                        int targetMonth = article.TargetDate.Month - 1;
                         <div class="single-blog-post small-featured-post d-flex">
                             <div class="post-thumb single-video-post">
                                 <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
                             </div>
                             <div class="post-data">
-                                <a href="/articles?category=@article.CategoryEN" class="post-catagory">@Html.Raw(article.CategoryName)</a>
+                                <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
                                 <div class="post-meta">
                                     <a href="/articles/all?id=@article.Id" class="post-title">
                                         <h6>@Html.Raw(article.Title)</h6>
