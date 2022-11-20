@@ -3,10 +3,10 @@
     using SportBox7.Application.Features.Articles.Contracts;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Common;
+    using SportBox7.Application.Features.Articles.Queries.HomePage;
     using SportBox7.Application.Features.Categories.Contracts;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     public class ArticlesByDateOutputModel : PageLayoutOutpuModel, IMetaTagable
@@ -17,7 +17,9 @@
         }
         public DateTime TargetDate { get; set; }
 
-        public List<ArticlesByDateListingModel> Articles { get; set; } = default!;
+        public IEnumerable<ArticlesByDateListingModel> Articles { get; set; } = default!;
+
+        public List<TopNewsModel> NextDaysArticles { get; set; } = default!;
 
         public string MetaDescription => "На този ден";
 
@@ -28,7 +30,8 @@
         private async Task<ArticlesByDateOutputModel> InitializeAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository, DateTime date)
         {
             await InitializeLayoutComponentsAsync(articleRepository, categoryRepository);
-            this.Articles = articleRepository.GetArticlesByDate(date).GetAwaiter().GetResult().ToList();
+            this.Articles = await articleRepository.GetArticlesByDate(date);
+            this.NextDaysArticles = await articleRepository.GetNextDaysNews(date);
             this.TargetDate = date;
             return this;
         }

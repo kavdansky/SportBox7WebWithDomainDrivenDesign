@@ -58,7 +58,7 @@
 
         public async Task<List<SideBarModel>> GetsideBarNews()
         {
-            var articles = await SortNextDaysArticles();
+            var articles = await SortNextDaysArticles(DateTime.Now);
             articles.Reverse();
             var passedArticles = articles.Select(a => new SideBarModel(a.Id, a.Title, a.H1Tag, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl, a.TargetDate)).Take(5).ToList();
 
@@ -72,7 +72,7 @@
         }
 
         public async Task<List<LatestNewsModel>> GetRunningTextNews()
-            => await Task.Run(() => SortNextDaysArticles()
+            => await Task.Run(() => SortNextDaysArticles(DateTime.Now)
             .GetAwaiter()
             .GetResult()
             .Take(5)
@@ -80,8 +80,8 @@
             new LatestNewsModel(a.Id, a.Category.CategoryNameEN, a.Title, a.TargetDate))
             .ToList());
 
-        public async Task<List<TopNewsModel>> GetTopNews()
-            => await Task.Run(() => SortNextDaysArticles().GetAwaiter().GetResult()
+        public async Task<List<TopNewsModel>> GetNextDaysNews(DateTime currentDate)
+            => await Task.Run(() => SortNextDaysArticles(currentDate).GetAwaiter().GetResult()
             .Take(5)
             .Select(a => new TopNewsModel(a.Id, a.Title, a.H1Tag, a.Category.CategoryNameEN, a.Category.CategoryName, a.ImageCredit, a.ImageUrl, a.Body, a.TargetDate))
             .ToList());
@@ -134,7 +134,7 @@
                 .ToListAsync();
         }
 
-        private async Task<List<Article>> SortNextDaysArticles()
+        private async Task<List<Article>> SortNextDaysArticles(DateTime currentDate)
         {
             var sortedArticles = await this.db.Articles
                 .Where(a=> a.ArticleState == ArticleState.Published && a.ArticleType == ArticleType.PeriodicArticle)
@@ -143,7 +143,6 @@
                 .OrderBy(o => o.TargetDate.Month).ToListAsync();
 
             List<Article> resultList = new List<Article>();
-            var currentDate = DateTime.Now;
             foreach (var obj in sortedArticles)
             {
                 if (obj.TargetDate.Month > currentDate.Month)

@@ -34,7 +34,7 @@
 
         Task<List<LatestNewsModel>> GetRunningTextNews();
 
-        Task<List<TopNewsModel>> GetTopNews();
+        Task<List<TopNewsModel>> GetNextDaysNews(DateTime currentDate);
 
         Task<Editor> GetArticleAuthor(int id);
 

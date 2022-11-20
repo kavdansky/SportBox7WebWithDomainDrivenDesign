@@ -31,7 +31,7 @@
         private async Task<FrontPageOutputModel> InitializeAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository)
         {
             await InitializeLayoutComponentsAsync(articleRepository, categoryRepository);
-            this.Topnews = await articleRepository.GetTopNews();
+            this.Topnews = await articleRepository.GetNextDaysNews(DateTime.Now);
             this.OnTheDayArticles = await articleRepository.GetArticlesByDate(DateTime.Now);
             return this;
         }
