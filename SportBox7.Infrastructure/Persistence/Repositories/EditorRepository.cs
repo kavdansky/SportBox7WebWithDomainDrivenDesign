@@ -3,6 +3,7 @@
     using AutoMapper;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Articles.Queries.Drafts;
     using SportBox7.Application.Features.Articles.Queries.PublishedArticles;
     using SportBox7.Application.Features.Dealers.Queries.Common;
@@ -15,6 +16,7 @@
     using SportBox7.Domain.Models.Articles.Enums;
     using SportBox7.Domain.Models.Editors;
     using SportBox7.Infrastructure.Identity;
+    using SportBox7.Infrastructure.PageHandling;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -98,18 +100,11 @@
             return await Task.Run(() => true);
         }
 
-        public Task<List<DraftsListingModel>> GetDraftsOutputModel(string userId)
+        public async Task<IPaginatedList<DraftsListingModel>> GetDraftsOutputModel(string userId, int? pageIndex)
         {
             var editorDrafts = GetUserArticlesById(userId).Where(a=> a.ArticleState == ArticleState.Draft);
-            var result = new List<DraftsListingModel>();
-            
-            foreach (var article in editorDrafts)
-            {
-                var model = new DraftsListingModel() { Title = article.Title, Id = article.Id };
-                result.Add(model);
-                
-            }
-            return Task.Run( ()=> result);
+            var result = editorDrafts.Select(x => new DraftsListingModel() { Title = x.Title, Id = x.Id }).AsQueryable();
+            return await PaginatedList<DraftsListingModel>.CreateAsync(result, pageIndex?? 1);
         }
 
         private IEnumerable<Article> GetUserArticlesById(string userId)

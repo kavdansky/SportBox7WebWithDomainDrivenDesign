@@ -162,18 +162,18 @@
                     </div>
                 </div>
                 <!--SideBar-->
-                @{ int targetMonth = Model.Article.TargetDate.Month - 1; }
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="calendar-wrapper"></div>
                 <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
                 <script src="~/js/calendar.min.js"></script>
                 <script src="~/js/calendar-initializer.js"></script>
-                <script>setCalendarDate(@Model.Article.TargetDate.Year, @targetMonth, @Model.Article.TargetDate.Day)</script>
                 <div id="passed-events">
                     <p id="passed-events-par">Минали събития</p>
                 </div>
                 @if (Model != null && Model.SideBar != null)
                 {
+                    int targetMonth = Model.Article.TargetDate.Month - 1;
+
                     foreach (var article in Model.SideBar)
                     {
                         <div class="single-blog-post small-featured-post d-flex">

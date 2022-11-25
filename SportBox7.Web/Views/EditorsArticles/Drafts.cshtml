@@ -102,9 +102,9 @@
                                 <th>Article Name</th>
                                 <th>Actions</th>
                             </tr>
-                            @if (Model != null)
+                            @if (Model != null && Model.Drafts != null)
                             {
-                                @foreach (var draft in Model.Drafts)
+                                @foreach (var draft in Model.Drafts as IEnumerable<DraftsListingModel>)
                                 {
                                    <tr>
                                        <td>@draft.Title</td>

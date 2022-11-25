@@ -78,7 +78,7 @@
 
         [Route("/editorsarticles/drafts")]
         [Authorize]
-        public async Task<ActionResult<DraftsListingOutputModel>> Drafts(DraftListingQuery query)
+        public async Task<ActionResult<DraftsListingOutputModel>> Drafts([FromQuery] DraftListingQuery query)
         {
             return View(await this.Mediator.Send(query));
         }

@@ -8,6 +8,8 @@
 
     public class DraftListingQuery: IRequest<DraftsListingOutputModel>
     {
+        public int PageIndex { get; set; }
+
         public class DraftListingQueryHandler : IRequestHandler<DraftListingQuery, DraftsListingOutputModel>
         {
             private readonly IEditorRepository editorRepository;
@@ -21,7 +23,7 @@
 
             public async Task<DraftsListingOutputModel> Handle(DraftListingQuery request, CancellationToken cancellationToken)
             {
-                return await DraftsListingOutputModel.CreateAsync(editorRepository, currentUser.UserId);
+                return await DraftsListingOutputModel.CreateAsync(editorRepository, currentUser.UserId, request.PageIndex);
             }
         }
     }

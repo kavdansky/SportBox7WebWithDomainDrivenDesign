@@ -27,7 +27,7 @@
 
         Task<bool> UpdateEditor(Editor editor);
 
-        Task<List<DraftsListingModel>> GetDraftsOutputModel(string userId);
+        Task<IPaginatedList<DraftsListingModel>> GetDraftsOutputModel(string userId, int? pageIndex);
 
         Task<List<PublishedArticlesListingModel>> GetPublishedArticlesListingModel(string userId);
 

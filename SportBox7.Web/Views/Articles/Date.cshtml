@@ -165,15 +165,16 @@
                             {
                                 foreach (var article in Model.NextDaysArticles)
                                 {
+                                    var articleTargetMonth = @article.TargetDate.Month - 1;
                                     <div class="single-blog-post featured-post mb-30">
                                         <div class="post-data">
-                                            <a href="#" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
+                                            <a href="/articles/date?year=2022&month=@articleTargetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
                                             <a href="/articles/all?id=@article.Id" class="post-title">
                                                 <h6>@article.Title</h6>
                                             </a>
                                             <div class="post-thumb">
                                                 <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" width="420" alt=""></a>
-                                                <p>@Html.Raw(article.ImageCredit)<p>
+                                                <p>Източник на изображението: @Html.Raw(article.ImageCredit)<p>
                                             </div>
                                             <div class="post-meta">
                                                 <p class="post-excerp">@Html.Raw(article.Body.Substring(0, 220)) <a href="/articles/all?id=@article.Id">...вижте повече</a></p>
@@ -188,37 +189,37 @@
                     </div>
                 </div>
                 <!-- SideBar -->
-                @{ int targetMonth = Model.TargetDate.Month - 1; }
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="calendar-wrapper"></div>
-                <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
-                <script src="~/js/calendar.min.js"></script>
-                <script src="~/js/calendar-initializer.js"></script>
-                <div id="passed-events">
-                    <p id="passed-events-par">Минали събития</p>
-                </div>
-                @if (Model != null && Model.SideBar != null)
-                {
-                    foreach (var article in Model.SideBar)
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="calendar-wrapper"></div>
+                    <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
+                    <script src="~/js/calendar.min.js"></script>
+                    <script src="~/js/calendar-initializer.js"></script>
+                    <div id="passed-events">
+                        <p id="passed-events-par">Минали събития</p>
+                    </div>
+                    @if (Model != null && Model.SideBar != null)
                     {
-                        <div class="single-blog-post small-featured-post d-flex">
-                            <div class="post-thumb single-video-post">
-                                <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
-                            </div>
-                            <div class="post-data">
-                                <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
-                                <div class="post-meta">
-                                    <a href="/articles/all?id=@article.Id" class="post-title">
-                                        <h6>@Html.Raw(article.Title)</h6>
-                                    </a>
-                                    <p class="post-date"><span>@article.TargetDate.ToString("dd MMMM", new System.Globalization.CultureInfo("bg-BG"))</span></p>
+                        foreach (var article in Model.SideBar)
+                        {
+                            int targetMonth = article.TargetDate.Month - 1;
+                            <div class="single-blog-post small-featured-post d-flex">
+                                <div class="post-thumb single-video-post">
+                                    <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
+                                </div>
+                                <div class="post-data">
+                                    <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
+                                    <div class="post-meta">
+                                        <a href="/articles/all?id=@article.Id" class="post-title">
+                                            <h6>@Html.Raw(article.Title)</h6>
+                                        </a>
+                                        <p class="post-date"><span>@article.TargetDate.ToString("dd MMMM", new System.Globalization.CultureInfo("bg-BG"))</span></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
-                }
-                <!-- SideBar End -->
-            </div>
+                    <!-- SideBar End -->
+                </div>
             </div>
         </div>
     </div>
