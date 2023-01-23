@@ -1,5 +1,6 @@
 ﻿namespace SportBox7.Application.Features.Sources.Queries.Index
 {
+    using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Articles.Contracts;
     using SportBox7.Application.Features.Editors.Contracts;
     using SportBox7.Application.Features.Editors.Queries.Common;
@@ -9,7 +10,7 @@
     public class SourcesOutputModel: IMetaTagable, IEditorPage
     {
 
-        public IEnumerable<IndexSourceModel> Sources { get; set; } = default!;
+        public IPaginatedList<IndexSourceModel> Sources { get; set; } = default!;
 
         public string ErrorMessage { get; set; } = default!;
 
@@ -21,16 +22,16 @@
 
         public IEnumerable<EditorMenuElement> MenuElements { get; set; } = default!;
 
-        private async Task<SourcesOutputModel> InitializeAsync(ISourceRepository sourceRepository)
+        private async Task<SourcesOutputModel> InitializeAsync(ISourceRepository sourceRepository, int index)
         { 
-            this.Sources = await sourceRepository.GetAllSources();
+            this.Sources = await sourceRepository.GetPaginatedSources(index);
             return this;
         }
 
-        public static Task<SourcesOutputModel> CreateAsync(ISourceRepository sourceRepository)
+        public static Task<SourcesOutputModel> CreateAsync(ISourceRepository sourceRepository, int index)
         {
             var mapgeModel = new SourcesOutputModel();
-            return mapgeModel.InitializeAsync(sourceRepository);
+            return mapgeModel.InitializeAsync(sourceRepository, index);
         }
 
     }

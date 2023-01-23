@@ -1,5 +1,6 @@
 ﻿namespace SportBox7.Application.Features.Articles.Queries.Category
 {
+    using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Articles.Contracts;
     using SportBox7.Application.Features.Articles.Contrcts;
     using SportBox7.Application.Features.Articles.Queries.Common;
@@ -11,19 +12,9 @@
     public class ListArticlesByCategoryOutputModel: PageLayoutOutpuModel, IMetaTagable
     {
         public ListArticlesByCategoryOutputModel()
-        {
-            this.Articles = new List<ArticleByCategoryListingModel>();
-        }
+        {}
 
-        public IEnumerable<ArticleByCategoryListingModel> Articles { get; set; } = default!;
-
-        public int Total 
-        {
-            get
-            {
-                return Articles.Count();
-            }
-        }
+        public IPaginatedList<ArticleByCategoryListingModel> Articles { get; set; } = default!;
 
         public string MetaDescription { get; set; } = default!;
 
@@ -31,10 +22,10 @@
 
         public string MetaTitle { get; set; } = default!;
 
-        private async Task<ListArticlesByCategoryOutputModel> InitializeAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository, string? category)
+        private async Task<ListArticlesByCategoryOutputModel> InitializeAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository, string? category, int? pageindex)
         {
             await InitializeLayoutComponentsAsync(articleRepository, categoryRepository);
-            this.Articles = await articleRepository.GetArticleListingsByCategory(category);
+            this.Articles = await articleRepository.GetArticleListingsByCategory(category, pageindex);
             this.CurrentCategory = await categoryRepository.GetCategoryByName(category);
             if (this.CurrentCategory == null)
             {
@@ -52,10 +43,10 @@
             return this;
         }
 
-        public static Task<ListArticlesByCategoryOutputModel> CreateAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository, string? category)
+        public static Task<ListArticlesByCategoryOutputModel> CreateAsync(IArticleRepository articleRepository, ICategoryRepository categoryRepository, string? category, int? pageindex)
         {
             var frpgouput = new ListArticlesByCategoryOutputModel();
-            return frpgouput.InitializeAsync(articleRepository, categoryRepository, category);
+            return frpgouput.InitializeAsync(articleRepository, categoryRepository, category, pageindex);
         }
     }
 }

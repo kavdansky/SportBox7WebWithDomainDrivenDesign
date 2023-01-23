@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class PaginatedList<T> : List<T>, IPaginatedList<T>
+    public class PaginatedList<T> : List<T>, IPaginatedList<T>, IEnumerable<T>
     {
         private const int PageSize = 2;
 
@@ -33,6 +33,8 @@
         public static Task<PaginatedList<T>> CreateAsync(IEnumerable<T> source, int pageIndex)
         {
             var count =  source.Count();
+            if (pageIndex == 0)
+                pageIndex = 1;
             var items =  source.Skip((pageIndex - 1) * PageSize).Take(PageSize).ToList();
             return Task.Run(()=> new PaginatedList<T>(items, count, pageIndex, PageSize)) ;
         }

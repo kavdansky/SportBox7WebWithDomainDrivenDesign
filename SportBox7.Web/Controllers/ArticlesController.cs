@@ -25,9 +25,7 @@
         {
             var model = await this.Mediator.Send(query);
             if (model.CurrentCategory != null)
-            {
                 return View(model);
-            }
             return Redirect("/Home/NotFound");
         }
 
@@ -35,20 +33,22 @@
         [HttpGet]
         public async Task<ActionResult<ArticleByIdOutputModel>> Id([FromQuery] ArticleByIdQuery query)
         {
-            var model = await this.Mediator.Send(query);
-            if (model.Article != null)
+            try
             {
-                return View(model);
+                return View(await this.Mediator.Send(query));
             }
-            return Redirect("/Home/NotFound"); 
+            catch (NullReferenceException)
+            {
+                return Redirect("/Home/NotFound");
+            }
+            
+            
         }
 
         [Route("/articles/date")]
         [HttpGet]
         public async Task<ActionResult<ArticlesByDateOutputModel>> Date([FromQuery] ArticleByDateQuery query)
-        {
-            var model = await this.Mediator.Send(query);
-            return View(model);
-        }
+            => View(await this.Mediator.Send(query));
+
     }
 }

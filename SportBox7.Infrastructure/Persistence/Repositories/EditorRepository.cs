@@ -102,9 +102,9 @@
 
         public async Task<IPaginatedList<DraftsListingModel>> GetDraftsOutputModel(string userId, int? pageIndex)
         {
-            var editorDrafts = GetUserArticlesById(userId).Where(a=> a.ArticleState == ArticleState.Draft);
-            var result = editorDrafts.Select(x => new DraftsListingModel() { Title = x.Title, Id = x.Id }).AsQueryable();
-            return await PaginatedList<DraftsListingModel>.CreateAsync(result, pageIndex?? 1);
+            var editorDrafts = GetUserArticlesById(userId).Where(a=> a.ArticleState == ArticleState.Draft).OrderBy(a=> a.TargetDate);
+            var result = editorDrafts.Select(x => new DraftsListingModel() { Title = x.Title, Id = x.Id, TargetDate = x.TargetDate }).AsQueryable();
+            return await PaginatedList<DraftsListingModel>.CreateAsync(result, pageIndex?? 0);
         }
 
         private IEnumerable<Article> GetUserArticlesById(string userId)
@@ -114,18 +114,13 @@
             return result;
         }
 
-        public Task<List<PublishedArticlesListingModel>> GetPublishedArticlesListingModel(string userId)
+        public async Task<IPaginatedList<PublishedArticlesListingModel>> GetPublishedArticlesListingModel(string userId, int? pageIndex)
         {
-            var editorPublishedArticles = GetUserArticlesById(userId).Where(a => a.ArticleState == ArticleState.Published);
-            var result = new List<PublishedArticlesListingModel>();
-
-            foreach (var article in editorPublishedArticles)
-            {
-                var model = new PublishedArticlesListingModel() { Title = article.Title, Id = article.Id };
-                result.Add(model);
-
-            }
-            return Task.Run(() => result);
+            var editorPublishedArticles = GetUserArticlesById(userId)
+                .Where(a => a.ArticleState == ArticleState.Published)
+                .Select(a=> new PublishedArticlesListingModel() { Title = a.Title, Id = a.Id });
+            
+            return await PaginatedList<PublishedArticlesListingModel>.CreateAsync(editorPublishedArticles, pageIndex?? 0);
         }
 
         public async Task<bool> PublishArticle(int articleId, string userId)

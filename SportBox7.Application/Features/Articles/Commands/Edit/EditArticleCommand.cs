@@ -22,10 +22,10 @@
                 this.sourceRepository = sourceRepository;
             }
 
-            public Task<EditArticleOutputModel> Handle(EditArticleCommand request, CancellationToken cancellationToken)
+            public async Task<EditArticleOutputModel> Handle(EditArticleCommand request, CancellationToken cancellationToken)
             {
-                this.articleRepository.UpdateArticle(request, sourceRepository.GetSourceByName(request.Source).GetAwaiter().GetResult());
-                return Task.Run(()=> new EditArticleOutputModel() { Id = request.Id });
+                var articleToEdit = await this.articleRepository.UpdateArticle(request, sourceRepository.GetSourceByName(request.Source).GetAwaiter().GetResult());
+                return new EditArticleOutputModel() { Id = request.Id, ArticleState = articleToEdit.ArticleState };
             }
         }
     }

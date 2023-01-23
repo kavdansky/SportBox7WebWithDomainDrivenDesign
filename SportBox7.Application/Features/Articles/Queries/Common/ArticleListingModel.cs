@@ -9,6 +9,7 @@ namespace SportBox7.Application.Features.Articles.Queries.Common
         public ArticleListingModel(
             int id,
             string title,
+            string h1,
             string body,
             string imageUrl,
             string category,
@@ -18,6 +19,7 @@ namespace SportBox7.Application.Features.Articles.Queries.Common
         {
             this.Id = id;
             this.Title = title;
+            this.H1 = h1;
             this.Body = body;
             this.ImageUrl = imageUrl;
             this.Category = category;
@@ -29,6 +31,8 @@ namespace SportBox7.Application.Features.Articles.Queries.Common
         public int Id { get; }
 
         public string Title { get; }
+
+        public string H1 { get; set; }
 
         public string Body { get; }
 

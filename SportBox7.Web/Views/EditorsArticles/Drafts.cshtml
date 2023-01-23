@@ -99,6 +99,7 @@
                         <br />
                         <table class="table table-bordered">
                             <tr>
+                                <th>Target date</th>
                                 <th>Article Name</th>
                                 <th>Actions</th>
                             </tr>
@@ -106,18 +107,40 @@
                             {
                                 @foreach (var draft in Model.Drafts as IEnumerable<DraftsListingModel>)
                                 {
-                                   <tr>
-                                       <td>@draft.Title</td>
-                                       <td>
-                                       <a href="/editorsarticles/edit?id=@draft.Id" class="post-title">Edit</a> | 
-                                       <a href = "/editorsarticles/publishdraft?id=@draft.Id">Publish</a>
-                                       </td>
-                                   </tr>
+                                    <tr>
+                                        <td>@draft.TargetDate.ToString("dd-MM-yyyy")</td>
+                                        <td>@draft.Title</td>
+                                        <td>
+                                            <a href="/editorsarticles/edit?id=@draft.Id" class="post-title">Edit</a> |
+                                            <a href="/editorsarticles/publishdraft?id=@draft.Id">Publish</a>
+                                        </td>
+                                    </tr>
                                 }
                             }
                         </table>
+                        @{
+                            var prevDisabled = !Model!.Drafts!.HasPreviousPage ? "disabled" : "";
+                            var nextDisabled = !Model!.Drafts!.HasNextPage ? "disabled" : "";
+                        }
 
-                       
+
+                        @for (int i = 1; i <= Model.Drafts.TotalPages; i++)
+                        {
+                            if (i == Model.Drafts.PageIndex)
+                            {
+                                <a href="#"class="btn btn-dark">
+                                    @i
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-action="Drafts"
+                                   asp-route-pageIndex="@(i)"
+                                   class="btn btn-light">
+                                    @i
+                                </a>
+                            }
+                        }
                     </div>
                 </div>
                 <!-- SideBar -->

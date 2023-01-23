@@ -13,6 +13,8 @@ namespace SportBox7.Application.Features.Sources.Queries.Index
     {
         public string ErrorMessage { get; set; } = default!;
 
+        public int Index { get; set; }
+
         public class ListSourcesQueryHandler : IRequestHandler<ListSourcesQuery, SourcesOutputModel>
         {
             private readonly ISourceRepository sourceRepository;
@@ -28,7 +30,7 @@ namespace SportBox7.Application.Features.Sources.Queries.Index
 
             public async Task<SourcesOutputModel> Handle(ListSourcesQuery request, CancellationToken cancellationToken)
             {
-                var model = await SourcesOutputModel.CreateAsync(sourceRepository);
+                var model = await SourcesOutputModel.CreateAsync(sourceRepository, request.Index);
                 model.ErrorMessage = request.ErrorMessage;
                 model.MenuElements = editorRepository.GetEditorMenuModel(currentUser.UserId);
                 return model;

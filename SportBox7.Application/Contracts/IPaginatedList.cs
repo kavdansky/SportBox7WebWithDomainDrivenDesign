@@ -1,6 +1,8 @@
 ﻿namespace SportBox7.Application.Contracts
 {
-    public interface IPaginatedList<T>
+    using System.Collections.Generic;
+
+    public interface IPaginatedList<T>: IEnumerable<T>
     {
         int PageIndex { get; set; }
         int TotalPages { get; set; }

@@ -29,7 +29,7 @@
 
         Task<IPaginatedList<DraftsListingModel>> GetDraftsOutputModel(string userId, int? pageIndex);
 
-        Task<List<PublishedArticlesListingModel>> GetPublishedArticlesListingModel(string userId);
+        Task<IPaginatedList<PublishedArticlesListingModel>> GetPublishedArticlesListingModel(string userId, int? pageIndex);
 
         Task<bool> PublishArticle(int articleId, string userId);
 

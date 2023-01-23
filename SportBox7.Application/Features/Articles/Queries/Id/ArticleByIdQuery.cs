@@ -27,7 +27,7 @@
 
             public async Task<ArticleByIdOutputModel> Handle(ArticleByIdQuery request, CancellationToken cancellationToken)
             {
-                var pagemodel = await ArticleByIdOutputModel.CreateAsync(articleRepository, categoryRepository, request.Id);
+                var pagemodel = await ArticleByIdOutputModel.CreateAsync(articleRepository, categoryRepository, request.Id, textManipulationService);
                 return pagemodel;
             }
         }

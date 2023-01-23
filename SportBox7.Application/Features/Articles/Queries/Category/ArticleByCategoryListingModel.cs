@@ -8,13 +8,14 @@
         public ArticleByCategoryListingModel(
             int id, 
             string title,
+            string h1,
             string body,
             string imageUrl,
             string category,
             string categoryEn,
             string imageCredit, 
             DateTime targetDate)
-            :base(id, title, body, imageUrl, category, categoryEn, imageCredit, targetDate)
+            :base(id, title, h1, body, imageUrl, category, categoryEn, imageCredit, targetDate)
         {     }
     }
 }

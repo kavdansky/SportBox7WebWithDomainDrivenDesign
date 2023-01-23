@@ -38,7 +38,7 @@
         [DataType(DataType.Date)]
         public DateTime TargetDate { get; private set; }
 
-        public ArticleState ArticleState { get; private set; }
+        public ArticleState ArticleState { get; set; }
 
         public ArticleType ArticleType { get; private set; }
 

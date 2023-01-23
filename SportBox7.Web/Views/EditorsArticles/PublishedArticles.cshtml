@@ -101,20 +101,41 @@
                                 <th>Article Name</th>
                                 <th>Actions</th>
                             </tr>
-                            @if (Model != null)
-                            {
-                                @foreach (var article in Model.PublishedArticles)
-                                {
-                                    <tr>
-                                        <td>@article.Title</td>
-                                        <td>
-                                            <a href="/editorsarticles/edit?id=@article.Id" class="post-title">Edit</a> |
-                                            <a href="/editorsarticles/revertasdraft?id=@article.Id">Revert as draft</a>
-                                        </td>
-                                    </tr>
-                                }
+
+                             @foreach (var article in Model.PublishedArticles)
+                             {
+                                 <tr>
+                                     <td>@article.Title</td>
+                                     <td>
+                                         <a href="/editorsarticles/edit?id=@article.Id" class="post-title">Edit</a> |
+                                         <a href="/editorsarticles/revertasdraft?id=@article.Id">Revert as draft</a>
+                                     </td>
+                                 </tr>
                             }
                         </table>
+                        @{
+                            var prevDisabled = !Model.PublishedArticles!.HasPreviousPage ? "disabled" : "";
+                            var nextDisabled = !Model.PublishedArticles!.HasNextPage ? "disabled" : "";
+                        }
+
+
+                        @for (int i = 1; i <= Model.PublishedArticles.TotalPages; i++)
+                        {
+                            if (i == Model.PublishedArticles.PageIndex)
+                            {
+                                <a href="#" class="btn btn-dark">
+                                    @i
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-action="PublishedArticles"
+                                   asp-route-pageIndex="@(i)"
+                                   class="btn btn-light">
+                                    @i
+                                </a>
+                            }
+                        }
                     </div>
                 </div>
                 <!-- SideBar -->

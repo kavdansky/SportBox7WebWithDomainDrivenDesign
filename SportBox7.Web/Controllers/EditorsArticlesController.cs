@@ -15,6 +15,7 @@
     using SportBox7.Application.Features.Articles.Queries.Edit;
     using SportBox7.Application.Features.Articles.Queries.PublishedArticles;
     using SportBox7.Application.Features.Sources;
+    using SportBox7.Domain.Models.Articles.Enums;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -67,8 +68,10 @@
         {
             try
             {
-                await this.Mediator.Send(command);
-                return RedirectToAction("Drafts");
+                var aditedArticle = await this.Mediator.Send(command);
+                if(aditedArticle.ArticleState == ArticleState.Draft)
+                    return RedirectToAction("Drafts");
+                return RedirectToAction("PublishedArticles");
             }
             catch (ModelValidationException ex)
             {

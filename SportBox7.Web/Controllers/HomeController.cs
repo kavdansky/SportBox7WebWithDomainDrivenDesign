@@ -8,7 +8,10 @@
     {
         [HttpGet]
         public async Task<ActionResult<FrontPageOutputModel>> Index([FromQuery] ListArticlesForHomepageQuery query)
-        => View(await this.Mediator.Send(query));
+        {
+            var result = await this.Mediator.Send(query);
+            return View(result);
+        } 
 
         [HttpGet]
         public async Task<ActionResult<FrontPageOutputModel>> NotFound([FromQuery] ListArticlesForHomepageQuery query)

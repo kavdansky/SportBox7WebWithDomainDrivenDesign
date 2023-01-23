@@ -20,6 +20,7 @@
         Task<DeleteSourceOutputModel> GetSourceToDeleteById(int id);
         IQueryable<Source> GetSource(int id);
         Task<IEnumerable<Source>> GetSources();
+        Task<IPaginatedList<IndexSourceModel>> GetPaginatedSources(int? index);
         Task<Source> GetSourceByName(string name);
     }
 }

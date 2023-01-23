@@ -136,16 +136,32 @@
                                 <!-- Single Featured Post -->
                                 <div class="single-blog-post featured-post mb-30">
                                     <div class="post-data">
-                                        <a href="#" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
+                                        <a href="#" class="post-catagory">@article.TargetDate.ToString("dd MMMM")/ @article.Category</a>
                                         <a href="/articles/all?id=@article.Id" class="post-title">
-                                            <h6>@article.Title</h6>
+                                            @if (DateTime.Now.Day == article.TargetDate.Day && DateTime.Now.Month == article.TargetDate.Month)
+                                            {
+                                                <h6>@article.H1</h6>                                                
+                                            }
+                                            else
+                                            {
+                                                <h6>@article.Title</h6>
+                                            }
                                         </a>
                                         <div class="post-thumb">
                                             <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" width="420" alt=""></a>
-                                            <p>@Html.Raw(article.ImageCredit)<p>
-                                        </div>
+                                            
+                                                <p>@Html.Raw(article.ImageCredit)<p>
+                                            </div>
                                         <div class="post-meta">
-                                            <p class="post-excerp">@Html.Raw(article.Body.Substring(0, 220)) <a href="/articles/all?id=@article.Id">...вижте повече</a></p>
+                                            @if (Model.Articles.ToList().Count > 1)
+                                            {
+                                                <p class="post-excerp">@Html.Raw(article.Body.Substring(0, 220)) <a href="/articles/all?id=@article.Id">...вижте повече</a></p>
+                                            }
+                                            else
+                                            {
+                                                <p class="post-excerp">@Html.Raw(article.Body)</p>
+
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -157,27 +173,42 @@
                             <!-- Single Featured Post -->
                             <div class="single-blog-post featured-post mb-30">
                                 <div class="post-data">
-                                    <h4>Няма статии за този ден. Вижте предстоящите събития:</h4>
+                                    @{
+                                        int month = int.Parse(Context.Request.Query["month"])+1;
+                                        int day = int.Parse(Context.Request.Query["day"]);
+                                        DateTime calendarDate = new DateTime(2020, month, day);
+                                     }
+                                    <a href="#"  class="post-catagory">@calendarDate.ToString("dd MMMM")</a>
+                                    <h4>Няма статии за този ден. Вижте събитията за следващите дни:</h4>
                                 </div>
                             </div>
                             <hr />
-                            if (Model != null && Model.NextDaysArticles.Any())
-                            {
-                                foreach (var article in Model.NextDaysArticles)
-                                {
-                                    var articleTargetMonth = @article.TargetDate.Month - 1;
+                                        if (Model != null && Model.NextDaysArticles.Any())
+                                        {
+                                            foreach (var article in Model.NextDaysArticles)
+                                            {
+                                                var articleTargetMonth = @article.TargetDate.Month - 1;
                                     <div class="single-blog-post featured-post mb-30">
                                         <div class="post-data">
-                                            <a href="/articles/date?year=2022&month=@articleTargetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
+                                            <a href="/articles/date?year=2022&month=@articleTargetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")/ @article.CategoryName</a>
                                             <a href="/articles/all?id=@article.Id" class="post-title">
                                                 <h6>@article.Title</h6>
                                             </a>
                                             <div class="post-thumb">
                                                 <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" width="420" alt=""></a>
-                                                <p>Източник на изображението: @Html.Raw(article.ImageCredit)<p>
+                                                <p>Изображение: @Html.Raw(article.ImageCredit)<p>
                                             </div>
                                             <div class="post-meta">
-                                                <p class="post-excerp">@Html.Raw(article.Body.Substring(0, 220)) <a href="/articles/all?id=@article.Id">...вижте повече</a></p>
+                                                @if (Model.NextDaysArticles.Count > 1)
+                                                {
+                                                    <p class="post-excerp">@Html.Raw(article.Body.Substring(0, 220)) <a href="/articles/all?id=@article.Id">...вижте повече</a></p>
+
+                                                }
+                                                else
+                                                {
+                                                    <p class="post-excerp">@Html.Raw(article.Body)</p>
+
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -212,7 +243,7 @@
                                         <a href="/articles/all?id=@article.Id" class="post-title">
                                             <h6>@Html.Raw(article.Title)</h6>
                                         </a>
-                                        <p class="post-date"><span>@article.TargetDate.ToString("dd MMMM", new System.Globalization.CultureInfo("bg-BG"))</span></p>
+                                        <p class="post-date"><span>@article.CategoryName.ToUpper()</span></p>
                                     </div>
                                 </div>
                             </div>

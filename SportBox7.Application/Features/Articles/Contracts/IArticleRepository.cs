@@ -21,9 +21,8 @@
         Task<ArticleByIdOutputModel> GetArticlePage(CancellationToken cancellationToken = default,
             int id = default);
 
-        Task<IEnumerable<ArticleByCategoryListingModel>> GetArticleListingsByCategory(
-            string? category = default,
-            CancellationToken cancellationToken = default);
+        Task<IPaginatedList<ArticleByCategoryListingModel>> GetArticleListingsByCategory(
+            string? category, int? pageIndex);
 
         Task<FrontPageOutputModel> GetArticlesForHomePage(
             CancellationToken cancellationToken = default);
@@ -42,7 +41,7 @@
 
         Task<Article> GetArticleObjectById(int id);
 
-        Task UpdateArticle(EditArticleCommand command, Source sourceToEdit);
+        Task<Article> UpdateArticle(EditArticleCommand command, Source sourceToEdit);
 
         Task<IEnumerable<ArticlesByDateListingModel>> GetArticlesByDate(DateTime date);
 

@@ -8,6 +8,8 @@
 
     public class PublishedArticlesListingQuery: IRequest<PublishedArticlesListingOutputModel>
     {
+        public int PageIndex { get; set; }
+
         public class PublishedArticlesListingQueryHandler : IRequestHandler<PublishedArticlesListingQuery, PublishedArticlesListingOutputModel>
         {
             private readonly IEditorRepository editorRepository;
@@ -21,7 +23,7 @@
 
             public async Task<PublishedArticlesListingOutputModel> Handle(PublishedArticlesListingQuery request, CancellationToken cancellationToken)
             {
-                return await PublishedArticlesListingOutputModel.CreateAsync(editorRepository, currentUser.UserId);
+                return await PublishedArticlesListingOutputModel.CreateAsync(editorRepository, currentUser.UserId, request.PageIndex);
             }
         }
     }

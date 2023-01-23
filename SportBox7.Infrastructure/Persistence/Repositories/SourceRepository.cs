@@ -13,6 +13,8 @@
     using System;
     using SportBox7.Application.Features.Sources.Queries.Details;
     using SportBox7.Application.Features.Sources.Queries.Delete;
+    using SportBox7.Application.Contracts;
+    using SportBox7.Infrastructure.PageHandling;
 
     internal class SourceRepository : DataRepository<Source>, ISourceRepository
     {
@@ -49,8 +51,15 @@
         public Task<DeleteSourceOutputModel> GetSourceToDeleteById(int id)
             => this.mapper.ProjectTo<DeleteSourceOutputModel>(getSourceById(id)).FirstOrDefaultAsync();
 
+        public async Task<IPaginatedList<IndexSourceModel>> GetPaginatedSources(int? index)
+        {
+            var sources = await GetAllSources();
+            return await PaginatedList<IndexSourceModel>.CreateAsync(sources, index ?? 0) ;
+        }
+
         public async Task<IEnumerable<Source>> GetSources()
             => await base.All().ToListAsync();
+
 
         public async Task<Source> GetSourceByName(string name)
         {

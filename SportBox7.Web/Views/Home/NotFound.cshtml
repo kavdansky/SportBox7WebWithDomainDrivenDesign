@@ -12,6 +12,10 @@
     <title>@Html.Raw(Model.MetaTitle)</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/css/calendar-style.css">
+    <link rel="stylesheet" href="~/css/calendar-theme.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header-area">
@@ -24,6 +28,9 @@
                             <!-- Logo -->
                             <div class="logo">
                                 <a href="/"><img src="~/img/core-img/logoSmall.jpg" alt="sportBox7-logo"></a>
+                            </div>
+                            <div>
+                                <span id="slogan">Големите дни в българския спорт</span>
                             </div>
                             <!-- Advertisement -->
                             <div class="login-search-area d-flex align-items-center">
@@ -101,7 +108,7 @@
                                     @{
                                         foreach (var article in Model.RunningTextNews)
                                         {
-                                            <li><a href="/Articles/all?id=@article.ArticleId">@Html.Raw(article.Title)</a></li>
+                                            <li><a href="/Articles/all?id=@article.ArticleId">@article.TargetDate.ToString("dd MMMM"):  @Html.Raw(article.Title)</a></li>
                                         }
                                     }
                                 </ul>
@@ -143,21 +150,29 @@
                 </div>
                 <!--SideBar-->
                 <div class="col-12 col-md-6 col-lg-4">
+                    <div class="calendar-wrapper"></div>
+                    <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
+                    <script src="~/js/calendar.min.js"></script>
+                    <script src="~/js/calendar-initializer.js"></script>
+                    <div id="passed-events">
+                        <p id="passed-events-par">Минали събития</p>
+                    </div>
                     @if (Model != null && Model.SideBar != null)
                     {
                         foreach (var article in Model.SideBar)
                         {
+                            int targetMonth = article.TargetDate.Month - 1;
                             <div class="single-blog-post small-featured-post d-flex">
                                 <div class="post-thumb single-video-post">
                                     <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
                                 </div>
                                 <div class="post-data">
-                                    <a href="/articles?category=@article.CategoryEN" class="post-catagory">@Html.Raw(article.CategoryName)</a>
+                                    <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
                                     <div class="post-meta">
                                         <a href="/articles/all?id=@article.Id" class="post-title">
                                             <h6>@Html.Raw(article.Title)</h6>
                                         </a>
-                                        <p class="post-date"><span></span></p>
+                                        <p class="post-date"><span>@article.CategoryName</span></p>
                                     </div>
                                 </div>
                             </div>

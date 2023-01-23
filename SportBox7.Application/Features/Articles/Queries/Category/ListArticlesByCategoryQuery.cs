@@ -10,6 +10,8 @@
     {
         public string? Category { get; set; }
 
+        public int? PageIndex { get; set; }
+
         public class ListArticleByCategotyHandler : IRequestHandler<ListArticlesByCategoryQuery, ListArticlesByCategoryOutputModel>
         {
             private readonly IArticleRepository articleRepository;
@@ -22,7 +24,7 @@
             }
            
             public async Task<ListArticlesByCategoryOutputModel> Handle(ListArticlesByCategoryQuery request, CancellationToken cancellationToken)
-                => await ListArticlesByCategoryOutputModel.CreateAsync(this.articleRepository, categoryRepository, request.Category);
+                => await ListArticlesByCategoryOutputModel.CreateAsync(this.articleRepository, categoryRepository, request.Category, request.PageIndex);
             
         }
     }

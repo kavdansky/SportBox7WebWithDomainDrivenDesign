@@ -113,7 +113,29 @@
                                 </tr>
                             }
                         </table>
+                        @{
+                            var prevDisabled = !Model.Sources!.HasPreviousPage ? "disabled" : "";
+                            var nextDisabled = !Model.Sources!.HasNextPage ? "disabled" : "";
+                        }
 
+
+                        @for (int i = 1; i <= Model.Sources.TotalPages; i++)
+                        {
+                            if (i == Model.Sources.PageIndex)
+                            {
+                                <a href="#" class="btn btn-dark">
+                                    @i
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-action="PublishedArticles"
+                                   asp-route-Index="@(i)"
+                                   class="btn btn-light">
+                                    @i
+                                </a>
+                            }
+                        }
                     </div>
                     
                 </div>

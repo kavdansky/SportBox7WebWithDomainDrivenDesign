@@ -138,13 +138,14 @@
                                 <!-- Single Featured Post -->
                                 <div class="single-blog-post featured-post mb-30">
                                     <div class="post-data">
-                                        <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
+                                        <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")/   @article.Category</a>
                                         <a href="/articles/all?id=@article.Id" class="post-title">
+
                                             <h6>@article.Title</h6>
                                         </a>
                                         <div class="post-thumb">
                                             <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" width="420" alt=""></a>
-                                            <p>Източник на изображението: @Html.Raw(article.ImageCredit)<p>
+                                            <p>Изображение: @Html.Raw(article.ImageCredit)<p>
                                         </div>
                                         <div class="post-meta">
                                             <p class="post-excerp">@Html.Raw(article.Body.Substring(0, 220)) <a href="/articles/all?id=@article.Id">...вижте повече</a></p>
@@ -152,6 +153,30 @@
                                     </div>
                                 </div>
                                 <hr />
+                            }
+                        }
+                        @{
+                            var prevDisabled = !Model.Articles!.HasPreviousPage ? "disabled" : "";
+                            var nextDisabled = !Model.Articles!.HasNextPage ? "disabled" : "";
+                        }
+
+
+                        @for (int i = 1; i <= Model.Articles.TotalPages; i++)
+                        {
+                            if (i == Model.Articles.PageIndex)
+                            {
+                                <a href="#" class="btn btn-dark">
+                                    @i
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-action="Category"
+                                   asp-route-Category="@Model.CurrentCategory.CategoryNameEN"
+                                   asp-route-pageIndex="@(i)"
+                                   class="btn btn-light">
+                                    @i
+                                </a>
                             }
                         }
                     </div>
@@ -180,7 +205,7 @@
                                         <a href="/articles/all?id=@article.Id" class="post-title">
                                             <h6>@Html.Raw(article.Title)</h6>
                                         </a>
-                                        <p class="post-date"><span>@article.TargetDate.ToString("dd MMMM", new System.Globalization.CultureInfo("bg-BG"))</span></p>
+                                        <p class="post-date"><span>@article.CategoryName.ToUpper()</span></p>
                                     </div>
                                 </div>
                             </div>
