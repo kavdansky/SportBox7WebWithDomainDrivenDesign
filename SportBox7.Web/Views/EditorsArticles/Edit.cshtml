@@ -142,6 +142,10 @@
                                             <input asp-for="@Model.ImageUrl" class="form-control" />
                                         </div>
                                         <div class="form-group">
+                                            <label asp-for="@Model.Image" class="control-label"></label>
+                                            <input asp-for="@Model.Image" type="file" name="Image" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
                                             <label asp-for="@Model.Category"></label>
                                             <select asp-for="@Model.Category"
                                                     asp-items="@(new SelectList(Model.Categories.Select(x=> x.NameEn).ToList()))"
@@ -158,7 +162,6 @@
                                             <label asp-for="@Model.Source"></label>
                                             <select asp-for="@Model.Source"
                                                     asp-items="@(new SelectList(Model.Sources.Select(x=> x.SourceName).ToList()))"
-                                                    
                                                     class="form-control">
                                             </select>
                                         </div>

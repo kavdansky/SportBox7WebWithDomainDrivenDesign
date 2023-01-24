@@ -1,6 +1,7 @@
 ﻿namespace SportBox7.Application.Features.Articles.Queries.Common
 {
     using AutoMapper;
+    using Microsoft.AspNetCore.Http;
     using SportBox7.Application.Mapping;
     using SportBox7.Domain.Models.Articles;
     using SportBox7.Domain.Models.Articles.Enums;
@@ -20,6 +21,8 @@
         public string H1Tag { get; private set; } = default!;
 
         public string ImageUrl { get; private set; } = default!;
+
+        public IFormFile Image { get; set; } = default!;
 
         public string MetaDescription { get; private set; } = default!;
 

@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
     using Application.Features.Articles.Queries.Category;
     using Domain.Models.Articles;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
     using SportBox7.Application.Contracts;
     using SportBox7.Application.Features.Articles.Commands.Edit;
@@ -25,14 +26,19 @@
     internal class ArticleRepository : DataRepository<Article>, IArticleRepository
     {
         private readonly ICategoryRepository categoryRepository;
-
+        private readonly IImageManipulationService imageManipulationService;
         private readonly ITextManipulationService textManipulationService;
+        [Obsolete]
+        private readonly IHostingEnvironment hostingEnvironment;
 
-        public ArticleRepository(SportBox7DbContext db, ICategoryRepository categoryRepository, ITextManipulationService textManipulationService)
+        [Obsolete]
+        public ArticleRepository(SportBox7DbContext db, ICategoryRepository categoryRepository, ITextManipulationService textManipulationService, IImageManipulationService imageManipulationService, IHostingEnvironment hostingEnvironment)
             : base(db)
         {
             this.categoryRepository = categoryRepository;
             this.textManipulationService = textManipulationService;
+            this.imageManipulationService = imageManipulationService;
+            this.hostingEnvironment = hostingEnvironment;
         }
 
         public async Task<IPaginatedList<ArticleByCategoryListingModel>> GetArticleListingsByCategory(
@@ -45,6 +51,7 @@
                 query = query
                     .Where(a => a.Category.CategoryNameEN == category)
                     .Where(a => a.ArticleType == ArticleType.PeriodicArticle)
+                    .Where(a => a.ArticleState == ArticleState.Published)
                     .OrderBy(a => a.TargetDate);
             }
 
@@ -103,6 +110,7 @@
         public Task<Article> GetArticleObjectById(int id)
             => this.All().Include(x => x.Source).Include(x => x.Category).Where(a => a.Id == id).FirstOrDefaultAsync();
 
+        [Obsolete]
         public async Task<Article> UpdateArticle(EditArticleCommand command, Source sourceToEdit)
         {
             command.Body = command.Body.Replace("\r\n", "<br />");
@@ -111,13 +119,18 @@
             articleToEdit.UpdateCategory(this.categoryRepository.GetCategoryByName(command.Category).GetAwaiter().GetResult());
             articleToEdit.UpdateArticleType((ArticleType)command.ArticleType);
             articleToEdit.UpdateH1Tag(command.H1Tag);
-            articleToEdit.UpdateImageUrl(command.ImageUrl);
             articleToEdit.UpdateMetaDescription(command.MetaDescription);
             articleToEdit.UpdateMetaKeywords(command.MetaKeywords);
             articleToEdit.UpdateImageCredit(command.ImageCredit);
             articleToEdit.UpdateSource(sourceToEdit);
             articleToEdit.UpdateTargetDate(DateTime.Parse(command.TargetDate));
             articleToEdit.UpdateTitle(command.Title);
+            string imageUrl = command.ImageUrl;
+            if (command.Image != null)
+            {
+                imageUrl = imageManipulationService.SaveImageFile(command.Image, hostingEnvironment);
+            }
+            articleToEdit.UpdateImageUrl(imageUrl);
             this.db.Articles.Update(articleToEdit);
             await this.db.SaveChangesAsync();
             return articleToEdit;

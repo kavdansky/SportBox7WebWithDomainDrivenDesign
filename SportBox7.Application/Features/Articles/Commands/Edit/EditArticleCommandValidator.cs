@@ -26,11 +26,6 @@
                     .GetCategoryByName(category) != null)
                 .WithMessage("'{PropertyName}' does not exist.");
 
-            this.RuleFor(c => c.ImageUrl)
-                .Must(url => Uri.IsWellFormedUriString(url, UriKind.Absolute))
-                .WithMessage("'{PropertyName}' must be a valid url.")
-                .NotEmpty();
-
             this.RuleFor(c => c.H1Tag)
                 .MinimumLength(H1MinLength)
                 .MaximumLength(H1MaxLength)

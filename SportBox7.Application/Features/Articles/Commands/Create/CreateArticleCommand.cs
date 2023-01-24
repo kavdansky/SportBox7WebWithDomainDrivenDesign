@@ -11,7 +11,6 @@
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.IO;
     using SportBox7.Application.Features.Articles.Contracts;
     using Microsoft.AspNetCore.Hosting;
 
@@ -61,19 +60,9 @@
 
                 var source = await sourceRepository.GetSourceByName(request.Source);
                 var imageUrl = request.ImageUrl;
-                var imageName = Guid.NewGuid() + ".jpg";
-
                 if (request.Image != null)
                 {
-                    imageUrl = @$"/Images/{imageName}";
-                    var imageLocation = this.hostingEnvironment.ContentRootPath.Replace("Startup", "Web") + "/wwwroot/Images";
-                    using (var fileStream = new FileStream(Path.Combine(imageLocation, imageName), FileMode.Create))
-                    {
-                        request.Image.CopyTo(fileStream);
-                    }
-                    byte[] myBinaryImage = File.ReadAllBytes(Path.Combine(imageLocation, imageName));
-                    var resizedImage = imageManipulationService.ResizeImageStaticProportions(myBinaryImage, 460);
-                    File.WriteAllBytes(Path.Combine(imageLocation, imageName), resizedImage);
+                    imageUrl = imageManipulationService.SaveImageFile(request.Image, hostingEnvironment);
                 }
 
                 request.Body = request.Body.Replace("\r\n", "<br />");
