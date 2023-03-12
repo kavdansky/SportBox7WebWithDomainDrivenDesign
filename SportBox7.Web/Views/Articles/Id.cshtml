@@ -1,15 +1,30 @@
 ﻿@using SportBox7.Application.Features.Articles.Queries.Id;
+@using System.Globalization;
 @model ArticleByIdOutputModel
 
 <!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="utf-8" />
-    <meta name="description" content="@Html.Raw(Model.Article.MetaTitle)">
+    <meta name="description" content="@Html.Raw(Model.Article.MetaDescription)">
     <meta name="keywords" content="@Html.Raw(Model.Article.MetaKeywords)">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <link rel="icon" href="">
+    <meta name="robots" content="index,follow" />
+    <meta name="author" content="@Html.Raw(Model.Author.FirstName) @Html.Raw(Model.Author.LastName)" />
+    <meta property='og:type' content='article' />
+    @if (DateTime.Now.Month == Model.Article.TargetDate.Month && DateTime.Now.Day == Model.Article.TargetDate.Day)
+    {
+        <meta property='og:title' content="@Html.Raw(Model.Article.H1)" />
+ }
+    else
+    {
+        <meta property='og:title' content="@Html.Raw(Model.Article.Title)" />
+}
+    <meta property="og:image" content="@Html.Raw(Model.Article.ImageUrl)" />
+    <meta property="og:description" content="@Html.Raw(Model.Article.MetaDescription)" />
+    <meta property='og:url' content='@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")' />
+    <link rel="icon" href="~/img/icon.ico">
     <title>@Html.Raw(Model.Article.MetaTitle) - Sportbox7 - @Html.Raw(Model.CurrentCategory.CategoryName)</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
@@ -118,7 +133,7 @@
                                     @{
                                         foreach (var article in Model.RunningTextNews)
                                         {
-                                            <li><a href="/articles/all?id=@article.ArticleId">@article.TargetDate.ToString("dd MMMM"):  @Html.Raw(article.Title)</a></li>
+                                            <li><a href="/articles/all?id=@article.ArticleId">@Html.Raw(article.TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG"))):  @Html.Raw(article.Title)</a></li>
                                         }
                                     }
                                 </ul>
@@ -141,73 +156,74 @@
                             @{ DateTime currentDate = DateTime.Now;}
                             @if (Model != null)
                             {
-                            <div class="post-data">
-                                <a href="#" class="post-catagory">@Model.Article.TargetDate.ToString("dd MMMM")</a>
-                                <a href="#" class="post-title">
-                                    @if (Model.Article.TargetDate.Month == currentDate.Month
-                                      && Model.Article.TargetDate.Day == currentDate.Day)
-                                    {
-                                        <h6>@Model.Article.H1</h6>
-                                    }
-                                    else
-                                    {
-                                        <h6>@Model.Article.Title</h6>
-                                    }
-                                </a>
-                                <div class="post-thumb">
-                                    <a href="#"><img src="@Model.Article.ImageUrl" width="420" alt=""></a>
-                                </div>
-                                <p>Изображение: @Model.Article.ImageCredit</p>
-                                <div class="post-meta">
-                                    <p></p>
-                                    <p>@Html.Raw(@Model.Article.Body)</p>
-                                    <p>Източник: @Model.Article.Source</p>
-                                    @if (Model.Author != null)
-                                    {
-                                        <p class="post-author">Автор: @Model.Author.FirstName @Model.Author.LastName</p>
-                                    }
-                                    <!-- Post Like & Post Comment -->
-                                    <div class="fb-share-button" data-href="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Споделяне</a></div>
+                                <div class="post-data">
+                                    <a href="#" class="post-catagory">@Html.Raw(Model.Article.TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG")))</a>
+                                    <a href="#" class="post-title">
+                                        @if (Model.Article.TargetDate.Month == currentDate.Month
+                                        && Model.Article.TargetDate.Day == currentDate.Day)
+                                        {
+                                            <h6>@Html.Raw(Model.Article.H1)</h6>
+                                        }
+                                        else
+                                        {
+                                            <h6>@Html.Raw(Model.Article.Title)</h6>
+                                        }
+                                    </a>
+                                    <div class="post-thumb">
+                                        <a href="#"><img class="article-image" src="@Model.Article.ImageUrl" alt=""></a>
+                                    </div>
+                                    <p>Изображение: @Html.Raw(Model.Article.ImageCredit)</p>
+                                    <div class="post-meta">
+                                        <p></p>
+                                        <p>@Html.Raw(Model.Article.Body)</p>
 
+                                        <p>Източник: @Html.Raw(Model.Article.Source)</p>
+                                        @if (Model.Author != null)
+                                        {
+                                    <p class="post-author">Автор: @Html.Raw(Model.Author.FirstName) @Html.Raw(Model.Author.LastName)</p>
+                                        }
+                                        <!-- Post Like & Post Comment -->
+                                        <div class="fb-share-button" data-href="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Споделяне</a></div>
+
+                                    </div>
                                 </div>
-                            </div>
                             }
                         </div>
                     </div>
                 </div>
                 <!--SideBar-->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="calendar-wrapper"></div>
-                <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
-                <script src="~/js/calendar.min.js"></script>
-                <script src="~/js/calendar-initializer.js"></script>
-                <div id="passed-events">
-                    <p id="passed-events-par">Минали събития</p>
-                </div>
-                @if (Model != null && Model.SideBar != null)
-                {
-                    int targetMonth = Model.Article.TargetDate.Month - 1;
-
-                    foreach (var article in Model.SideBar)
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="calendar-wrapper"></div>
+                    <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
+                    <script src="~/js/calendar.min.js"></script>
+                    <script src="~/js/calendar-initializer.js"></script>
+                    <div id="passed-events">
+                        <p id="passed-events-par">Минали събития</p>
+                    </div>
+                    @if (Model != null && Model.SideBar != null)
                     {
-                        <div class="single-blog-post small-featured-post d-flex">
-                            <div class="post-thumb single-video-post">
-                                <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
-                            </div>
-                            <div class="post-data">
-                                <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
-                                <div class="post-meta">
-                                    <a href="/articles/all?id=@article.Id" class="post-title">
-                                        <h6>@Html.Raw(article.Title)</h6>
-                                    </a>
-                                    <p class="post-date"><a href="/articles?category=@article.CategoryEN">@article.CategoryName.ToUpper()</a></p>
+                        int targetMonth = Model.Article.TargetDate.Month - 1;
+
+                        foreach (var article in Model.SideBar)
+                        {
+                            <div class="single-blog-post small-featured-post d-flex">
+                                <div class="post-thumb single-video-post">
+                                    <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
+                                </div>
+                                <div class="post-data">
+                                    <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@Html.Raw(article.TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG")))</a>
+                                    <div class="post-meta">
+                                        <a href="/articles/all?id=@article.Id" class="post-title">
+                                            <h6>@Html.Raw(article.Title)</h6>
+                                        </a>
+                                        <p class="post-date"><a href="/articles?category=@article.CategoryEN">@Html.Raw(article.CategoryName.ToUpper())</a></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
-                }
-                <!--SideBar End-->
-            </div>
+                    <!--SideBar End-->
+                </div>
             </div>
         </div>
     </div>
@@ -243,6 +259,7 @@
     <script src="~/js/plugins.js"></script>
     <!-- Active js -->
     <script src="~/js/active.js"></script>
+    <script src="~/js/site.js"></script>
 </body>
 
 </html>

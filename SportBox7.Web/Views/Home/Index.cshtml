@@ -1,4 +1,5 @@
 ﻿@using SportBox7.Application.Features.Articles.Queries.HomePage;
+@using System.Globalization;
 @model FrontPageOutputModel
 <!DOCTYPE html>
 <html lang="bg">
@@ -8,7 +9,12 @@
     <meta name="keywords" content="@Html.Raw(Model.MetaKeywords)">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <link rel="icon" href="">
+    <link rel="icon" href="~/img/icon.ico">
+    <meta property='og:type' content='article' />
+    <meta property='og:title' content="Големите дни в българския спорт" />
+    <meta property="og:image" content="~/img/core-img/LogoBig.jpg" />
+    <meta property="og:description" content="Sportbox7.com е ресурс посветен на отбелязването на значимите годишнини в българския спорт. " />
+    <meta property='og:url' content='@($"{Context.Request.Scheme}://{Context.Request.Host}")' />
     <title>@Html.Raw(Model.MetaTitle)</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
@@ -34,7 +40,7 @@
                             </div>
                             <!-- Advertisement -->
                             <div class="login-search-area d-flex align-items-center">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -52,7 +58,7 @@
                         <div class="logo">
                             <a href="/"><img src="~/img/core-img/logoSmall-black.jpg" alt="sportBox7 logo"></a>
                         </div>
-                      
+
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
                             <span class="navbarToggler"><span></span><span></span><span></span></span>
@@ -108,7 +114,7 @@
                                     @{
                                         foreach (var article in Model.RunningTextNews)
                                         {
-                                            <li><a href="/Articles/all?id=@article.ArticleId">@article.TargetDate.ToString("dd MMMM"):  @Html.Raw(article.Title)</a></li>
+                                            <li><a href="/Articles/all?id=@article.ArticleId">@article.TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG")):  @Html.Raw(article.Title)</a></li>
                                         }
                                     }
                                 </ul>
@@ -134,12 +140,12 @@
                                 {
                                     <div class="single-blog-post featured-post mb-30">
                                         <div class="post-data">
-                                            <a href="#" class="post-catagory">@cureentDayNews.FirstOrDefault().TargetDate.ToString("dd MMMM")  /@Model.Topnews.FirstOrDefault().CategoryName</a>
+                                            <a href="#" class="post-catagory">@cureentDayNews.FirstOrDefault().TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG"))  /@Model.Topnews.FirstOrDefault().CategoryName</a>
                                             <a href="/articles/all?id=@cureentDayNews.FirstOrDefault().Id" class="post-title">
                                                 <h6>@cureentDayNews.FirstOrDefault().H1</h6>
                                             </a>
                                             <div class="post-thumb">
-                                                <a href="/articles/all?id=@cureentDayNews.FirstOrDefault().Id"><img src="@Model.Topnews.FirstOrDefault().ImageUrl" width="420" alt=""></a>
+                                                <a href="/articles/all?id=@cureentDayNews.FirstOrDefault().Id"><img class="article-image-list" src="@Model.Topnews.FirstOrDefault().ImageUrl" alt=""></a>
                                                 <p>Изображение: @Html.Raw(cureentDayNews.FirstOrDefault().ImageCredit)<p>
                                             </div>
                                             <div class="post-meta">
@@ -155,12 +161,12 @@
                                         <!-- Single Featured Post -->
                                         <div class="single-blog-post featured-post mb-30">
                                             <div class="post-data">
-                                                <a href="#" class="post-catagory">@article.TargetDate.ToString("dd MMMM") /@article.Category</a>
+                                                <a href="#" class="post-catagory">@article.TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG")) /@article.Category</a>
                                                 <a href="/articles/all?id=@article.Id" class="post-title">
                                                     <h6>@article.H1</h6>
                                                 </a>
                                                 <div class="post-thumb">
-                                                    <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" width="420" alt=""></a>
+                                                    <a href="/articles/all?id=@article.Id"><img class="article-image-list" src="@article.ImageUrl" alt=""></a>
                                                     <p>Изображение: @Html.Raw(article.ImageCredit)<p>
                                                 </div>
                                                 <div class="post-meta">
@@ -175,70 +181,70 @@
                         }
                         else
                         {
+                            <!-- Single Featured Post -->
+                            <div class="single-blog-post featured-post mb-30">
+                                <div class="post-data">
+                                    <a href="#" class="post-catagory">@DateTime.Now.ToString("dd MMMM", new CultureInfo("bg-BG"))</a>
+                                    <h4>Няма статии за този ден. Вижте предстоящите събития:</h4>
+                                </div>
+                            </div>
+
+                            @foreach (var article in Model!.Topnews)
+                            {
+                                int targetMonth = article.TargetDate.Month - 1;
                                 <!-- Single Featured Post -->
                                 <div class="single-blog-post featured-post mb-30">
                                     <div class="post-data">
-                                        <a href="#" class="post-catagory">@DateTime.Now.ToString("dd MMMM")</a>
-                                        <h4>Няма статии за този ден. Вижте предстоящите събития:</h4>
-                                    </div>
-                                </div>
-
-                                @foreach (var article in Model.Topnews)
-                                {
-                                    int targetMonth = article.TargetDate.Month - 1;
-                                    <!-- Single Featured Post -->
-                                    <div class="single-blog-post featured-post mb-30">
-                                        <div class="post-data">
-                                            <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")  /@article.CategoryName</a>
-                                            <a href="/articles/all?id=@article.Id" class="post-title">
-                                                <h6>@article.Title</h6>
-                                            </a>
-                                            <div class="post-thumb">
-                                                <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" width="420" alt=""></a>
-                                                <p>Изображение: @Html.Raw(article.ImageCredit)<p>
-                                            </div>
-                                            <div class="post-meta">
-                                                <p class="post-excerp">@Html.Raw(article.Body.Substring(0, 220)) <a href="/articles/all?id=@article.Id">...вижте повече</a></p>
-                                            </div>
+                                        <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG"))  /@article.CategoryName</a>
+                                        <a href="/articles/all?id=@article.Id" class="post-title">
+                                            <h6>@article.Title</h6>
+                                        </a>
+                                        <div class="post-thumb">
+                                            <a href="/articles/all?id=@article.Id"><img class="article-image-list" src="@article.ImageUrl" alt=""></a>
+                                            <p>Изображение: @Html.Raw(article.ImageCredit)<p>
+                                        </div>
+                                        <div class="post-meta">
+                                            <p class="post-excerp">@Html.Raw(article.Body.Substring(0, 220)) <a href="/articles/all?id=@article.Id">...вижте повече</a></p>
                                         </div>
                                     </div>
-                                    <hr />
-                                }
+                                </div>
+                                <hr />
+                            }
                         }
 
                     </div>
                 </div>
                 <!-- SideBar -->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="calendar-wrapper"></div>
-                <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
-                <script src="~/js/calendar.min.js"></script>
-                <script src="~/js/calendar-initializer.js"></script>
-                <div id="passed-events">
-                    <p id="passed-events-par">Минали събития</p>
-                </div>
-                @if (Model != null && Model.SideBar != null)
-                {
-                    foreach (var article in Model.SideBar)
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="calendar-wrapper"></div>
+                    <script src="~/lib/jquery/dist/jquery-2.2.4.min.js"></script>
+                    <script src="~/js/calendar.min.js"></script>
+                    <script src="~/js/calendar-initializer.js"></script>
+                    <div id="passed-events">
+                        <p id="passed-events-par">Минали събития</p>
+                    </div>
+                    @if (Model != null && Model.SideBar != null)
                     {
-                        int targetMonth = article.TargetDate.Month - 1;
-                        <div class="single-blog-post small-featured-post d-flex">
-                            <div class="post-thumb single-video-post">
-                                <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
-                            </div>
-                            <div class="post-data">
-                                <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
-                                <div class="post-meta">
-                                    <a href="/articles/all?id=@article.Id" class="post-title">
-                                        <h6>@Html.Raw(article.Title)</h6>
-                                    </a>
-                                    <p class="post-date"><span>@article.CategoryName.ToUpper()</span></p>
+                        foreach (var article in Model.SideBar)
+                        {
+                            int targetMonth = article.TargetDate.Month - 1;
+                            <div class="single-blog-post small-featured-post d-flex">
+                                <div class="post-thumb single-video-post">
+                                    <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
+                                </div>
+                                <div class="post-data">
+                                    <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG"))</a>
+                                    <div class="post-meta">
+                                        <a href="/articles/all?id=@article.Id" class="post-title">
+                                            <h6>@Html.Raw(article.Title)</h6>
+                                        </a>
+                                        <p class="post-date"><span>@article.CategoryName.ToUpper()</span></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
-                }
-            </div>
+                </div>
                 <!-- SideBar End -->
             </div>
         </div>

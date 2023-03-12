@@ -1,4 +1,5 @@
 ﻿@using SportBox7.Application.Features.Articles.Queries.ArticlesByDate;
+@using System.Globalization;
 @model ArticlesByDateOutputModel
 <!DOCTYPE html>
 <html lang="bg">
@@ -8,7 +9,13 @@
     <meta name="keywords" content="@Html.Raw(Model.MetaKeywords)">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <link rel="icon" href="">
+    <meta name="author" content="sportbox7.com" />
+    <meta property='og:type' content='article' />
+    <meta property='og:title' content="Събитията от sportbox7com за дата: @Html.Raw(Model.TargetDate.ToString("dd MMMM"))" />
+    <meta property="og:image" content="~/img/core-img/LogoBig.jpg" />
+    <meta property="og:description" content="@Html.Raw(Model.MetaDescription)" />
+    <meta property='og:url' content='@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")' />
+    <link rel="icon" href="~/img/icon.ico">
     <title>@Html.Raw(Model.MetaTitle)</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
@@ -112,7 +119,7 @@
                                     @{
                                         foreach (var article in Model.RunningTextNews)
                                         {
-                                            <li><a href="/Articles/all?id=@article.ArticleId">@article.TargetDate.ToString("dd MMMM"):  @Html.Raw(article.Title)</a></li>
+                                            <li><a href="/Articles/all?id=@article.ArticleId">@article.TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG")):  @Html.Raw(article.Title)</a></li>
                                         }
                                     }
                                 </ul>
@@ -136,7 +143,7 @@
                                 <!-- Single Featured Post -->
                                 <div class="single-blog-post featured-post mb-30">
                                     <div class="post-data">
-                                        <a href="#" class="post-catagory">@article.TargetDate.ToString("dd MMMM")/ @article.Category</a>
+                                        <a href="#" class="post-catagory">@article.TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG"))/ @article.Category</a>
                                         <a href="/articles/all?id=@article.Id" class="post-title">
                                             @if (DateTime.Now.Day == article.TargetDate.Day && DateTime.Now.Month == article.TargetDate.Month)
                                             {
@@ -148,7 +155,7 @@
                                             }
                                         </a>
                                         <div class="post-thumb">
-                                            <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" width="420" alt=""></a>
+                                            <a href="/articles/all?id=@article.Id"><img class="article-image-list" src="@article.ImageUrl" alt=""></a>
                                             
                                                 <p>@Html.Raw(article.ImageCredit)<p>
                                             </div>
@@ -178,7 +185,7 @@
                                         int day = int.Parse(Context.Request.Query["day"]);
                                         DateTime calendarDate = new DateTime(2020, month, day);
                                      }
-                                    <a href="#"  class="post-catagory">@calendarDate.ToString("dd MMMM")</a>
+                                    <a href="#"  class="post-catagory">@calendarDate.ToString("dd MMMM", new CultureInfo("bg-BG"))</a>
                                     <h4>Няма статии за този ден. Вижте събитията за следващите дни:</h4>
                                 </div>
                             </div>
@@ -190,7 +197,7 @@
                                                 var articleTargetMonth = @article.TargetDate.Month - 1;
                                     <div class="single-blog-post featured-post mb-30">
                                         <div class="post-data">
-                                            <a href="/articles/date?year=2022&month=@articleTargetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")/ @article.CategoryName</a>
+                                            <a href="/articles/date?year=2022&month=@articleTargetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG"))/ @article.CategoryName</a>
                                             <a href="/articles/all?id=@article.Id" class="post-title">
                                                 <h6>@article.Title</h6>
                                             </a>
@@ -238,7 +245,7 @@
                                     <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
                                 </div>
                                 <div class="post-data">
-                                    <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
+                                    <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG"))</a>
                                     <div class="post-meta">
                                         <a href="/articles/all?id=@article.Id" class="post-title">
                                             <h6>@Html.Raw(article.Title)</h6>

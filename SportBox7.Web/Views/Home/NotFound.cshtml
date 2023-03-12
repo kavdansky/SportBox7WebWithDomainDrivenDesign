@@ -1,4 +1,5 @@
 ﻿@using SportBox7.Application.Features.Articles.Queries.HomePage;
+@using System.Globalization; 
 @model FrontPageOutputModel
 <!DOCTYPE html>
 <html lang="bg">
@@ -8,7 +9,7 @@
     <meta name="keywords" content="@Html.Raw(Model.MetaKeywords)">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <link rel="icon" href="">
+    <link rel="icon" href="~/img/icon.ico">
     <title>@Html.Raw(Model.MetaTitle)</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
@@ -101,14 +102,14 @@
                     {
                         <div class="breaking-news-area d-flex align-items-center">
                             <div class="news-title">
-                                <p><a href="#" id="latestNews">Последни</a></p>
+                                <p><a href="#" id="latestNews">Предстоящи</a></p>
                             </div>
                             <div id="breakingNewsTicker" class="ticker">
                                 <ul>
                                     @{
                                         foreach (var article in Model.RunningTextNews)
                                         {
-                                            <li><a href="/Articles/all?id=@article.ArticleId">@article.TargetDate.ToString("dd MMMM"):  @Html.Raw(article.Title)</a></li>
+                                            <li><a href="/Articles/all?id=@article.ArticleId">@article.TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG")):  @Html.Raw(article.Title)</a></li>
                                         }
                                     }
                                 </ul>

@@ -1,4 +1,5 @@
 ﻿@using SportBox7.Application.Features.Articles.Queries.Category;
+@using System.Globalization;
 @model ListArticlesByCategoryOutputModel
 <!DOCTYPE html>
 <html lang="bg">
@@ -8,7 +9,13 @@
     <meta name="keywords" content="@Html.Raw(Model.MetaKeywords)">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <link rel="icon" href="">
+    <meta name="author" content="sportbox7.com" />
+    <meta property='og:type' content='article' />
+    <meta property='og:title' content="Събитията от sportbox7com за категория @Html.Raw(Model.CurrentCategory.CategoryName)" />
+    <meta property="og:image" content="~/img/core-img/LogoBig.jpg" />
+    <meta property="og:description" content="@Html.Raw(Model.MetaDescription)" />
+    <meta property='og:url' content='@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")' />
+    <link rel="icon" href="~/img/icon.ico">
     <title>@Html.Raw(Model.MetaTitle)</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
@@ -16,6 +23,7 @@
     <link rel="stylesheet" href="~/css/calendar-theme.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <header class="header-area">
@@ -113,7 +121,7 @@
                                     @{
                                         foreach (var article in Model.RunningTextNews)
                                         {
-                                            <li><a href="/Articles/all?id=@article.ArticleId">@article.TargetDate.ToString("dd MMMM"):  @Html.Raw(article.Title)</a></li>
+                                            <li><a href="/Articles/all?id=@article.ArticleId">@article.TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG")):  @Html.Raw(article.Title)</a></li>
                                         }
                                     }
                                 </ul>
@@ -138,13 +146,13 @@
                                 <!-- Single Featured Post -->
                                 <div class="single-blog-post featured-post mb-30">
                                     <div class="post-data">
-                                        <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")/   @article.Category</a>
+                                        <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG"))/   @article.Category</a>
                                         <a href="/articles/all?id=@article.Id" class="post-title">
 
                                             <h6>@article.Title</h6>
                                         </a>
                                         <div class="post-thumb">
-                                            <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" width="420" alt=""></a>
+                                            <a href="/articles/all?id=@article.Id"><img class="article-image-list" src="@article.ImageUrl" alt=""></a>
                                             <p>Изображение: @Html.Raw(article.ImageCredit)<p>
                                         </div>
                                         <div class="post-meta">
@@ -153,6 +161,14 @@
                                     </div>
                                 </div>
                                 <hr />
+                            }
+                            if (Model.Articles.FirstOrDefault() == null)
+                            {
+                                <div class="single-blog-post featured-post mb-30">
+                                    <div class="post-data">
+                                        <h4>В момента няма статии в тази категория.</h4>
+                                    </div>
+                                </div>
                             }
                         }
                         @{
@@ -200,7 +216,7 @@
                                     <a href="/articles/all?id=@article.Id"><img src="@article.ImageUrl" alt=""></a>
                                 </div>
                                 <div class="post-data">
-                                    <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM")</a>
+                                    <a href="/articles/date?year=@DateTime.Now.Year&month=@targetMonth&day=@article.TargetDate.Day" class="post-catagory">@article.TargetDate.ToString("dd MMMM", new CultureInfo("bg-BG"))</a>
                                     <div class="post-meta">
                                         <a href="/articles/all?id=@article.Id" class="post-title">
                                             <h6>@Html.Raw(article.Title)</h6>

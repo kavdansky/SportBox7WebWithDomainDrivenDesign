@@ -48,7 +48,18 @@
         [Route("/articles/date")]
         [HttpGet]
         public async Task<ActionResult<ArticlesByDateOutputModel>> Date([FromQuery] ArticleByDateQuery query)
-            => View(await this.Mediator.Send(query));
+        {
+            try
+            {
+                var result = await this.Mediator.Send(query);
+                return View(result);
+            }
+            catch (Exception)
+            {
+                return Redirect("/Home/NotFound");
+            }
+            
+        } 
 
     }
 }
